@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1c-sft-v1: SFT of the navya-1c base (from-scratch 1.31B, ~103B tokens + deep cooldown) on sft_v9 = the same corpus_v2 (15,736 train convs / 3.6M supervised tokens) that produced navya-1b-sft-v9. Init from the COOLED base checkpoints/navya-1c-final. Full fine-tune. LR lowered to 3e-5 (vs the 337M's 1e-4) — appropriate for a ~4x larger model to learn the chat format without wrecking the base. ~3 epochs (400 steps at batch1 x grad16, ~131 steps/epoch). Trains on GCP A100 40GB (full-FT of 1.31B ~21GB + acts fits comfortably; OOMs on the A10's 24GB once acts are added). Serves navyam.ai as the navya-1c upgrade.",
+  "data_dir": "../04-training-stack/data/sft_v9",
+  "out_dir": "../04-training-stack/out/navya-1c-sft-v1",
+  "batch_size": 1,
+  "grad_accum": 16,
+  "max_steps": 400,
+  "lr": 0.00003,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 50,
+  "eval_iters": 10,
+  "ckpt_interval": 50
+}

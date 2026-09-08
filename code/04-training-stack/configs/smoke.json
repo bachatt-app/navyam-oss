@@ -1,0 +1,20 @@
+{
+  "vocab_size": 4096,
+  "dim": 128,
+  "n_layers": 4,
+  "n_heads": 4,
+  "n_kv_heads": 2,
+  "max_seq_len": 128,
+
+  "data_dir": "04-training-stack/data/smoke",
+  "out_dir": "04-training-stack/out/smoke",
+  "batch_size": 8,
+  "grad_accum": 1,
+  "max_steps": 60,
+  "lr": 1e-3,
+  "warmup_steps": 10,
+  "log_interval": 10,
+  "eval_interval": 30,
+  "eval_iters": 5,
+  "ckpt_interval": 30
+}

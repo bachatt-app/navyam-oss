@@ -1,0 +1,133 @@
+{
+ "ckpt": "/Users/ankurjhavery/Bachatt/navyam-gpt/code/04-training-stack/out/navya-1a/ckpt_last.pt",
+ "overall_acc": 0.18796992481203006,
+ "n_items": 133,
+ "n_reviewed": 11,
+ "sections": {
+  "banking": {
+   "correct": 2,
+   "total": 6,
+   "acc": 0.3333333333333333
+  },
+  "behaviour": {
+   "correct": 1,
+   "total": 4,
+   "acc": 0.25
+  },
+  "calculations": {
+   "correct": 1,
+   "total": 8,
+   "acc": 0.125
+  },
+  "citation": {
+   "correct": 1,
+   "total": 7,
+   "acc": 0.14285714285714285
+  },
+  "codemix": {
+   "correct": 0,
+   "total": 1,
+   "acc": 0.0
+  },
+  "concepts": {
+   "correct": 1,
+   "total": 18,
+   "acc": 0.05555555555555555
+  },
+  "credit": {
+   "correct": 0,
+   "total": 8,
+   "acc": 0.0
+  },
+  "date-rate-trap": {
+   "correct": 1,
+   "total": 5,
+   "acc": 0.2
+  },
+  "date-regime": {
+   "correct": 1,
+   "total": 3,
+   "acc": 0.3333333333333333
+  },
+  "date-tax-year": {
+   "correct": 1,
+   "total": 4,
+   "acc": 0.25
+  },
+  "estate": {
+   "correct": 0,
+   "total": 2,
+   "acc": 0.0
+  },
+  "gold": {
+   "correct": 0,
+   "total": 2,
+   "acc": 0.0
+  },
+  "hinglish-quality": {
+   "correct": 1,
+   "total": 2,
+   "acc": 0.5
+  },
+  "insurance": {
+   "correct": 2,
+   "total": 8,
+   "acc": 0.25
+  },
+  "loans": {
+   "correct": 0,
+   "total": 5,
+   "acc": 0.0
+  },
+  "markets": {
+   "correct": 4,
+   "total": 8,
+   "acc": 0.5
+  },
+  "mutual-funds": {
+   "correct": 2,
+   "total": 6,
+   "acc": 0.3333333333333333
+  },
+  "nri": {
+   "correct": 0,
+   "total": 1,
+   "acc": 0.0
+  },
+  "payments": {
+   "correct": 0,
+   "total": 2,
+   "acc": 0.0
+  },
+  "refusal": {
+   "correct": 0,
+   "total": 4,
+   "acc": 0.0
+  },
+  "regulation": {
+   "correct": 1,
+   "total": 4,
+   "acc": 0.25
+  },
+  "retirement": {
+   "correct": 2,
+   "total": 6,
+   "acc": 0.3333333333333333
+  },
+  "scams": {
+   "correct": 1,
+   "total": 8,
+   "acc": 0.125
+  },
+  "tax": {
+   "correct": 2,
+   "total": 8,
+   "acc": 0.25
+  },
+  "weights-vs-rag": {
+   "correct": 1,
+   "total": 3,
+   "acc": 0.3333333333333333
+  }
+ }
+}

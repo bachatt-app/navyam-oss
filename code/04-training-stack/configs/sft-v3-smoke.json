@@ -1,0 +1,15 @@
+{
+  "_comment": "smoke config for sft_train.py \u2014 12 steps on the local navya-0 base to validate response masking + packing + block-diagonal attention. Real SFT configs come with navya-1a.",
+  "data_dir": "../04-training-stack/data/sft_v3_smoke",
+  "out_dir": "../04-training-stack/out/sft-v3-smoke",
+  "batch_size": 4,
+  "grad_accum": 2,
+  "max_steps": 12,
+  "lr": 5e-05,
+  "warmup_steps": 3,
+  "weight_decay": 0.1,
+  "log_interval": 2,
+  "eval_interval": 6,
+  "eval_iters": 3,
+  "ckpt_interval": 100
+}

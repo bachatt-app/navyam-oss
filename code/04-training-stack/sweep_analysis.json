@@ -1,0 +1,23 @@
+{
+ "lr2e4": {
+  "final_train": 3.8666,
+  "final_val": 3.7446,
+  "val_points": 15,
+  "train_spikes": 0,
+  "val_slope_per_1k_steps": -0.807
+ },
+ "lr4e4": {
+  "final_train": 3.5926,
+  "final_val": 3.468,
+  "val_points": 15,
+  "train_spikes": 0,
+  "val_slope_per_1k_steps": -0.776
+ },
+ "lr6e4": {
+  "final_train": 3.5442,
+  "final_val": 3.4225,
+  "val_points": 15,
+  "train_spikes": 0,
+  "val_slope_per_1k_steps": -0.8488
+ }
+}

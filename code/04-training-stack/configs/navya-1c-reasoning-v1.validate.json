@@ -1,0 +1,16 @@
+{
+  "_comment": "2-step upfront validation of the reasoning SFT loop before the full A100 run: confirms the packed reasoning_v1 data loads, a train step + optimizer step completes, and validation_loss() is finite, before committing to the full navya-1c-reasoning-v1.json run. Disposable out_dir.",
+  "data_dir": "../04-training-stack/data/reasoning_v1",
+  "out_dir": "out/_reasoning_validate",
+  "optimizer_8bit": true,
+  "batch_size": 1,
+  "grad_accum": 4,
+  "max_steps": 2,
+  "lr": 0.00002,
+  "warmup_steps": 1,
+  "weight_decay": 0.1,
+  "log_interval": 1,
+  "eval_interval": 1,
+  "eval_iters": 5,
+  "ckpt_interval": 1
+}

@@ -1,0 +1,43 @@
+{
+ "ckpt": "/Users/ankurjhavery/Bachatt/navyam-gpt/code/04-training-stack/out/navya-1a/ckpt_last.pt",
+ "overall_acc": 0.21428571428571427,
+ "n_items": 28,
+ "n_reviewed": 0,
+ "sections": {
+  "citation": {
+   "correct": 1,
+   "total": 7,
+   "acc": 0.14285714285714285
+  },
+  "date-rate-trap": {
+   "correct": 1,
+   "total": 5,
+   "acc": 0.2
+  },
+  "date-regime": {
+   "correct": 1,
+   "total": 3,
+   "acc": 0.3333333333333333
+  },
+  "date-tax-year": {
+   "correct": 1,
+   "total": 4,
+   "acc": 0.25
+  },
+  "hinglish-quality": {
+   "correct": 1,
+   "total": 2,
+   "acc": 0.5
+  },
+  "refusal": {
+   "correct": 0,
+   "total": 4,
+   "acc": 0.0
+  },
+  "weights-vs-rag": {
+   "correct": 1,
+   "total": 3,
+   "acc": 0.3333333333333333
+  }
+ }
+}

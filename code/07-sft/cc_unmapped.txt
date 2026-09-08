@@ -1,0 +1,212 @@
+7. FD wale credit card par limit FD amount ka kitna percent milti hai?
+9. Pre-approved credit card offer netbanking me kaise check karein?
+10. Pre-approved card apply karne pe hard inquiry CIBIL me aati hai kya?
+15. V-KYC (Video KYC) se credit card application 5 minute me kaise approve hoti hai?
+16. "Card-to-Card" basis par naya credit card apply karne ka kya criteria hai?
+19. Multiple banks me ek sath credit card apply karne se CIBIL kyu girta hai?
+20. Entry-level credit card aur premium credit card me kya difference hai?
+26. Credit card application status "On Hold" dikha raha hai, iska kya matlab hai?
+27. Physical verification ke time bank agent office kyu aata hai?
+28. Freelancers ko ITR ke basis par maximum kitni limit ka card mil sakta hai?
+29. NRI (Non-Resident Indian) ko India me credit card NRO account pe mil sakta hai?
+32. Credit card agent (DSA) se apply karwana safe hai ya direct website se karein?
+33. DSA agar fake income proof laga de to fraud list me naam kaise aata hai?
+34. Age limit kya hoti hai primary credit card apply karne ke liye?
+35. Senior citizens / pensioners ko credit card milne me issue kyu hota hai?
+37. Salary account wale bank se card lene par limit zyada milti hai kya?
+38. CKYC number use karke paperless credit card approval kaise milta hai?
+39. Income Tax Return (ITR) minimum kitne lakh ka hona chahiye acche card ke liye?
+40. Card application me "Company not listed" error aaye to kya karein?
+43. Credit card dispatch hone ke baad Bluedart/Delhivery se track kaise karein?
+44. Naya credit card aane par uska PIN generate kaise karein online?
+46. Card activation ke time domestic aur international limit alag-alag set kaise karein?
+48. First swipe bonus ya welcome benefit kitne din me account me credit hota hai?
+49. Credit card kitne din me activate nahi kiya to automatically close ho jata hai (30 days rule)?
+51. Virtual credit card (e.g., Paytm HDFC) physical card se kaise alag kaam karta hai?
+52. Credit card limit income ka kitna guna milti hai normally?
+56. Limit enhancement offer accept karne pe CIBIL inquiry hoti hai?
+60. Total Credit Limit aur Available Credit Limit me kya farak hai?
+62. Ek aadmi maximum kitne credit cards hold kar sakta hai legally?
+63. 10 credit cards rakhne se CIBIL me "Credit Hungry" ka tag lagta hai kya?
+64. "Credit Utilization Ratio" (CUR) 30% se niche rakhna kyu recommend kiya jata hai?
+65. Agar main har mahine 90% limit use karu aur time pe pay karu, to score girega?
+66. Total CUR matter karta hai ya individual card ka CUR?
+67. CIBIL score me credit card history ka kitna weightage hota hai?
+69. Average Age of Credit (AAoC) naya card lene se kyu drop hota hai?
+70. Purana credit card (5 saal purana) band karne se CIBIL score kyu girta hai?
+72. CIBIL me "High Risk" alert kab lagta hai credit card usage pe?
+73. Credit card settle karwane ke baad naya card kitne saal tak nahi milta?
+74. Credit card EMI chalne par available limit utne amount se block kyu ho jati hai?
+76. Overlimit facility kya hoti hai aur isse on rakhne ka nuksan kya hai?
+77. CIBIL DPD (Days Past Due) me credit card delay kaise show hota hai (000, 030, 060)?
+78. Credit limit block hone (Lien marking) ke common reasons kya hain?
+79. Kya bank bina bataye credit card limit reduce kar sakta hai?
+80. Inactive card ki limit bank reduce kyu kar deta hai risk management ke naam pe?
+81. Credit card account CIBIL report se hatwane ka dispute process kya hai?
+82. Name mismatch ki wajah se credit card apply nahi ho raha, Aadhar-PAN link issue?
+83. Credit card ke liye ghar ka address permanent dena zaroori hai ya current/rented?
+88. E-commerce platforms par card offer 10% instant discount kisi specific bin (starting digits) par hi kyu milta hai?
+89. Corporate credit card aur retail credit card me fundamental difference kya hai?
+90. Company ke naam par (SME/Business credit card) lene se personal CIBIL pe asar hota hai?
+91. Purchase card ya fleet card (Business use) limit proprietor ke CIBIL me aati hai?
+93. NPI (Non-Performing Asset) list me naam hone par credit card lifetime ban ho jata hai?
+94. CIBIL V3 me credit card utilization pattern ko zyada aggressively penalize kyu kiya jata hai?
+95. EMI bounce history hone par naya credit card lene ki trick kya hai?
+96. Credit card ka welcome kit na aane par virtual card details se online shopping safe hai?
+97. 0% interest par card lene ka marketing gimmick actual me kitna cost karta hai?
+106. Airmiles kya hote hain aur inhe Vistara/AirIndia me convert kaise karein?
+114. Travel credit card (MakeMyTrip, Yatra) par cancellation insurance cover milta hai?
+122. BookMyShow Buy 1 Get 1 (BOGO) ticket offer quota system kaise kaam karta hai?
+124. Comprehensive travel insurance (Baggage delay, flight cancellation) claim karne ka process?
+125. Air accident insurance cover (e.g. 1 Crore) tabhi milta hai agar ticket usi card se book hui ho?
+127. Purchase protection cover (Samaan chori/damage hone par) credit card se kaise claim karein?
+138. SBI Elite vs HDFC Regalia Gold: Mid-premium segment me travel ke liye best kaunsa hai?
+139. Axis Atlas card Edge miles aur tier system (Silver, Gold, Platinum) travel booking me fayda?
+140. Tata Neu Infinity HDFC card se UPI payment karke 1.5% NeuCoins kaise kamayein?
+149. E-vouchers (Amazon/Flipkart) vs Statement credit: Points burn karne ka most efficient tarika?
+150. Card devaluation (benefits kam hona): Axis Magnus aur HDFC cards recently devalue kyu hue?
+156. Renewal fee waive karwane ke liye customer care ko call karke retention offer (fee reversal) kaise mangein?
+158. "Spend and Win" promotions (Spend 1 lakh in 30 days for iPhone) marketing trap hote hain?
+160. BookMyShow me BOGO offer me convenience fee kyu deni padti hai puri?
+161. International frequent flyer programs (KrisFlyer, Avios) me points transfer ratio 1:1 kaunse cards dete hain?
+164. RuPay Select aur Platinum cards ke free spa aur health checkup benefits claim kaise karein?
+171. MyZone Axis ya Millennia HDFC beginner cards ke best optimization hacks?
+178. Yes Bank Reserv / Marquee cards ka subscription model aur point value drop?
+182. RBL Bank Zomato Edition card (now closed) replacement strategies for food delivery spends.
+183. E-commerce festive sales (Big Billion Days/Great Indian Festival) me 10% instant discount limits (usually max ₹1500).
+184. Ek hi sale me multiple order place karke maximum ₹1500 limit bypass karne pe order cancel kyu hota hai?
+185. EMI on festive sale: Instant discount EMI par zyada milta hai normal swipe se (to cover interest)?
+186. No-cost EMI me merchant discount deta hai jo bank ke interest ko nullify karta hai (mathematic breakdown).
+189. Referral program: Dost ko credit card refer karke ₹1500 voucher earn karne ki limit?
+191. E-gift cards (Gyftr) expire hone se pehle use na karein to bank refund deta hai?
+192. "Targeted offers" (SMS se aane wale extra 5000 points on 20k spend) kaise activate aur track karein?
+194. Pre-approved Jumbo Loan HDFC limit block nahi karta, alag account banata hai (Good for CIBIL).
+196. Insurance premium credit card se pay karne par (LIC) ab fees lagni shuru kyu ho gayi hai?
+199. Mutual fund SIP credit card se start kyu nahi ki ja sakti (SEBI restrictions on borrowed money investing)?
+200. Demat account me margin add karne ke liye credit card blocked kyu hota hai?
+207. Credit card interest "Average Daily Balance" par calculate kaise hota hai?
+208. Agar maine 10,000 ka bill tha, 9,900 pay kar diya. Kya 100 rupay pe interest lagega ya pure 10,000 par starting date se?
+211. Late payment fee (₹500-₹1300) bill amount ke slab ke hisab se kaise lagti hai?
+212. Late payment fee par bhi 18% GST charge hota hai?
+219. Balance Transfer on EMI (BT on EMI) 12% se 14% rate pe lena personal loan se sasta hai?
+223. Utility bill payments (Gas/Water/Electricity) > ₹50,000 per month personal credit card se commercial suspect me block ho sakte hain?
+229. EMI cancellation/pre-closure karne par 3% foreclosure fee unbilled principal par charge hoti hai?
+234. NEFT se credit card bill pay karne ka formula (e.g. IFSC + 16 digit card number) kaise kaam karta hai?
+235. Auto-debit (Standing Instruction) fail kyu hota hai agar bank account aur credit card alag name formatting me hon?
+236. Billed Amount aur Unbilled Amount me difference kya hai?
+237. Current Outstanding negative (minus me) show ho raha hai, iska matlab mera paisa bank me extra jama hai?
+238. Extra payment (Negative balance) bank account me refund (Credit balance refund request) kaise lein?
+239. Kya credit balance zyada hone par bank uspar saving account jaisa interest deta hai? (No)
+241. "Interest on interest" (Capitalisation of interest) moratorium ke time Supreme court judgement ka credit card pe asar?
+242. CIBIL DPD "000" maintain karne ke liye due date se kitne din pehle pay karna safe hai?
+247. Outstation cheque se credit card bill pay karne par clearance fee lagti hai?
+248. Physical statement letter ghar par mangwane ka charge ab banks lagane lage hain (Go Green fee)?
+249. Branch me jaa kar cash se credit card bill jama karne par cash handling fee (₹100 + GST) kyu padti hai?
+253. EMI interest rate (e.g. 15% p.a.) actually flat rate hota hai ya reducing balance method?
+254. Amortization schedule credit card EMI ka kaise read karein (Principal vs Interest component)?
+256. Loan on Credit Card (Draft/RTGS to bank) processing fee (2-3%) upfront kyu deduction hoti hai?
+257. Pre-approved loan on CC me interest flat hota hai, isse XIRR (effective rate) nikalna sikhayein.
+258. Kya credit card loan par prepay/foreclose karne pe penalty lagti hai like personal loan?
+260. "Payment Holiday" ya "Skip EMI" offer fest me lene par interest meter band nahi hota, truth of the offer?
+261. ITR file karte waqt agar 10 lakh se zyada credit card bill pay kiya hai saal me (SFT reporting), income tax notice?
+262. AIR (Annual Information Return) Form 26AS me credit card spends 2 Lakh se upar show hone lagte hain?
+263. Business expense personal credit card se kiye, ITR me reimbursement show karke scrutiny se bachein?
+266. Merchant ne double swipe kar diya (duplicate charge), bank auto-resolve karega ya form bharna padega?
+267. Subscription trap (Netflix/Amazon auto-renew) e-mandate portal se cancel na ho to card block/replace karna padega?
+268. CIBIL score simulator me due date miss hone par score drop calculation?
+269. Ek hi card se EMI multiple chal rahi hain, foreclosure order choose kar sakte hain ya saari ek sath close hongi?
+270. Credit card limit temporarily block kyu ho jati hai jab hotel incidentals reserve (hold) karta hai?
+271. Pre-authorization hold (e.g. ₹5000) petrol pump ya hotel me release hone me 7 din kyu lagte hain?
+275. Cheque bounce hone pe Section 138 of NI Act credit card me bhi apply ho sakta hai for criminal case?
+277. Third party payment (brother paying my CC bill from his account) anti-money laundering (AML) alert trigger?
+278. Overpaying CC bill (advance payment of ₹1 lakh to buy ₹2 lakh item on 1.5L limit card) is it allowed?
+280. Statement generate hone ke agle din EMI convert ki, to next month bill me aayega ya adjust hoga?
+281. E-commerce refund timeline: Amazon refund generated but HDFC credit card me 5 working days lagna.
+282. Interest compounding daily vs monthly - credit card agreement clause interpretation.
+285. Personal loan le kar 4 credit cards ka debt consolidate karke interest 36% se 11% pe lana.
+286. Zero percent BT (Balance transfer for 3 months) promotional offer ICICI/SBI hidden processing fees.
+289. Insurance premiums paid on CC - auto-renew fail hone pe policy lapse responsibility of bank?
+290. Tax payments (Advance tax, GST) via credit card convenience fee structure (0.85% to 1%).
+291. CRED Coins/Gems valuation reality - why are they practically worthless compared to direct bank points?
+294. Adding money to Paytm wallet using CC and transferring to bank via merchant QR - 2.5% charge logic.
+297. CIBIL score simulator accuracy vs real-time ping latency on Paisabazaar/CRED.
+298. Does closing a newly opened credit card (within 1 month) hurt CIBIL more than closing a 5-year-old card?
+300. CIBIL "Control Number" requirement to file a dispute directly with TransUnion CIBIL for wrong CC account.
+304. TCS amount (20%) ITR file karte waqt advance tax ki tarah adjust ya refund kaise hota hai?
+315. No-Cost EMI lene pe product return/cancel karne par interest refund kyu nahi milta (sirf discount wapas hota hai)?
+316. Amazon/Flipkart pe bank discount (e.g. 10%) aur No-cost EMI ek sath combine kaise hote hain?
+318. EMI foreclosure karne par bache hue interest pe GST (18%) reverse hota hai ya nahi?
+327. Business credit cards (e.g., HDFC BizBlack, SBI Aurum) proprietorship ITR ke tax set-off me kaise help karte hain?
+332. MakeMyTrip ICICI card pe holiday booking pe extra discount aur MMT black membership ke real fayde?
+345. Insurance cover on Credit cards: Air accident cover tabhi valid hota hai agar flight ticket usi card se li ho?
+346. Purchase protection insurance: Naya mobile kharida aur 7 din me chori ho gaya, credit card se refund claim process?
+348. Credit card replacement (lost/stolen) pe naya card aane tak ongoing EMIs aur auto-debit subscriptions fail kyu hoti hain?
+349. Naye credit card number par puraani Netflix/Amazon Prime (e-mandate) subscriptions transfer hoti hain ya wapas set karni padti hain?
+350. Virtual credit cards (generated on app) single-use ke liye kaise protect karte hain unsafe website pe card data?
+353. "Zero Liability Protection": Fraud hone ke 3 din ke andar report karne pe customer ko ₹1 ka bhi nuksan kyu nahi hota?
+354. Phishing fraud: SMS me "Your PAN is blocked, update KYC" link par click karke OTP dene par zero liability kyu cancel hoti hai?
+363. Cash deposit in branch to pay CC bill - Cash handling fee of ₹100 + GST penalty by HDFC/SBI/ICICI.
+366. Cred/Cheq/Mobikwik credit card bill platforms data monetize kaise karte hain aur inke "coins" ki actual value kya hai?
+369. Advance payment (Negative outstanding) 5 lakh ki car kharidne ke liye 1L limit wale card pe allow karte hain banks?
+371. Inactive card closure ke baad CIBIL score drop (Credit mix aur AAoC kam hona) ko manage kaise karein?
+376. Credit limit share: SBI Prime aur SBI SimplyClick lene par dono ki 1 Lakh limit shared kyu milti hai (Separate kyu nahi)?
+382. Credit card insurance premium auto-debit fail hone pe LIC policy lapse ki responsibility bank ki ya customer ki?
+383. E-mandate limits (RBI): ₹15,000 se upar ki recurring payment (e.g., term insurance) par har baar OTP AFA (Additional Factor Authentication) zaroori hai.
+384. Netflix ₹199 auto-debit bina OTP ke (e-mandate registered) kaise process ho jata hai successfully?
+385. Sub-standard / Written-off credit card CIBIL status 7 saal baad expire/remove (fall off) kab aur kaise hota hai?
+386. Experian vs CIBIL: Ek me default 3 saal purana nahi dikh raha par dusre me dikh raha hai, dispute management.
+391. Credit card statement PDF ka password standard format (Name 4 letters + DOB) sabhi banks ka similar kyu hota hai?
+395. Bank holidays / Sunday ko due date padne par RBI ke hisab se agla working day automatically due date kyu ban jata hai?
+396. Cheque bounce (Section 138) credit card EMI bounce par ECS mandate ke through jail/criminal case penalty?
+397. Recovery agent sham 7 baje ke baad ghar aaye (Harassment) to Cyber police aur RBI Ombudsman evidence (video/audio).
+399. "Credit Hungry" behavior: 1 mahine me 6 bank me credit card apply karne pe hard inquiries CIBIL 50 points gira deti hain.
+400. "Spillover" spending: Credit limit 1 lakh, swipe 1.05 lakh (Overlimit enabled). CIBIL utilization > 100% flag red alert.
+405. Card closure request aane ke 7 working days me close karna mandatory hai (Failure = ₹500/day penalty payable to customer).
+406. Credit card statement cycle (billing date) change karne ka option bank ko one-time (lifetime) dena mandatory kyu hai?
+409. Telemarketers / DSA ki spam calls (credit card sell karne ke liye) DND (Do Not Disturb) bypass kaise karti hain?
+410. RBI Integrated Ombudsman Scheme (CMS portal): Bank nodal officer 30 din me solution na de to ombudsman complain process.
+414. Phishing email ("Your card is blocked, click link") se credentials chori hone pe cybercrime (1930) helpline immediate block.
+417. Exclusive network tie-ups (sirf Mastercard milega) bank force nahi kar sakta, customer can choose network at issuance.
+420. Hidden processing fees ya foreclosure charges ko APR calculation me shamil karke real rate of interest (XIRR) batana.
+421. Cooling off period: EMI convert karne ke 3 din me customer bina penalty EMI cancel karke normal purchase me wapas laa sakta hai.
+426. Deceased cardholder (Death): Unpaid bill recover karne ke liye bank recovery agents legal heirs ko harrass nahi kar sakte.
+427. Legal heir credit card debt chukane ke liye sirf utna liable hai jitni property (asset) inherit ki ho (Estate liability).
+429. Civil recovery suit vs Arbitration: Bank arbitration clause T&C me daal kar ex-parte (ek tarfa) order kaise pass karwa lete hain?
+430. Lok Adalat settlement: Credit card 2 lakh due ko 50,000 me Lok Adalat me settle karne ka court order aur CIBIL status "Settled".
+431. "Settled" status ko bank "Closed" me kabhi nahi badalta chahe 5 saal ho jayein (permanent CIBIL mark), iska CIBIL repair.
+433. Salary account freeze kar dena jab credit card dusre bank ka ho: Illegal practice without court order/garnishee order.
+435. DPD (Days Past Due) 090 cross hone pe "Sub-standard NPA" tag lagta hai aur bank interest income reverse kar deta hai.
+436. Recovery agents timing (8 AM to 7 PM limit) aur abusive language proof (audio recording) pe 1 lakh tak consumer court penalty on bank.
+440. KYC Update via Re-KYC: Aadhar update na hone pe card block, e-KYC video link se dobara activate karwana.
+441. CKYC registry data error: Kis aur ka PAN aapke profile se map ho gaya aur uski CC entry CIBIL me aane lagi, rectifying CKYC database.
+442. Aadhaar e-Sign credit card application form Indian Evidence act me IT Act 2000 legally binding contract.
+444. E-mandate / Auto-debit limit 1 lakh rupees UPI aur CC dono pe (Insurance, Mutual funds, SIPs) RBI notification (2024 limit hike).
+445. Cancelled E-mandate par merchant wapas charge lagane ki koshish kare to bank ₹500 bounce charge penalty nahi laga sakta.
+446. Overlimit transaction decline karne ka default feature (Customer portal me enable karna zaroori hai overlimit spend ke liye).
+447. Credit card limit on EMI purchases: Pura principal block hota hai, monthly bill bharne par limit dheere-dheere release hoti hai.
+448. Return of merchandise (Refund): EMI chal rahi ho aur item refund ho jaye, bank prepayment charge maf karke EMI close karega.
+452. Inactive card block (1 year no transaction): Bank sends 30 days notice via email/SMS before OTP-based auto-closure.
+453. Renewal fee charge reverse: Card active na hone pe renewal fee lagna, par bank ko request karne pe reversal policy.
+456. Disputing MCC mismatch with bank: "I swiped at a restaurant but got 1x points instead of 10x dining points because merchant registered as general store".
+459. Closing a credit card with negative balance (Advance payment): Bank ko NEFT/DD se customer account me balance refund karna mandatory hai 30 din me.
+460. NOC (No Objection Certificate) for credit card closure: Physical/Digital letter proof for future CIBIL dispute if bank wrongly reports active status.
+461. CIBIL score simulator tools on banking apps: Do they perform a soft ping or hard inquiry when used frequently? (Soft).
+462. Impact of opening 3 credit cards in one month on Average Age of Credit Accounts (AAoA) and temporary CIBIL drop.
+464. CIBIL Control Number: 9-digit code needed from the latest CIBIL report to raise a dispute directly on CIBIL website.
+465. Experian vs Equifax vs CIBIL: Why does one credit card account show as "Closed" in Equifax but "Active" in CIBIL? (Bank data upload lag).
+466. Settlement vs Foreclosure in CC: 1 Lakh due, paid 50k as settlement. CIBIL status says "Settled". Does it stay for 7 years?
+467. Paying remaining 50k after 3 years of settlement to convert CIBIL status from "Settled" to "Closed" to get a home loan.
+468. Unblocking a credit limit temporarily blocked due to suspect transaction (Bank's Fraud Risk Management FRM system).
+470. Card replacement fee (e.g. ₹100): Requesting waiver because the EMV chip malfunctioned not due to customer negligence.
+471. Go Green fee (Physical statement fee): Opting out of email statements and forcing bank to send paper bills incurs ₹100 charge.
+474. Upgrading card (e.g. Millennia to Regalia): Does the old card number change? Yes, leading to failure of all linked auto-debits.
+476. "Payment Holiday" festival offers: You can skip December EMI, but interest keeps accruing. Why it is a debt trap.
+478. E-commerce instant discount failure: Offer applied on checkout, but bank charged full amount on statement. Evidence submission (Screenshots).
+480. Do credit card companies cross-verify income with the Income Tax Department via PAN mapping before approving high limits? (Yes, via APIs).
+481. CIBIL hit for Limit Enhancement: Does clicking "Check Eligibility for Higher Limit" in app trigger a hard inquiry? (Depends on bank UI).
+485. Golf booking cancellation penalty: No-show fee (e.g. ₹2000) charged directly to credit card if complimentary game not played.
+487. Insurance on CC: Comprehensive travel cover requires the flight ticket to be bought 100% on the same credit card.
+489. Utility bill payment apps (Cred) blocking credit card payments due to commercial threshold limits (AML guidelines).
+492. Can a credit card be attached (lien marked) by the Income Tax department for unpaid taxes? (No, because it's borrowed money, not your asset).
+493. Impact of marriage/name change: Updating maiden name to married name on credit card via Gazette notification and CKYC.
+496. Business/Corporate credit card default: Does it hit the Director's personal CIBIL or the Company's CMR report? (Both, if personal guarantee signed).

@@ -1,0 +1,23 @@
+{
+  "_comment": "Research-L. Single-node reference shape; real 1B runs move to multi-GPU. vocab_size overridden by data meta.json.",
+  "vocab_size": 65536,
+  "dim": 2048,
+  "n_layers": 26,
+  "n_heads": 16,
+  "n_kv_heads": 4,
+  "max_seq_len": 4096,
+
+  "data_dir": "data/research",
+  "out_dir": "out/1b",
+  "batch_size": 8,
+  "grad_accum": 64,
+  "max_steps": 150000,
+  "lr": 2e-4,
+  "warmup_steps": 2000,
+  "weight_decay": 0.1,
+  "log_interval": 20,
+  "eval_interval": 1000,
+  "eval_iters": 100,
+  "ckpt_interval": 1000,
+  "peak_flops": 989e12
+}

@@ -1,0 +1,105 @@
+{
+ "tokenizer": "tokenizer-v0.3-64k.json",
+ "data_source": "FLORES-200 dev+devtest (official facebookresearch/flores release, downloaded directly from dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz -- the HuggingFace facebook/flores mirror is gated so this direct download was used instead). Real professionally-translated parallel corpus, 2009 sentences/language, 29k-50k whitespace-split words/language. Files copied into code/01-tokenizer/eval_sets_flores200/<lang>.txt for reproducibility. This supersedes fertility_report_v2.json's tiny (~35-90 word) finance-domain samples -- this measurement is definitive.",
+ "method": "tokens_per_word = tokenizer.encode(text).ids / whitespace_split_word_count, measured over the full FLORES dev+devtest concatenation per language.",
+ "indic_abs_target": 1.8,
+ "english_tokens_per_word": 1.391,
+ "per_language": {
+  "assamese": {
+   "tokens_per_word": 2.3097,
+   "n_words": 37859,
+   "n_tokens": 87444,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "bengali": {
+   "tokens_per_word": 2.1477,
+   "n_words": 38262,
+   "n_tokens": 82174,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "english": {
+   "tokens_per_word": 1.391,
+   "n_words": 42855,
+   "n_tokens": 59610,
+   "corpus": "FLORES-200 dev+devtest"
+  },
+  "gujarati": {
+   "tokens_per_word": 2.0616,
+   "n_words": 40966,
+   "n_tokens": 84455,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "hindi": {
+   "tokens_per_word": 1.6496,
+   "n_words": 50250,
+   "n_tokens": 82890,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": true
+  },
+  "kannada": {
+   "tokens_per_word": 2.7324,
+   "n_words": 31530,
+   "n_tokens": 86154,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "malayalam": {
+   "tokens_per_word": 3.1381,
+   "n_words": 29307,
+   "n_tokens": 91967,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "marathi": {
+   "tokens_per_word": 2.1318,
+   "n_words": 37111,
+   "n_tokens": 79112,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "odia": {
+   "tokens_per_word": 2.2491,
+   "n_words": 38534,
+   "n_tokens": 86667,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "punjabi": {
+   "tokens_per_word": 1.8075,
+   "n_words": 50445,
+   "n_tokens": 91179,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "tamil": {
+   "tokens_per_word": 2.4984,
+   "n_words": 32909,
+   "n_tokens": 82219,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  },
+  "telugu": {
+   "tokens_per_word": 2.5877,
+   "n_words": 33326,
+   "n_tokens": 86238,
+   "corpus": "FLORES-200 dev+devtest",
+   "pass_1_8": false
+  }
+ },
+ "indic_failing_1_8": [
+  "assamese",
+  "bengali",
+  "gujarati",
+  "kannada",
+  "malayalam",
+  "marathi",
+  "odia",
+  "punjabi",
+  "tamil",
+  "telugu"
+ ],
+ "honest_finding": "On a real, much larger held-out parallel corpus the v0.3 tokenizer still fails the flat 1.8 tokens/word gate on 10/11 Indic scripts, confirming (not just indicating) the v2 finding. Dravidian scripts (Tamil/Telugu/Malayalam/Kannada) are the worst offenders and cluster together, consistent with agglutinative morphology producing long orthographic word-forms that whitespace-splitting counts as one 'word' regardless of internal complexity -- see PER_SCRIPT_TARGETS.md for why a flat 1.8 target is linguistically unrealistic for them."
+}

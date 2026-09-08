@@ -1,0 +1,23 @@
+{
+  "_comment": "navya-1a: 151.0M params (embed 33%), seq 2048, 4B tokens over 7600 steps (524K tok/step). Config chosen by bench_train.py matrix on the A10 (2026-08-19): micro 8 x accum 32, torch.compile default, native GQA, FULL cross-entropy -> 42.7K tok/s, 31.0% MFU, 16.4GB peak (~26h). Chunked CE lost on this card (compile's memory savings sufficed); micro 16 OOMs. Global batch and window order unchanged from the 4x64 config (loader counters are batch-shape invariant).",
+  "vocab_size": 65536,
+  "dim": 768,
+  "n_layers": 16,
+  "n_heads": 12,
+  "n_kv_heads": 4,
+  "max_seq_len": 2048,
+  "data_dir": "data/navya1a_v1",
+  "out_dir": "out/navya-1a",
+  "batch_size": 8,
+  "grad_accum": 32,
+  "max_steps": 7600,
+  "lr": 0.0004,
+  "warmup_steps": 300,
+  "weight_decay": 0.1,
+  "log_interval": 20,
+  "eval_interval": 500,
+  "eval_iters": 50,
+  "ckpt_interval": 250,
+  "peak_flops": 125000000000000.0,
+  "compile_mode": "default"
+}

@@ -1,0 +1,16 @@
+{
+  "_comment": "navya-1c-reasoning-v1: reasoning distillation of navya-1c-sft-dpo-grpo (1.31B). Teacher is a LOCAL deepseek-r1:14b (R1-Distill) over corpus_v2 prompts (code/13-reasoning/build_reasoning_traces.py); assistant target is '<think>reasoning</think>\\n\\nanswer' (code/13-reasoning/format_reasoning_sft.py). Small, purpose-built corpus (~300-400 conversations, data_dir reasoning_v1 — NOT sft_v9), so max_steps is modest and lr is lower than the original SFT pass (3e-5) to avoid wrecking post-training gains from DPO/GRPO while still teaching the <think> habit. Init from checkpoints/navya-1c-sft-dpo-grpo/ckpt_last.pt. Full fine-tune, same recipe as navya-1c-sft-v1 (fits comfortably on A100 40GB).",
+  "data_dir": "../04-training-stack/data/reasoning_v1",
+  "out_dir": "out/navya-1c-reasoning-v1",
+  "optimizer_8bit": true,
+  "batch_size": 1,
+  "grad_accum": 16,
+  "max_steps": 200,
+  "lr": 0.00002,
+  "warmup_steps": 10,
+  "weight_decay": 0.1,
+  "log_interval": 10,
+  "eval_interval": 25,
+  "eval_iters": 10,
+  "ckpt_interval": 50
+}

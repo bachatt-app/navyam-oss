@@ -1,0 +1,84 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Generated training artifacts (regenerable; real runs store checkpoints elsewhere)
+code/04-training-stack/data/
+code/04-training-stack/out/
+code/01-tokenizer/tokenizer-smoke.json
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.pdf
+
+# OS
+.DS_Store
+
+# Ingested corpora and derived artifacts (regenerate via ingest/run_ingest.sh)
+code/02-data-pipeline/pools/*/*.jsonl
+code/01-tokenizer/corpus/
+code/01-tokenizer/corpus_balanced/
+code/01-tokenizer/corpus_v04/
+code/01-tokenizer/corpus_sangraha/
+code/01-tokenizer/corpus_v05_balanced/
+code/01-tokenizer/corpus_v05_scriptaware/
+code/01-tokenizer/tokenizer-v0.1-32k.json
+code/01-tokenizer/tokenizer-v0.2-64k.json
+
+# Compiled docs are deliverables — track them despite the artifact rules above
+!docs/**/*.pdf
+
+# Scratch dirs — never tracked
+tmp/
+output/
+code/02-data-pipeline/bulk_cache/
+
+# transcription output / working data (call-ASR-corpus call transcripts etc.)
+code/02-data-pipeline/pools/
+.cache/
+
+# GCP service-account keys — never commit
+keys/
+*.json.key
+
+# call-ASR-corpus export data — large, lives in GCS (gs://your-corpus-bucket/s067/exports/), not git
+code/02-data-pipeline/exports/s067/s067_transcripts.jsonl
+code/02-data-pipeline/exports/s067/s067_transcripts_clean.jsonl
+code/02-data-pipeline/exports/s067/s067_transcripts.csv
+code/02-data-pipeline/exports/s067/s067_sample_200.jsonl
+
+# --- secrets: never commit ---
+.env
+
+# --- Ollama/HF build scratch (12GB): GGUFs + safetensors exports, regeneratable;
+#     the models live on Hugging Face (navyam-ai) + Azure Blob. ---
+ollama-build/
+
+# --- large model/artifact binaries ---
+*.safetensors
+*.gguf
+*.pt
+*.bin
+
+# local cloud identifiers (not secrets, but kept out of the public repo)
+infra.env
+
+
+# internal-only docs (roadmap, strategy, LaTeX design book) — never published
+docs_private/
+
+# training / eval data corpora — not part of the code release (weights are on HF/Ollama)
+*.jsonl
+code/**/data/
+code/**/corpus_v2/
+code/**/exports/
+
+# deployment / cloud-provisioning scripts — not part of the code release
+deploy/

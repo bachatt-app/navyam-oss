@@ -1,0 +1,8 @@
+{
+  "global_english":   {"paths": ["pools/global_english/"], "tokens": 60e9, "weight": 0.50},
+  "indian_english":   {"paths": ["pools/indian_english/"], "tokens": 15e9, "weight": 0.175},
+  "indian_languages": {"paths": ["pools/indic/"],          "tokens": 8e9,  "weight": 0.125},
+  "code":             {"paths": ["pools/code/"],           "tokens": 40e9, "weight": 0.10},
+  "finance_econ_law": {"paths": ["pools/finance/"],        "tokens": 2e9,  "weight": 0.075},
+  "math_reasoning":   {"paths": ["pools/math/"],           "tokens": 5e9,  "weight": 0.025}
+}

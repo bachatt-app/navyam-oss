@@ -1,0 +1,158 @@
+3. Voluntary GST registration lene ke kya fayde aur nuksan hain chote business ke liye?
+4. Kya inter-state (ek state se dusre state) maal bechne par GST registration 1 rupay ki sale par bhi mandatory hai?
+13. GST registration form (REG-01) me principal place of business dikhane ke liye rent agreement aur NOC ka format kaisa hona chahiye?
+14. Aadhaar authentication GST registration me fail ho jaye to physical verification me kitne din lagte hain?
+15. Mere paas ek hi PAN card hai, kya main do alag-alag states me GST number le sakta hu?
+16. Ek hi state me do alag businesses (jaise ek kapde ka aur ek electronics ka) ke liye do alag GST mil sakte hain?
+19. GSTIN 15 digit ka alphanumeric code hota hai, isme PAN card number kahan par chhupa hota hai?
+20. Casual Taxable Person (CTP) kya hota hai aur exhibitions/melas ke liye temporary GST kaise milta hai?
+21. Non-Resident Taxable Person (NRTP) jo India me temporary business kar raha hai, uska advance GST deposit rule kya hai?
+22. UIN (Unique Identity Number) GST me foreign embassies aur UN bodies ko kyu issue kiya jata hai?
+23. GST registration certificate (REG-06) download karne ke baad dukan ke bahar display karna legally mandatory hai?
+24. GST number cancel (surrender) karne ka step-by-step process kya hai agar business band ho gaya ho?
+26. Revocation of cancellation ki application (REG-21) file karne ki time limit 30 din se badha kar 90 din kab hui?
+27. Input Service Distributor (ISD) kya hota hai aur corporate head office branches ko ITC distribute kaise karta hai?
+28. GST me aggregate turnover calculate karte waqt exempt income, export income, aur taxable income sab add hoti hai?
+30. GST portal pe core fields amendment aur non-core fields amendment me kya farak hai?
+31. Business ka naam ya address change karne ke liye GST officer ka approval (core amendment) kyu chahiye hota hai?
+32. Authorized signatory ko GST portal par change/update karne ka process kya hai?
+41. IGST, CGST, aur SGST me farak kya hai aur ye alag-alag transactions pe kaise lagte hain?
+47. Services ke case me Time of Supply calculate karte waqt 30 days invoice issue limit ka kya role hai?
+50. Post-sale discount (jo saal ke end me target achieve hone pe milta hai) uspar credit note se GST reverse kaise hota hai?
+56. SEZ (Special Economic Zone) developer/unit ko saaman bechna inter-state supply (IGST) kyu maani jati hai?
+58. Branch transfer (apni hi doosri state ki branch ko stock bhejna) par IGST lagana mandatory kyu hai cross-charge ke liye?
+59. Schedule II: Kab kisi transaction ko supply of goods manenge aur kab supply of services (jaise software ya restaurant)?
+61. Petrol, Diesel, aur Alcohol human consumption ke liye GST ke daayre se bahar (Out of GST) kyu rakhe gaye hain?
+65. GST Council ka decision-making process center aur state governments ke beech kaise divide hota hai?
+66. "One Nation One Tax" hone ke bawajood state-wise registration ka concept kyu follow karna padta hai?
+67. Place of Supply for goods: Agar Delhi ka dealer Haryana ke dealer ke kehne pe UP me maal deliver kare (Bill-to-Ship-to model) to IGST lagega ya CGST/SGST?
+68. Place of Supply for services: Immovable property (hotel/construction) ki service jahan property hai wahan kyu mani jati hai?
+69. Event management services ka Place of Supply agar event foreign me ho raha ho par company India ki ho to kya hoga?
+70. OIDAR (Online Information Database Access and Retrieval) services me Netflix, Google ads foreign se India service de to GST kon dega?
+71. Cross-charge aur ISD (Input Service Distributor) ke beech better tax optimization head office ke liye kya hai?
+73. Job worker agar 1 saal me maal process karke wapas na kare, to principal ko kya penalty aur GST dena padega?
+74. Scrap / Waste bechne par GST kis rate se calculate hota hai manufacturing industry me?
+78. Continuous supply of services (jaise AMC maintenance contract) me milestone basis pe GST invoice kab banta hai?
+81. Antiques, stamps, aur collectibles ko auction se bechne par taxation margin scheme se hoti hai ya normal?
+82. GST portal par "Track Application Status" me ARN (Application Reference Number) pending for processing kyu aata hai 7 din tak?
+86. TDS (Tax Deducted at Source) under GST Section 51 govt departments vendor payment par 2% kyu kaat te hain?
+88. GST officers state aur center me divide (Jurisdiction) kaise hote hain cross-empowerment rule me?
+89. Non-resident taxable person (NRTP) ka registration sirf 90 din ke liye valid kyu hota hai?
+90. Import of service from foreign freelancer without consideration (free me service lena related party se) taxable hai?
+93. Taxable territory aur Non-taxable territory (Jaise High seas) me hui sales pe GST exemption (Schedule III)?
+101. Input Tax Credit (ITC) claim karne ki basic 4 shartein (Section 16) kya hain?
+105. Maal abhi tak physically factory me receive nahi hua, par invoice aa gaya, kya is mahine ITC le sakte hain?
+107. 180 din baad agar maine supplier ko late payment de diya, to kya main reversed ITC dobara (Re-claim) kar sakta hu?
+115. Rent-a-cab service employee cab drop ke liye use hoti hai, kya company cab service pe ITC le sakti hai?
+116. Repair and maintenance expense agar immovable property ka ho aur capitalized ho, to ITC block kyu hota hai?
+119. Business promotion vs Gift: 'Buy 1 Get 1 Free' me free item ka ITC block hota hai ya allow?
+122. ITC of IGST ko CGST aur SGST ki liability set-off karne me kis order me use karna chahiye (Rule 88A)?
+123. Kya SGST ka ITC CGST ki liability pay karne ke liye cross-utilize ho sakta hai (State to Center limit)?
+125. ITC on bank charges (loan processing fee) business purpose hone par claim allowed hai kya?
+127. Uniforms aur safety shoes provided to factory workers (mandated by factory act) par ITC block hoga ya allow?
+129. Job worker ke paas bheje gaye goods par input tax credit principal manufacturer claim kar sakta hai bina receive kiye?
+130. Bill to Ship to model me buyer A ne B ko bola C ko maal dene, to ITC A ko milega ya C ko (Constructive receipt)?
+131. Invoice ki date pichle saal ki hai aur maal naye saal me mila, ITC kis saal ki limit me claim hoga?
+133. Pre-incorporation expenses: Company banne se pehle director dwara pay kiye gaye GST ka ITC company le sakti hai?
+135. Sale of business as a going concern: Pura business bech diya, to electronic credit ledger ka bacha hua ITC naye owner ko transfer (ITC-02) kaise karein?
+136. Input Service Distributor (ISD) ki return GSTR-6 bhar kar branches ko exactly kaise ITC pass hota hai?
+138. Telecom towers aur telecommunication infrastructure building mani jati hai, unka ITC allow hai ya block?
+139. Pipelines laid outside the factory gates ITC block hai, but inside factory allow hai, kya ye sach hai?
+148. Rule 86B: 1% tax liability cash me dena mandatory kyu hai agar aapka turnover 50 lakh per month se zyada hai?
+150. Provisional ITC vs Verified ITC: GST system me provisional claim concept bilkul khatam ho chuka hai.
+153. Supplier ka registration retrospective effect se cancel ho jaye, to department purane valid purchases ka ITC disallow kyu karta hai?
+160. TDS aur TCS ka credit seedha cash ledger me kyu aata hai bajaye credit ledger ke?
+163. Hotel booking (Accommodation service): Agar meri company Delhi me hai aur employee Mumbai me hotel ruke, to CGST/SGST ka ITC kyu nahi milta?
+164. IGST on hotel room: Agar hotel aur company alag states me hain to inter-state travel ITC ka loss avoid kaise karein?
+170. Import of goods par pay kiye gaye IGST ka ITC lene ke liye Bill of Entry (BOE) ICEGATE portal pe verify karna kyu zaroori hai?
+171. Custom duty (BCD) aur Social Welfare Surcharge par ITC milta hai ya sirf IGST component par?
+172. Purchase in lots (machinery 4 trucks me alag-alag aayi), ITC pehle truck pe milega ya aakhiri truck (last lot) receive hone pe?
+175. Employee travel by flight: GST act me LTA (Leave travel) ticket pe employer ko ITC lene pe manahi kyu hai?
+176. Books of accounts (audited) me supplier ka payment bank se ho par debit balance chal raha ho, to 180 days rule strictly bank match karke prove karna?
+178. Inter-company loan interest (financial services) exempt hai, par bank dwara GST charge kiye gaye cheque bounce charges ka ITC?
+180. E-invoicing QR code na hone par (supplier eligible tha par banaya nahi), invoice invalid kyu mana jata hai aur ITC disallow kyu hota hai?
+181. ITC verification during department audit (EA-2000): Invoices me lorry receipt (LR), weighbridge slip, aur toll tax slips proof of delivery kyu maangte hain?
+183. JDA (Joint Development Agreement) me landlord ko diye gaye flats pe GST liability aur builder ka ITC optimization.
+195. Subrogation in motor claims: Insurance company paying garage directly, but GST component paid by insured owner to claim ITC in their business books.
+196. Inter-state supply of promotional materials (brochures, standees) to own branches without consideration: Input tax credit mapping.
+210. GST me returns revise (modify) karne ka option kyu nahi diya gaya, uski jagah amendment tables kaise kaam aati hain?
+219. GSTR-5 (Non-Resident Taxable Person) aur GSTR-6 (Input Service Distributor) ke filing dates.
+233. Cancellation notice for non-filing (REG-17): Regular taxpayer 6 mahine (ab naye rule me 6 tax periods) return na bhare to suo-moto suspension.
+236. Form GST PMT-09: Cash ledger me galti se CGST ki jagah SGST, ya interest ki jagah penalty me paise daal diye, usko cross-head transfer karna.
+240. Temporary reversed ITC ko dobara Table 4(A)(5) 'All Other ITC' me claim karke Table 4(D)(1) me 'Reclaimed ITC' me reconcile karwana.
+243. Section 50(3) clarification: Interest only when wrongly availed ITC is utilized reducing the cash payment.
+252. Section 62 Assessment of Non-filers (Best Judgement Assessment): Officer pichle data ke basis pe arbitrary high tax liability order (ASMT-13) pass kar deta hai.
+262. Discrepancy notice for non-filing of ITC-04 (Job work return) detailing principal to job worker materials movement.
+263. Filing ITC-04 semi-annually (Turnover < 5 Cr) vs Annually (Turnover > 5 Cr) details of challans dispatched and received.
+271. Personal liability of directors for non-payment of GST by private limited company: Section 89 lifts corporate veil if negligence is proven.
+272. Penalty for non-issuance of tax invoice (Section 122): 10,000 rupees or tax evaded (whichever is higher).
+273. Penalty for aiding or abetting GST evasion (Section 122(3)): CA or accountant can be penalized up to 25,000 rupees.
+274. First time offender leniency under Section 126 (General Disciplines related to penalty) for minor breaches < 5000 tax amount.
+276. Release of seized goods on payment of 200% tax penalty under Section 129 vs disputing it in appellate authority.
+280. Amendment of B2B invoices in subsequent financial year: Cut-off date restriction (30th November) strict enforcement prevents any correction later.
+281. Section 16(4) time limit dispute: Many taxpayers filed 2017-18 returns late in 2019 and got ITC notices. Retroactive amnesty and court verdicts.
+282. Transitional credit (TRAN-1 / TRAN-2): Shifting old VAT / Excise duty credits to GST electronic ledger during 2017 regime shift (Supreme court extension window).
+283. GSTR-2A vs 3B mismatches for FY 17-18 and FY 18-19: CBIC Circular 183 allows CA certificate from supplier to resolve discrepancies without full 2B enforcement.
+284. Can a provisional attachment of bank account (Section 83) be done during pendency of assessment to protect revenue? (Valid for 1 year).
+285. Arrest provisions under Section 69: Commissioner can order arrest if tax evasion exceeds 2 Crore rupees without issuing show cause notice first.
+286. Bailable vs Non-bailable offenses under GST: Evasion > 5 Crore becomes non-bailable and cognizable offense.
+287. Compounding of offenses (Section 138): Paying a settlement fee to avoid criminal prosecution and jail time in GST frauds.
+291. Self-assessment vs Scrutiny assessment vs Best Judgement assessment definitions in GST Act.
+295. Can an invoice series be restarted mid-year? (No, requires maintaining separate distinct series for different branches or verticals).
+324. Export ki definition me service ka location of supplier India me ho aur location of recipient foreign me ho, with payment in convertible foreign exchange (FIRC/e-BRC).
+334. Pre-audit vs Post-audit of refund claims: 2 Crore se upar ke refund claims release hone se pehle detailed physical file scrutiny se kyu guzarte hain?
+335. Deficiency Memo (RFD-03): Refund application me document missing hone pe officer 15 din me notice deta hai, customer ko fresh application lagani padti hai.
+337. Refund withholding (RFD-07): Agar tax evader pe recovery pending ho to officer uska refund hold karke demand adjust kar sakta hai.
+341. Duty Drawback (Customs) claim karne par IGST refund of ITC pe koi restriction lagti hai GST-Customs correlation me?
+350. E-invoicing B2C transactions par lagu na karke sirf dynamic QR code ki limit 500 Crore (B2C) compulsory UPI tracking ke liye.
+358. E-invoicing verification app: Tax officer scanning the QR code on physical printout to verify digital signature offline.
+359. Export invoice numbering sequence can be different from domestic series (e.g. EXP/001) for easier compliance tracking.
+363. Refund to Canteen Stores Department (CSD / Army Canteen): Specialized 50% GST refund to authorized defense retail outlets.
+364. Tourist refund scheme (Section 15 IGST Act): Foreign tourists claiming GST refund at international airports on goods bought in India (Yet to be fully operational).
+369. Cross-empowerment rule preventing double jeopardy: If Center is auditing/processing your refund, State officers cannot open a parallel investigation.
+371. Part B updating by transporter: Consignor assigns the EWB to a Transporter ID, allowing the transporter to enter vehicle details during movement.
+377. Transporting goods for weighing/quality testing (Job work): Sending via delivery challan without tax invoice, returning back after testing.
+381. Section 54(8) unjust enrichment principle in GST refund: Taxpayer must prove that the GST burden wasn't passed on to the final consumer to get the refund directly.
+382. CA / CMA certificate required for refund claims exceeding Rs. 2 Lakhs to certify that incidence of tax has not been passed onto consumer.
+388. Over-the-counter (OTC) sales to foreigners in India (e.g. tourist buying a carpet in Jaipur) is treated as INTRA-state local sale, charging CGST+SGST, not export.
+390. E-invoicing applicability check: Once a PAN crosses the 5 Cr limit in any previous financial year since 2017, e-invoicing becomes permanently applicable.
+393. Sending goods for demonstration/exhibition outside India: Cleared under Delivery Challan and Export Declaration; if sold, tax invoice raised; if returned within 6 months, no duty.
+396. Suspension of IGST refund at ICEGATE: Officer demands physical verification of business premises and supply chain before releasing blocked refunds.
+398. SEZ online portal integration with GSTN: Mismatch in SEZ DTA procurement forms delaying ITC and refund mechanisms.
+399. Refund in case of inverted tax structure for EPC (Engineering Procurement Construction) contracts: Excluded by explicit government notification causing working capital stress.
+402. ASMT-10 aane par ASMT-11 me clarification/reply submit karna 30 din ke andar kyu zaroori hai penalty se bachne ke liye?
+403. ASMT-12 order pass hone par scrutiny drop (close) ho jati hai agar officer reply se satisfy ho jaye.
+405. Section 73 (normal error/unpaid tax) me penalty tax amount ka 10% ya 10,000 (whichever is higher) lagti hai.
+406. Section 74 (fraud, suppression of facts) me penalty tax amount ka 100% tak chali jati hai aur limitation period 5 saal hota hai.
+409. GST Appeal (APL-01) file karte waqt disputed tax amount ka 10% pre-deposit karna mandatory kyu hai (frivolous appeals rokne ke liye)?
+410. First Appellate Authority (Commissioner Appeals) ka order against aaye to Appellate Tribunal (GSTAT) me 20% extra pre-deposit dena padta hai.
+411. GST Appellate Tribunal (GSTAT) set up hone me delay ki wajah se log directly High Court me writ petition (Article 226) kyu daal rahe the?
+412. Advance Ruling (ARA-01): Business transaction se pehle uspar kitna GST rate lagega, ye legally clarify karwane ke liye AAR authority se order lena.
+413. Advance Ruling order kya dusre taxpayers pe lagu (binding) hota hai ya sirf usi applicant ke liye specific hai? (Sirf applicant ke liye).
+415. Directorate General of GST Intelligence (DGGI) raids aur search & seizure power Section 67 ke under fake billing racketeers ko arrest karne ke liye.
+434. Cross-charge between Head Office (Delhi) and Factory (Haryana): Delhi office CEO ki salary factory allocate karke GST charge karne ki complex valuation.
+440. Co-operative housing society maintenance > 7,500 per month. If total is 8,000, is GST on entire 8,000 or only the 500 extra? (Entire 8,000 is taxable).
+441. Sinking fund/corpus fund collected by builder/society from members: Taxable as advance for future service.
+442. Trust/NGOs holding Section 12AA Income Tax exemption running a paid yoga camp or selling religious books: Commercial activity attracts GST.
+443. Free charitable hospital charging only for specialized VIP rooms: Mixed applicability of healthcare exemptions.
+444. Subsidies from Central/State Government directly reducing the price of goods (e.g. Urea fertilizer): Excluded from GST value of supply. Subsidies from NGOs are included.
+448. Sale of software as a service (SaaS) subscription model: Always treated as supply of service (not goods) mitigating dual taxation confusion.
+452. Customs bonded warehouse goods sold multiple times before clearance (High Sea Sales): Neither supply of goods nor services (Schedule III) - IGST charged only once at final port clearance.
+453. Personal vehicle sold to Cars24: Normal individual not in business of selling cars, so sale is not supply, no GST. Cars24 sells it on margin scheme.
+455. ISD (Input Service Distributor) mechanism vs Cross Charge: When is raising a tax invoice better than distributing credit via GSTR-6?
+457. Attachment of property (Section 83): Commissioner attaching factory premises during a raid to prevent promoter from selling assets and fleeing.
+458. Search and Seizure (Section 67): Officers confiscating laptops, hard drives, and mobile phones as digital evidence during EA-2000 audits.
+459. Pan-masala / Gutkha manufacturers mandatory machine registration to prevent unaccounted unbilled manufacturing evasion (Special procedure 2024).
+460. Rectification of Mistake (ROM) under Section 161: Correcting an obvious typographical error in a GST appeal order within 3 months.
+461. Stay on recovery of demand: Paying 10% pre-deposit automatically stays the recovery of the remaining 90% balance pending appeal.
+462. Condonation of delay for filing appeals beyond 3 months: High courts invoking Article 226 strictly only if technical glitch proven, rejecting negligence.
+464. Special Audit (Section 66): Department forcing a taxpayer to get accounts audited by an empanelled CA/CMA if complex fraud/valuation suspected.
+472. Tour operator services (Outbound tours): Indian tour operator booking Dubai package for Indian client - Place of supply is outside India? (Exemption debates).
+474. Air ticket booking agent margin vs gross value: IATA commission vs convenience fee GST valuation rule 32(3).
+476. Annuity/Pension plan single premium GST valuation: 1.8% of the single premium charged as GST liability by LIC/private insurers.
+478. Supply of actionable claims: Lottery, betting, gambling are actionable claims heavily taxed, but other actionable claims (like unsecured debt transfer) are Schedule III non-GST.
+487. Writ of Mandamus in High Courts to unlock ITC frozen under Rule 86A beyond the 1-year statutory limit.
+488. GST Council recommendation status: Supreme court judgment (Mohit Minerals) stating GST Council recommendations are persuasive, not strictly binding on state legislatures.
+490. Liquidated damages for delay in construction contract: Clarified as non-taxable measure of compensation, not a consideration for "tolerating an act".
+494. Valuation of subsidized canteen food for factory workers: Employers charging ₹10 per meal. GST applicable on nominal value or open market value? (Taxed at nominal consideration).
+495. Free intra-state branch transfers: No GST required since it's the same GSTIN, unlike inter-state branch transfers which need IGST cross-charge.

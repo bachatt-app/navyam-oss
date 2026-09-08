@@ -1,0 +1,213 @@
+19. Health and Education Cess (4%) tax liability par calculate hota hai ya total income par?
+31. Marginal relief kya hota hai aur surcharge lagne par ye tax ko kaise kam karta hai?
+42. Agricultural income ko total income me add karke tax calculation (aggregation) dono regimes me hoti hai?
+55. 115BAC section of Income Tax Act specifically kis baare me baat karta hai?
+60. Education cess ke ilawa kisi aur type ka cess bhi personal income tax par lagta hai kya?
+70. Children Education Allowance ki exemption maximum kitne bacho ke liye milti hai?
+71. Hostel Expenditure Allowance me per child kitni limit exempt hoti hai?
+73. Meal coupons (jaise Sodexo/Zeta) par tax exemption per meal kitni hoti hai?
+84. PPF (Public Provident Fund) ka EEE (Exempt-Exempt-Exempt) status ka kya matlab hai?
+88. Section 80D me health insurance premium par self aur family ke liye kitni limit hai?
+89. Parents ke liye health insurance premium pay karne par 80D me alag se 25k/50k ki extra deduction milti hai?
+90. Preventive health checkup ka 5,000 ka bill 80D limit ke andar aata hai ya bahar?
+91. Agar senior citizen parents ka insurance nahi hai, to kya unke actual medical bills 80D me claim ho sakte hain?
+95. Education loan me interest ka pura amount tax-free hota hai ya uski koi maximum limit hai?
+102. Section 80U disabled taxpayer (self) ko disability severity ke hisab se 75k ya 1.25L ki deduction kaise deta hai?
+105. Section 80EEB me electric vehicle (EV) kharidne par interest deduction abhi bhi claim kar sakte hain?
+109. Notice period pay ki recovery employer ne ki hai, kya main us amount ko salary income se reduce kar sakta hu?
+111. Professional tax (State level) ka deduction gross salary se kaise minus hota hai?
+112. VPF (Voluntary Provident Fund) me interest agar 2.5 lakh threshold cross kare to taxable kyu ho jata hai?
+113. Retrenchment compensation me exempt limit kitni milti hai?
+118. Leave travel concession (LTC) cash voucher scheme abhi valid hai kya?
+122. Double Taxation Avoidance Agreement (DTAA) ka fayda salary income me kaise lein (NRI/Resident status)?
+123. Foreign Tax Credit (FTC) claim karne ke liye Form 67 kab submit karna hota hai?
+125. Pension uncommuted (monthly) aur commuted (lumpsum) ke tax rules kya hain?
+126. Superannuation fund maturity se withdrawal kab tax-free hoti hai?
+127. Salary received in cash kya legally bank account route ki tarah ITR me file ho sakti hai?
+128. Employer provident fund trust ka interest statutory PF se zyada ho to extra interest tax hota hai?
+129. Contractual salary vs employment salary (TDS under 194C/194J vs 192) me ITR form kaunsa change ho jata hai?
+131. House property income calculate karte waqt Net Annual Value (NAV) kaise nikali jati hai?
+133. Home loan interest par Section 24(b) ke under maximum deduction 2 lakh ki self-occupied property pe milti hai?
+134. Agar property jointly kharidi hai, to kya dono (husband/wife) 2-2 lakh ka interest deduction claim kar sakte hain?
+135. Let-out property (rent pe di hui) ke liye home loan interest deduction ki upper limit kya hoti hai?
+138. Pre-construction interest (possession aane se pehle ka interest) possession aane ke baad 5 equal installments me claim karna?
+139. Deemed let-out property ka concept kya hai agar mere paas 2 se jyada ghar hain?
+140. Kya 2 self-occupied ghar dikhane par income tax me exemption mil sakti hai?
+141. Property tax (Municipal tax) pay karne par house property income se kaise minus karte hain?
+142. Agar maine municipal tax pay nahi kiya, to kya ITR me rent se deduction milega?
+143. Home loan relative ya friend se liya hai (non-bank), to kya Section 24(b) ka interest deduction milega?
+145. Unrealised rent (kirayedar ne paise nahi diye) ko house property income se kaise exclude karein?
+150. Home improvement loan / repair loan par kitne rupay tak ka interest tax-free hota hai (limit of 30,000)?
+152. PMAY (Pradhan Mantri Awas Yojana) CLSS subsidy milne ke baad home loan interest deduction calculate kaise hoga?
+156. Builder ne possession delay kar diya, aur EMI cut rahi hai, to us pre-EMI ko ITR me dikhane ka workaround kya hai?
+158. Property loan ko balance transfer (BT) karwane par processing fee ko capital cost ya interest expense dikha sakte hain?
+160. Home office deduction: Apne ghar ko business ke liye use karne par depreciation aur interest ka kya proportion business ITR me lein?
+161. Joint ownership me agar wife ne 100% EMI pay ki hai, to kya wo 100% tax benefit le sakti hai registered share se independent hokar?
+163. Mortgage loan (Loan against property) par agar paisa business me invest kiya, to interest kahan claim karein?
+165. NRI property buyer se property kharidte waqt TDS 20% ya 23.92% katna kyu zaroori hota hai (Section 195)?
+166. Tenant maintenance charges pay kar raha hai RWA ko, kya usko rent me jod kar tax calculate karenge?
+169. Property me interior/furniture lagwane ka kharcha (woodwork) tax me interest ya depreciation benefit deta hai?
+170. HUF property se aane wala rent HUF ki alag ITR me dikhana aur Karta ke tax se alag karna.
+171. Rent deposit (Security deposit) par income tax lagta hai kya?
+172. Rental yield increase hone par 30% deduction ke baad slab rate apply hone ka tax drag?
+173. Home loan par principal repayment tax exemption me claim karna bhool gaye, to ITR revise kaise karein?
+175. Reverse mortgage (senior citizens ke liye) se aane wali monthly payment tax-free hoti hai ya nahi?
+176. House property ownership dispute hone par legal expenses rent se minus kiye ja sakte hain?
+177. Society transfer charges ya mutation fees ka deduction rent aamdani se allow hai?
+178. Section 80EE ke early provisions (1 lakh interest subvention) abhi applicable hain agar purana loan chal raha ho?
+179. Home loan interest certificate bank se March end ke baad download karke actual payment aur accrued interest me difference check karna.
+180. Sale of house property par agar purana interest (jo pehle claim nahi hua) bacha ho, to usko cost of acquisition me add karein?
+184. Debt mutual funds me indexation ka benefit kyu hata diya gaya (Taxed as per slab rate)?
+187. Capital gain par indexation (inflation adjustment) calculate karne ke liye CII (Cost Inflation Index) chart kaise use karein?
+188. Physical Gold aur Sovereign Gold Bonds (SGB) ke capital gains tax treatment me kya bada difference hai?
+189. SGB ko maturity tak hold karne par capital gains tax bilkul zero kyu ho jata hai?
+195. Naya ghar kharidne ke liye capital gains account scheme (CGAS) me paisa kab tak park karna hota hai?
+196. Section 54EC: Capital gain bonds (NHAI, REC) me invest karke 50 lakh tak property tax exemption lene ka lock-in (5 years) kaisa hai?
+198. Capital loss (Short term ya Long term) ko aage kitne saal tak (8 years) carry forward karke adjust kiya ja sakta hai?
+203. Bonus shares aur Rights issue me shares ki Cost of Acquisition (Purchase price) zero (0) kyu mani jati hai?
+204. Demat account me FIFO (First In First Out) method capital gains calculation me automatically kaise apply hota hai?
+210. Mutual fund switch (e.g., regular plan se direct plan me shift karna) ko "Sale/Transfer" maan kar capital gains tax kyu lagaya jata hai?
+211. Dividend reinvestment option (IDCW reinvest) wale mutual fund me extra units pe dubara tax liability aati hai?
+212. Target maturity funds aur conservative hybrid funds ko debt taxation kyu lagti hai (Tax at slab rates)?
+216. Stock split hone par purane aur naye split shares ka purchase price apportion (divide) kaise hota hai?
+217. Buyback of shares pe company dividend distribution tax jaisa tax pay karti thi, kya naye rules me shareholder ke hath me taxable hoga?
+218. ESOP me employer TDS kaat leta hai allotment ke time, par bechte time capital gain calculation me FMV as cost kyu use karte hain?
+220. Sale of agricultural land (Rural) par capital gains tax kyu exempt hota hai, aur urban agricultural land pe tax kyu lagta hai?
+223. Demerger ya merger of companies me purane shares ke badle naye shares milne ko capital gains tax exempt (tax-neutral transfer) kyu mante hain?
+225. REITs ka dividend / repayment of capital receipt ITR me Schedule OS ya Capital Gains me kahan aur kaise tax hota hai?
+226. Gold ETFs bechne par tax slab rate pe lagega ya capital gain rate (20% with indexation) pe?
+231. Listed debentures (NCDs) aur unlisted bonds bechne par capital gains aur tax rate ka farak kya hai?
+236. Schedule AL (Assets and Liabilities): 50 Lakh se jyada taxable income hone par share holdings aur property ITR me declare karna.
+237. Business asset (machinery) jispar depreciation liya ho, bechne par wo hamesha Short Term Capital Gain kyu ban jata hai?
+238. Goodwill of a business / profession bechne par capital gain cost of acquisition zero (0) kyu consider hota hai?
+239. Insurance claim milne par (e.g. factory jalne par settlement amount) kya usko capital gains under section 45(1A) me tax karenge?
+240. Conversion of capital asset into stock-in-trade (Property builder ne purani zameen ko project banaya) pe tax implication kya hoga?
+241. Liquidation of a company pe shareholder ko distribution milne par capital gains aur dividend dono ek sath kaise tax hote hain?
+243. Silver ETFs me tax structure budget updates ke baad Gold ETFs ki tarah tax on slab rates hota hai?
+244. Slump sale (pura business ek sath bechna bina alag-alag valuation ke) pe long term ya short term capital gain calculation kaise hota hai?
+246. Brokerage fees, demat charges, aur stamp duty on shares kya purchase cost me add ya sale value se deduct ki ja sakti hai?
+250. Compulsory acquisition of property by government (e.g., highway construction) me enhanced compensation milne par tax delay (Section 45(5)) rule.
+266. Tax audit (Section 44AB) ki requirement business turnover 1 Crore (ya 10 Crore if 95% digital transactions) cross hone par lagti hai?
+267. Form 3CB-3CD tax audit report CA portal par kab tak furnish/upload karni hoti hai (ITR due date se ek mahine pehle)?
+269. GST registration number hone par ITR me GSTR-3B ka turnover tally karna Income tax department automation mismatch alert kyu bhejta hai?
+273. Business me kithne cash transactions allowed hain income tax ke hisab se (Section 40A(3) Rs. 10,000 cash expense limit)?
+274. Cash me 2 lakh se upar kisi party se payment receive karne par 100% penalty lagne ka Section 269ST ka rule.
+277. Depreciation on assets (Machinery 15%, Computers 40%) WDV (Written Down Value) method block of assets pe kaise claim karein?
+278. Non-compete fee milne par wo capital receipt mani jayegi ya taxable business income?
+279. Startup founder ko DPIIT recognized startup 80-IAC under 3 saal tax holiday claim karne ke process aur conditions.
+280. Angel tax (Section 56(2)(viib)) startup shares unlisted premium par issue karne pe tax lagne ka naya exemption rule.
+281. Keyman insurance policy proceeds business/profession income me taxable hoti hai agar employer receive kare?
+282. Business me lagayi hui personal car (mixed use) ke liye petrol/maintenance expense ka 1/3rd (personal usage) ITR me disallow kyu karte hain?
+284. Bad debts (paisa doob jana) ITR me tabhi claim hote hain jab wo income me count ho chuke hon (accrual accounting).
+285. Accounting methods: Mercantile (accrual) system vs Cash basis accounting professionals (doctors/lawyers) tax delay ke liye kaise use karte hain.
+286. Provision for bad debts ya expenses income tax me allow nahi hota, sirf actual bad debts allow hote hain.
+288. MSME payments (Section 43B(h)): Supplier/MSME ko 45 din me payment nahi ki to wo kharcha ITR me disallow hokar income me jud jayega.
+292. Books of accounts (Cash book, ledger) maintain karna Section 44AA ke under kin businesses aur income limit (e.g. 2.5L income/25L turnover) par mandatory hai?
+294. Schedule CYLA (Current Year Loss Adjustment), BFLA, aur CFL (Carry Forward Loss) ITR me trading losses set off kaise karte hain?
+295. Trading profit me brokerages aur STT dono allowed expense hain (capital gains me STT allow nahi hai par business income me hai).
+303. Payout gateway (Stripe/Razorpay) charges ITR me as a bank charge or processing fee deduction claim kar sakte hain.
+304. Home office rent deduction: Agar aapne spouse/parents ke naam ka ghar business address dikhaya hai to rent paid as business expense claim hoga.
+305. Co-working space membership fee GST input claim ke sath business ITR me 100% deduction.
+306. Website hosting, domains, software subscriptions (AWS, Adobe) digital creators ke liye direct operational expense (OpEx) deduction.
+308. Unregistered dealer (Bina GST wale) se business ka saaman kharidne par ITR expense claiming me dikkat?
+309. Foreign tax paid (W8-BEN form filled for US clients) tax credit Form 67 file karke DTAA ke through India ITR me claim kaise hota hai?
+311. Sole proprietor agar apne business se personal use ke liye paise nikale (Drawings), to kya us drawing par tax lagta hai? (Nahi, profit par lagta hai).
+312. Pre-incorporation expenses: Naya business setup karne ka kharcha pehle saal me ITR me claim (amortize) kitne saal me hota hai (Section 35D)?
+313. Preliminary expenses, legal registration, trademark filing ko asset balance sheet me dikha kar P&L se expense karna.
+314. Undisclosed income, cash deposits (Section 68/69) demonetisation jaisi scrutiny me tax department 78% flat tax penalty (Section 115BBE) kaise lagati hai.
+316. Joint venture (JV) ya Association of Persons (AOP) me income distribution hone par member tax liability (MMR rate) kya hai?
+318. Dairy, poultry, aur animal husbandry farm income ITR me agriculture income hai ya normal business income? (Normal business income).
+320. Section 44AB tax audit na karwane par penalty (0.5% of turnover or Rs 1,50,000 whichever is lower).
+321. "Income from Other Sources" ITR me residuary head kyu kehlata hai (jo kahin fit nahi hota wo yahan aata hai)?
+323. Post Office savings account interest section 10(15) me 3,500 (single) ya 7,000 (joint) tak totally exempt kyu hota hai?
+324. PPF aur EPF ka exempt interest ITR me (Exempt Income - Schedule EI) me dikhana chahiye ya chhupana chahiye?
+325. Dividend income Indian companies se aane par TDS 10% kab katta hai (5,000 limit) aur ITR me slab rate pe tax kyu hota hai?
+326. Dividend income against borrow kiya gaya loan interest expense sirf 20% of dividend income tak hi claim kar sakte hain?
+327. Foreign companies se mila dividend (e.g. Apple, Google) ITR me gross value pe show karke Foreign Tax Credit (FTC) claim karna.
+331. Will/Vasiyat/Inheritance me mili properties aur cash fully tax-free hoti hain Indian income tax act me?
+332. Lottery, Dream11, KBC, online gaming winnings (Section 115BBJ) par 30% flat tax lagta hai, aur TDS platform (Section 194BA) kab deduct karta hai?
+334. Family pension widow/dependents ko milne par 15,000 rupay ya 1/3rd of pension ki exemption (Section 57) kaise apply hoti hai?
+335. EPF withdrawal before 5 years (192A) TDS 10% katta hai agar amount 50,000 se jyada ho, ITR me kaise show karein?
+336. Unrecognized Provident Fund (URPF) employer aur interest portion ITR me "Salary" aur "Other Sources" me split kaise hota hai?
+338. Minor child ki aamdani (bank interest/FD) parents ki ITR me club hoti hai (Section 64) aur 1,500 ki chhot (Section 10(32)) milti hai?
+343. Section 194J: Professional/Technical fees par TDS (10% standard, 2% call center/royalties) deduct karna.
+348. High-value transactions: Credit card bill 10 lakh, saving me cash deposit 10 lakh, property purchase 30 lakh Income tax radar (SFT code) me aati hain.
+349. SFT (Statement of Financial Transaction) banks, registrars aur mutual funds report karte hain aapke PAN pe directly.
+350. Non-filing of ITR: ITR na bharne par higher rate pe TDS (Section 206AB) dugna kyu deduct hota hai (e.g. 5% ki jagah 10%)?
+351. PAN aur Aadhaar link na hone par PAN inoperative ho jata hai aur TDS flat 20% higher rate (Section 206AA) pe katta hai.
+352. TCS (Tax Collected at Source): LRS (Liberalised Remittance Scheme) foreign tour/forex par 20% TCS lagta hai, par education loan via LRS par 0.5% kyu?
+353. TCS on car purchase (Section 206C(1F)) 10 lakh se mehangi car showroom se lene par 1% TCS tax liability me adjust hota hai.
+363. Intimation under Section 143(1): E-filing CPC Bangalore se processed ITR "Demand or Refund" mail aana, jispe further action required na ho (if zero diff).
+364. Tax Demand Notice (143(1)): Calculation error / deduction mismatch se department extra tax aur penalty demand karta hai.
+365. Scrutiny Notice (Section 143(2) / 143(3)): Faceless assessment me officer income aur expense ke bank proofs detail me kyu mangta hai?
+366. Income Escaping Assessment (Section 147/148): Pichle 10 saalo ki 50 lakh+ hidden property ya cash milne pe reopening of case (notices).
+367. E-proceedings / Faceless Appeals portal pe login karke notice ka reply notice reference number (DIN - Document Identification Number) dal kar online submit karna.
+368. Fake IT notices scam (WhatsApp/Email link phishing): Asli notices "incometax.gov.in" se aate hain aur Document Identification Number (DIN) verify hota hai.
+373. Refund claim: ITR processing ke baad 143(1) me tax refund approved hone ke baad ECS (NEFT) bank account validate kyu hona zaruri hai?
+374. Pre-validate bank account e-filing portal par EVC (Electronic Verification Code) aur refund aane ke liye kaise karte hain?
+376. ITR-V (Acknowledgement) print karke CPC Bangalore physical speed post se bhejna abhi bhi alternative hai e-verification ka.
+378. Form 15G / 15H bank FD interest par TDS na katwane ke liye (agar total income tax-free limit se niche hai) har saal April me jama karna.
+379. 15H senior citizens (age 60+) ke liye hai aur 15G non-seniors ke liye. Dono me estimate of income accurately dalna zaroori hai.
+381. Tax Evasion vs Tax Avoidance vs Tax Planning: Legal boundary aur General Anti-Avoidance Rules (GAAR) ka difference kya hai?
+382. E-campaign (Compliance Portal): Non-filers (jisne ITR nahi bhari) ko department SMS karta hai "high value transaction found", respond in portal.
+383. Outstanding tax demand adjustment against refund (Section 245): Pichle saal ka 5000 due tha, iss saal ka 20000 refund tha, notice bhej kar net 15000 kyu aata hai?
+384. Response to outstanding demand: Agree, Disagree, ya Partially Agree karke challan number portal pe upload karna to close the cycle.
+391. Schedule AL (Asset & Liability): Jewelry, Cash in hand, Cars, Property ki acquisition cost declare karna for transparency.
+392. Tax Residency Certificate (TRC): DTAA benefit lene ke liye foreign country authority se TRC (residency proof) produce karna.
+393. Resident and Ordinarily Resident (ROR) vs Non-Resident Indian (NRI) tax rule: 182 days rule aur 120 days (15 lakh Indian income clause) residency status.
+394. RNOR (Resident but Not Ordinarily Resident): Returning NRIs ko Indian tax system me aane ke baad 2-3 saal tak foreign income tax-free rakhne ki window.
+395. Salary paid directly by a foreign company to Indian resident bank account attracts GST export criteria plus full slab rate income tax?
+397. Tax implications on startup liquidation: Distributions to founders classified as deemed dividends under Section 2(22)(c).
+398. Sovereign gold bonds capital gains exemption available only on maturity, but periodic 2.5% interest is fully taxable in ITR?
+399. Senior citizen tax planning: Post office SCSS vs Bank Tax Saver FDs vs Deferred annuity (XIRR modeling post 30% slab taxes).
+402. Aadhaar PAN linking penalty Rs. 1000 challan (ITNS 280) Minor Head 500 aur Major Head 0021 fee collection mechanics.
+403. PAN card duplicate reprint vs Correcting Name mismatch in PAN DB using e-KYC NSDL/UTIITSL portals.
+404. E-pay tax options: Debit card, Netbanking, UPI, and NEFT payment gateways (Protean, Federal Bank, Kotak etc) inside e-filing portal.
+405. Form 15CA and 15CB: Online filing utility for outward remittances to pay foreign software subscriptions (TDS withholding rules).
+407. TDS on e-commerce operators (194-O) vs TDS on goods purchase (194Q) vs TCS on sale of goods (206C(1H)): Tricky interplay for MSME businesses.
+408. Deduction u/s 80P: Cooperative societies (Housing societies) interest income from banks and tax exemption controversies.
+409. Hindu Undivided Family (HUF) partition / dissolution deed (Total partition) tax effects on member distributions.
+410. Creating a private family trust vs HUF for succession planning: Pass-through taxation vs individual entity taxation.
+411. Section 10(23C) Educational and Medical institutions trust income exemptions and 85% application of funds rules.
+412. Unexplained cash credits (Section 68) addition in scrutiny when friend's friendly loan is received in cash instead of NEFT.
+413. Transfer Pricing in domestic transactions (Specified Domestic Transactions) for transactions between related parties (Directors and their own companies).
+414. Start-up DPIIT registration tax holiday (Section 80-IAC) allows 3 consecutive years of 100% tax deduction out of first 10 years.
+415. Deemed dividend (Section 2(22)(e)): Private limited company giving a loan/advance to a shareholder holding >10% voting power triggers 30% tax alert.
+418. Claiming ITC (Input Tax Credit) on GST side vs Expensing it as an expense on Income tax side (avoiding double benefit).
+422. E-sahaj / E-nivaran portal: Lodging grievance with jurisdictional assessing officer (JAO) for long pending refunds (> 1 year).
+424. Unclaimed ITR refund: If refund failure occurs due to bank account closure, raising "Refund Re-issue Request" on e-filing portal.
+426. STT paid offline for physical shares dematerialization: Can it be factored in cost of acquisition?
+427. Unlisted shares capital gains: FMV calculation based on Rule 11UA (Net asset value or DCF method) certified by merchant banker.
+432. What constitutes "Business Income" for a salaried person filing ITR? (e.g. Selling old household car vs repeatedly buying/selling cars).
+433. Tax implication of receiving alimony (lump sum) upon divorce - categorized as capital receipt (tax free) vs monthly alimony (taxable as income).
+436. Dividend Stripping rules (Section 94(7)): Buying mutual funds just before record date to capture dividend and selling at loss to offset other gains is restricted.
+437. Bonus Stripping (Section 94(8)): Tax avoidance rules around acquiring bonus units and selling original units to manufacture short term losses.
+438. The impact of the Rupee depreciation on Foreign Tax Credit (FTC): Exchange rate (SBI TT buying rate on last day of previous month) rules for translating foreign income to INR in ITR.
+442. Notice 133(6) "Calling for information": Receiving a letter from tax department to verify property documents of a builder you bought a flat from.
+443. Section 269SS/269T violation trap: Taking a loan of 50,000 from father by transferring via UPI is safe, but taking cash triggers 100% penalty on father.
+444. Submitting an ITR via offline utility (Excel/Java JSON): How to generate the JSON schema, validate, and upload bulk data on the portal.
+445. The "Prepare Online" feature on income tax portal vs using ClearTax / Quicko APIs for direct filing.
+446. Using digital signature certificate (DSC) Class 3 for verifying ITRs: Mandatory for Tax Audits, Companies, and LLPs.
+447. HUF creation documentation: Does an oral partition of HUF property stand in tax assessments, or is a registered partition deed required?
+448. Filing ITR for a deceased person: Registering as Legal Heir on e-filing portal using Death Certificate, surviving member certificate, and PAN of deceased.
+449. The tax liability of legal heirs is limited to the extent of the assets inherited from the deceased.
+451. Black Money (Undisclosed Foreign Income and Assets) and Imposition of Tax Act, 2015 - severe penalties for keeping foreign bank accounts hidden in ITR.
+452. The role of the Central Board of Direct Taxes (CBDT) vs the Income Tax Appellate Tribunal (ITAT) in tax administration and judicial appeals.
+453. Advance Pricing Agreements (APA) for MNCs avoiding transfer pricing disputes with Indian tax authorities.
+454. Equalisation Levy (Google Tax) 2% or 6% on foreign e-commerce operators generating ad revenue from Indian IP addresses.
+456. "Taxpayer Charter" introduced in the Income Tax Act mandating fair, courteous, and reasonable treatment to citizens by tax officers.
+457. Can you be arrested for not paying income tax? (Only in cases of massive proven willful evasion/fraud, standard civil recovery happens first).
+458. Whistleblower program: Can someone inform the income tax department about a neighbor's tax evasion and earn a reward percentage?
+466. Individual taxpayers operating businesses who are not subject to a tax audit can now file their returns until 31 August for FY 2025-26.
+467. The budget 2026 changes stipulate that salaried individuals earning side income from social media content creation have more time to file ITR.
+470. Casual receipts from isolated tasks that don't amount to a profession are usually taxed under 'Income from other sources'.
+471. Forms 3CB-3CD are the required reports of audit of accounts to be furnished by a taxpayer undergoing tax audit under section 44AB.
+472. Form 67 is explicitly used to claim foreign tax credit for income earned in a country or specified territory outside India.
+477. The income tax slabs structure determines a progressive taxation system ensuring higher income earners are taxed at higher rates.
+485. Eligible taxpayers having income from a business or profession have restricted mobility to switch regimes annually compared to non-business cases.
+486. Non-business cases (like salaried individuals) can exercise the option to choose the regime every year directly in the ITR before the 139(1) due date.
+487. The Finance Minister of India presented the Union Budget for nine consecutive years, announcing the latest tax slabs effective 1 April 2026.
+497. Form 3CEB requires a report from an accountant under section 92E when an individual taxpayer is entering into specified domestic or international transactions.
+498. The overarching philosophy of the Union Budget 2025-26 in terms of taxation revolves around "trust first, scrutinize later."
+499. The government hopes that leaving more money in the hands of the middle class through tax reliefs will boost household consumption and investment.
+500. A primary function of the income tax slab structure is tracking inflation and cost of living adjustments over different fiscal years.

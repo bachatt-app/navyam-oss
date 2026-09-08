@@ -1,0 +1,33 @@
+{
+  "source_ckpt": "/tmp/navya_proxy/ckpt_last.pt",
+  "old_tokenizer": "tokenizer-v0.3-64k.json",
+  "new_tokenizer": "tokenizer-v0.5-B96k.json",
+  "old_model_config": {
+    "vocab_size": 65536,
+    "dim": 512,
+    "n_layers": 8,
+    "n_heads": 8,
+    "n_kv_heads": 2,
+    "max_seq_len": 1024,
+    "rope_base": 10000.0,
+    "norm_eps": 1e-05
+  },
+  "new_model_config": {
+    "vocab_size": 96000,
+    "dim": 512,
+    "n_layers": 8,
+    "n_heads": 8,
+    "n_kv_heads": 2,
+    "max_seq_len": 1024,
+    "rope_base": 10000.0,
+    "norm_eps": 1e-05
+  },
+  "v_old": 65536,
+  "v_new": 96000,
+  "n_verbatim": 60585,
+  "n_pooled": 35415,
+  "n_missing_fallback_random": 0,
+  "mean_old_tokens_per_new_token": 1.4284166666666667,
+  "max_old_tokens_per_new_token": 8,
+  "pct_verbatim": 63.11
+}

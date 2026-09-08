@@ -1,0 +1,98 @@
+{
+ "ckpt": "/Users/ankurjhavery/Bachatt/navyam-gpt/code/04-training-stack/out/navya-0/ckpt_last.pt",
+ "overall_acc": 0.23809523809523808,
+ "n_items": 105,
+ "n_reviewed": 11,
+ "sections": {
+  "banking": {
+   "correct": 1,
+   "total": 6,
+   "acc": 0.16666666666666666
+  },
+  "behaviour": {
+   "correct": 1,
+   "total": 4,
+   "acc": 0.25
+  },
+  "calculations": {
+   "correct": 1,
+   "total": 8,
+   "acc": 0.125
+  },
+  "codemix": {
+   "correct": 0,
+   "total": 1,
+   "acc": 0.0
+  },
+  "concepts": {
+   "correct": 1,
+   "total": 18,
+   "acc": 0.05555555555555555
+  },
+  "credit": {
+   "correct": 0,
+   "total": 8,
+   "acc": 0.0
+  },
+  "estate": {
+   "correct": 0,
+   "total": 2,
+   "acc": 0.0
+  },
+  "gold": {
+   "correct": 0,
+   "total": 2,
+   "acc": 0.0
+  },
+  "insurance": {
+   "correct": 4,
+   "total": 8,
+   "acc": 0.5
+  },
+  "loans": {
+   "correct": 0,
+   "total": 5,
+   "acc": 0.0
+  },
+  "markets": {
+   "correct": 6,
+   "total": 8,
+   "acc": 0.75
+  },
+  "mutual-funds": {
+   "correct": 2,
+   "total": 6,
+   "acc": 0.3333333333333333
+  },
+  "nri": {
+   "correct": 1,
+   "total": 1,
+   "acc": 1.0
+  },
+  "payments": {
+   "correct": 2,
+   "total": 2,
+   "acc": 1.0
+  },
+  "regulation": {
+   "correct": 1,
+   "total": 4,
+   "acc": 0.25
+  },
+  "retirement": {
+   "correct": 1,
+   "total": 6,
+   "acc": 0.16666666666666666
+  },
+  "scams": {
+   "correct": 2,
+   "total": 8,
+   "acc": 0.25
+  },
+  "tax": {
+   "correct": 2,
+   "total": 8,
+   "acc": 0.25
+  }
+ }
+}

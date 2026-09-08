@@ -1,0 +1,23 @@
+{
+  "_comment": "navya-2 COOLDOWN mix (last 15%: steps 24,310-28,599; ~18B tokens): high-quality upweight \u2014 first-party finance Q/A banks S061-S066, call-ASR-corpus call transcripts (PII-scrubbed), authoritative tax/law, textbooks/medical in the English slice, curated Indic (Wikipedia/Wikisource + Sangraha verified).",
+  "global_english": 0.2,
+  "indian_english": 0.2,
+  "indic_hin": 0.1,
+  "indic_ben": 0.02,
+  "indic_tam": 0.02,
+  "indic_tel": 0.02,
+  "indic_mar": 0.02,
+  "indic_guj": 0.005,
+  "indic_kan": 0.005,
+  "indic_mal": 0.004,
+  "indic_pan": 0.002,
+  "indic_urd": 0.002,
+  "indic_ory": 0.001,
+  "indic_asm": 0.001,
+  "code": 0.05,
+  "finance_econ_law": 0.08,
+  "india_tax_authoritative": 0.07,
+  "india_case_law": 0.03,
+  "india_corporate_law": 0.02,
+  "math_reasoning": 0.15
+}

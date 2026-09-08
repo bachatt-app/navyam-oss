@@ -1,0 +1,23 @@
+{
+  "_comment": "Research-S. vocab_size is overridden by data meta.json. peak_flops: set per device (H100 BF16 dense ~989e12) to get MFU.",
+  "vocab_size": 65536,
+  "dim": 1024,
+  "n_layers": 24,
+  "n_heads": 16,
+  "n_kv_heads": 4,
+  "max_seq_len": 4096,
+
+  "data_dir": "data/research",
+  "out_dir": "out/300m",
+  "batch_size": 16,
+  "grad_accum": 32,
+  "max_steps": 60000,
+  "lr": 3e-4,
+  "warmup_steps": 2000,
+  "weight_decay": 0.1,
+  "log_interval": 20,
+  "eval_interval": 1000,
+  "eval_iters": 100,
+  "ckpt_interval": 1000,
+  "peak_flops": 989e12
+}

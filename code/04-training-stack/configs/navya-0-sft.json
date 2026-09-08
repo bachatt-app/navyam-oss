@@ -1,0 +1,22 @@
+{
+  "_comment": "navya-0-sft: instruction-tune navya-0 on dolly+oasst2+navyam seed (Q:/A: template). Warm start via --init-from. 120 steps x 131K tok = 15.7M tokens ~ 2.9 epochs over the 5.5M-token SFT set. Plain LM loss (no prompt masking) \u2014 documented v0 tradeoff.",
+  "vocab_size": 65536,
+  "dim": 512,
+  "n_layers": 8,
+  "n_heads": 8,
+  "n_kv_heads": 2,
+  "max_seq_len": 1024,
+  "data_dir": "data/sft_v1",
+  "out_dir": "out/navya-0-sft",
+  "batch_size": 8,
+  "grad_accum": 16,
+  "max_steps": 120,
+  "lr": 5e-05,
+  "warmup_steps": 15,
+  "weight_decay": 0.1,
+  "log_interval": 20,
+  "eval_interval": 40,
+  "eval_iters": 30,
+  "ckpt_interval": 40,
+  "peak_flops": 125000000000000.0
+}

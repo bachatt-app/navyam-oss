@@ -1,0 +1,57 @@
+{
+ "tokenizer": "tokenizer-v0.3-64k.json",
+ "baseline": "tokenizer-v0.2-64k.json",
+ "fertility": {
+  "assamese": 2.1463414634146343,
+  "bengali": 1.9047619047619047,
+  "code": 2.4680851063829787,
+  "english": 1.1777777777777778,
+  "gujarati": 2.142857142857143,
+  "hindi": 1.3243243243243243,
+  "hinglish": 2.130434782608696,
+  "kannada": 2.111111111111111,
+  "malayalam": 2.7777777777777777,
+  "marathi": 2.2285714285714286,
+  "odia": 2.1219512195121952,
+  "punjabi": 1.6727272727272726,
+  "tamil": 2.4444444444444446,
+  "telugu": 2.473684210526316
+ },
+ "baseline_fertility": {
+  "assamese": 4.390243902439025,
+  "bengali": 4.380952380952381,
+  "code": 2.404255319148936,
+  "english": 1.1444444444444444,
+  "gujarati": 4.0476190476190474,
+  "hindi": 3.2972972972972974,
+  "hinglish": 1.9565217391304348,
+  "kannada": 6.194444444444445,
+  "malayalam": 6.805555555555555,
+  "marathi": 5.685714285714286,
+  "odia": 4.609756097560975,
+  "punjabi": 3.4727272727272727,
+  "tamil": 6.361111111111111,
+  "telugu": 5.815789473684211
+ },
+ "targets": {
+  "relative_gap": 0.15,
+  "indic_abs": 1.8
+ },
+ "indic": [
+  "assamese",
+  "bengali",
+  "gujarati",
+  "hindi",
+  "kannada",
+  "malayalam",
+  "marathi",
+  "odia",
+  "punjabi",
+  "tamil",
+  "telugu"
+ ],
+ "note": "eval_sets are smoke placeholders until real held-out data lands (week-1 sprint item)",
+ "_audit_note": "Eval text provenance is UNVERIFIED (flagged placeholder in audit 2026-09). These per-language tokens/word must be re-measured on real, held-out per-language corpora before driving tokenizer or mixture decisions. 9/11 Indic languages exceed the 1.8 target here (Malayalam 2.78, Telugu 2.47, Tamil 2.44) — a real signal that Indic fertility is a known weakness, but the exact figures need trustworthy corpora. No real Tamil/Telugu/Malayalam corpus is present in this repo; sourcing one is the blocking task.",
+ "target_tokens_per_word": 1.8,
+ "needs_real_corpus_reeval": true
+}

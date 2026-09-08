@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1a-sft2: sft_v4 corpus — adds S061 MF/SIP question bank (605 paraphrase pairs onto 42 canonical intent answers, 54-question generative holdout kept out) + greeting-prefix context augmentation. 1,204 convs / 180,640 supervised tokens (3.7x sft_v3). Steps raised 300->400 for the larger set; batch 2x8 is the seq-2048 A10 OOM-safe shape.",
+  "data_dir": "../04-training-stack/data/sft_v4",
+  "out_dir": "../04-training-stack/out/navya-1a-sft2",
+  "batch_size": 2,
+  "grad_accum": 8,
+  "max_steps": 400,
+  "lr": 1e-4,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 100,
+  "eval_iters": 8,
+  "ckpt_interval": 100
+}

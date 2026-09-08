@@ -1,0 +1,73 @@
+{
+  "total_tokens_requested": 100000000000.0,
+  "max_epochs": 4.0,
+  "domains": {
+    "global_english": {
+      "paths": [
+        "pools/global_english/"
+      ],
+      "pool_tokens": 60000000000.0,
+      "weight": 0.5,
+      "target_tokens": 50000000000.0,
+      "epochs": 0.8333,
+      "sampled_tokens": 50000000000,
+      "shortfall_tokens": 0
+    },
+    "indian_english": {
+      "paths": [
+        "pools/indian_english/"
+      ],
+      "pool_tokens": 15000000000.0,
+      "weight": 0.175,
+      "target_tokens": 17500000000.0,
+      "epochs": 1.1667,
+      "sampled_tokens": 17500000000,
+      "shortfall_tokens": 0
+    },
+    "indian_languages": {
+      "paths": [
+        "pools/indic/"
+      ],
+      "pool_tokens": 8000000000.0,
+      "weight": 0.125,
+      "target_tokens": 12500000000.0,
+      "epochs": 1.5625,
+      "sampled_tokens": 12500000000,
+      "shortfall_tokens": 0
+    },
+    "code": {
+      "paths": [
+        "pools/code/"
+      ],
+      "pool_tokens": 40000000000.0,
+      "weight": 0.1,
+      "target_tokens": 10000000000.0,
+      "epochs": 0.25,
+      "sampled_tokens": 10000000000,
+      "shortfall_tokens": 0
+    },
+    "finance_econ_law": {
+      "paths": [
+        "pools/finance/"
+      ],
+      "pool_tokens": 2000000000.0,
+      "weight": 0.075,
+      "target_tokens": 7500000000.0,
+      "epochs": 3.75,
+      "sampled_tokens": 7500000000,
+      "shortfall_tokens": 0
+    },
+    "math_reasoning": {
+      "paths": [
+        "pools/math/"
+      ],
+      "pool_tokens": 5000000000.0,
+      "weight": 0.025,
+      "target_tokens": 2500000000.0,
+      "epochs": 0.5,
+      "sampled_tokens": 2500000000,
+      "shortfall_tokens": 0
+    }
+  },
+  "snapshot_id": "snap-a9c18b83ebb76bdf"
+}

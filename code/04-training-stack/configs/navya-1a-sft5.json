@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1a-sft5: sft_v7 = six first-party banks (S061 MF/SIP, S062 loans, S063 CC, S064 insurance, S065 income-tax, S066 GST) + thin-intent aug. 3,214 train convs / 644,995 sup tokens. Steps 500->700 for 1.8x data.",
+  "data_dir": "../04-training-stack/data/sft_v7",
+  "out_dir": "../04-training-stack/out/navya-1a-sft5",
+  "batch_size": 2,
+  "grad_accum": 8,
+  "max_steps": 700,
+  "lr": 0.0001,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 100,
+  "eval_iters": 8,
+  "ckpt_interval": 100
+}

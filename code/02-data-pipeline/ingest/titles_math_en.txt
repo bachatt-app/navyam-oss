@@ -1,0 +1,40 @@
+Probability
+Probability distribution
+Expected value
+Variance
+Standard deviation
+Normal distribution
+Binomial distribution
+Bayes' theorem
+Conditional probability
+Statistics
+Regression analysis
+Correlation
+Arithmetic progression
+Geometric progression
+Geometric series
+Exponential function
+Logarithm
+Exponential growth
+Percentage
+Ratio
+Interest
+Linear algebra
+Matrix (mathematics)
+Calculus
+Derivative
+Integral
+Limit (mathematics)
+Optimization problem
+Convex optimization
+Game theory
+Combinatorics
+Permutation
+Set theory
+Mathematical proof
+Mathematical induction
+Number theory
+Prime number
+Algorithm
+Computational complexity theory
+Dynamic programming

@@ -1,0 +1,298 @@
+{
+ "tokenizer": "tokenizer-v0.5-B96k.json",
+ "vocab_size": 96000,
+ "eval_dir": "/Users/ankurjhavery/Bachatt/navyam-gpt/code/01-tokenizer/eval_sets_flores200",
+ "renyi_alpha": 2.5,
+ "per_language": {
+  "assamese": {
+   "n_sentences": 2009,
+   "n_words": 37859,
+   "n_tokens": 70197,
+   "fertility_mean": 1.883,
+   "fertility_p50": 1.84,
+   "fertility_p95": 2.5,
+   "fertility_p99": 2.9084,
+   "tokens_per_word": 1.8542,
+   "tokens_per_grapheme": 0.3979,
+   "bytes_per_token": 9.4992,
+   "byte_fragment_rate": 0.004459,
+   "renyi_efficiency_a2.5": 0.4684,
+   "vocab_utilization": 0.065719,
+   "used_vocab_tokens": 6309
+  },
+  "bengali": {
+   "n_sentences": 2009,
+   "n_words": 38262,
+   "n_tokens": 67553,
+   "fertility_mean": 1.7944,
+   "fertility_p50": 1.75,
+   "fertility_p95": 2.3832,
+   "fertility_p99": 2.6858,
+   "tokens_per_word": 1.7655,
+   "tokens_per_grapheme": 0.3872,
+   "bytes_per_token": 10.0991,
+   "byte_fragment_rate": 0.001258,
+   "renyi_efficiency_a2.5": 0.4632,
+   "vocab_utilization": 0.062667,
+   "used_vocab_tokens": 6016
+  },
+  "english": {
+   "n_sentences": 2009,
+   "n_words": 42855,
+   "n_tokens": 56535,
+   "fertility_mean": 1.3301,
+   "fertility_p50": 1.2857,
+   "fertility_p95": 1.7059,
+   "fertility_p99": 2.0,
+   "tokens_per_word": 1.3192,
+   "tokens_per_grapheme": 0.2198,
+   "bytes_per_token": 4.5526,
+   "byte_fragment_rate": 0.000265,
+   "renyi_efficiency_a2.5": 0.3848,
+   "vocab_utilization": 0.096583,
+   "used_vocab_tokens": 9272
+  },
+  "gujarati": {
+   "n_sentences": 2009,
+   "n_words": 40966,
+   "n_tokens": 74937,
+   "fertility_mean": 1.8613,
+   "fertility_p50": 1.8056,
+   "fertility_p95": 2.5282,
+   "fertility_p99": 2.8571,
+   "tokens_per_word": 1.8292,
+   "tokens_per_grapheme": 0.4449,
+   "bytes_per_token": 8.6177,
+   "byte_fragment_rate": 0.002429,
+   "renyi_efficiency_a2.5": 0.4499,
+   "vocab_utilization": 0.05099,
+   "used_vocab_tokens": 4895
+  },
+  "hindi": {
+   "n_sentences": 2009,
+   "n_words": 50250,
+   "n_tokens": 74243,
+   "fertility_mean": 1.4951,
+   "fertility_p50": 1.4545,
+   "fertility_p95": 1.9152,
+   "fertility_p99": 2.2222,
+   "tokens_per_word": 1.4775,
+   "tokens_per_grapheme": 0.4175,
+   "bytes_per_token": 8.891,
+   "byte_fragment_rate": 0.001024,
+   "renyi_efficiency_a2.5": 0.4263,
+   "vocab_utilization": 0.056917,
+   "used_vocab_tokens": 5464
+  },
+  "kannada": {
+   "n_sentences": 2009,
+   "n_words": 31530,
+   "n_tokens": 71997,
+   "fertility_mean": 2.3099,
+   "fertility_p50": 2.2667,
+   "fertility_p95": 3.0728,
+   "fertility_p99": 3.5418,
+   "tokens_per_word": 2.2834,
+   "tokens_per_grapheme": 0.4071,
+   "bytes_per_token": 10.1808,
+   "byte_fragment_rate": 0.000542,
+   "renyi_efficiency_a2.5": 0.4578,
+   "vocab_utilization": 0.065302,
+   "used_vocab_tokens": 6269
+  },
+  "malayalam": {
+   "n_sentences": 2009,
+   "n_words": 29307,
+   "n_tokens": 75074,
+   "fertility_mean": 2.5922,
+   "fertility_p50": 2.5385,
+   "fertility_p95": 3.4286,
+   "fertility_p99": 3.8552,
+   "tokens_per_word": 2.5616,
+   "tokens_per_grapheme": 0.4011,
+   "bytes_per_token": 10.6969,
+   "byte_fragment_rate": 0.002105,
+   "renyi_efficiency_a2.5": 0.4714,
+   "vocab_utilization": 0.059906,
+   "used_vocab_tokens": 5751
+  },
+  "marathi": {
+   "n_sentences": 2009,
+   "n_words": 37111,
+   "n_tokens": 69506,
+   "fertility_mean": 1.8963,
+   "fertility_p50": 1.8462,
+   "fertility_p95": 2.5,
+   "fertility_p99": 2.8552,
+   "tokens_per_word": 1.8729,
+   "tokens_per_grapheme": 0.399,
+   "bytes_per_token": 9.9503,
+   "byte_fragment_rate": 0.001324,
+   "renyi_efficiency_a2.5": 0.4687,
+   "vocab_utilization": 0.063906,
+   "used_vocab_tokens": 6135
+  },
+  "odia": {
+   "n_sentences": 2009,
+   "n_words": 38534,
+   "n_tokens": 72885,
+   "fertility_mean": 1.9159,
+   "fertility_p50": 1.8636,
+   "fertility_p95": 2.5816,
+   "fertility_p99": 2.8966,
+   "tokens_per_word": 1.8914,
+   "tokens_per_grapheme": 0.4035,
+   "bytes_per_token": 9.7264,
+   "byte_fragment_rate": 0.006311,
+   "renyi_efficiency_a2.5": 0.4745,
+   "vocab_utilization": 0.049698,
+   "used_vocab_tokens": 4771
+  },
+  "punjabi": {
+   "n_sentences": 2009,
+   "n_words": 50445,
+   "n_tokens": 77036,
+   "fertility_mean": 1.5461,
+   "fertility_p50": 1.5,
+   "fertility_p95": 2.0,
+   "fertility_p99": 2.2722,
+   "tokens_per_word": 1.5271,
+   "tokens_per_grapheme": 0.4254,
+   "bytes_per_token": 8.7886,
+   "byte_fragment_rate": 0.001051,
+   "renyi_efficiency_a2.5": 0.4369,
+   "vocab_utilization": 0.049531,
+   "used_vocab_tokens": 4755
+  },
+  "tamil": {
+   "n_sentences": 2009,
+   "n_words": 32909,
+   "n_tokens": 69164,
+   "fertility_mean": 2.1249,
+   "fertility_p50": 2.087,
+   "fertility_p95": 2.7692,
+   "fertility_p99": 3.2216,
+   "tokens_per_word": 2.1017,
+   "tokens_per_grapheme": 0.3562,
+   "bytes_per_token": 11.8616,
+   "byte_fragment_rate": 0.000824,
+   "renyi_efficiency_a2.5": 0.4483,
+   "vocab_utilization": 0.063167,
+   "used_vocab_tokens": 6064
+  },
+  "telugu": {
+   "n_sentences": 2009,
+   "n_words": 33326,
+   "n_tokens": 70636,
+   "fertility_mean": 2.1443,
+   "fertility_p50": 2.0833,
+   "fertility_p95": 2.8889,
+   "fertility_p99": 3.4153,
+   "tokens_per_word": 2.1195,
+   "tokens_per_grapheme": 0.4254,
+   "bytes_per_token": 9.8038,
+   "byte_fragment_rate": 0.002846,
+   "renyi_efficiency_a2.5": 0.4617,
+   "vocab_utilization": 0.069833,
+   "used_vocab_tokens": 6704
+  }
+ },
+ "roundtrip_fidelity": {
+  "pass_rate": 1.0,
+  "n_pass": 30,
+  "n_total": 30,
+  "cases": {
+   "nukta_qa_precomposed": {
+    "pass": true
+   },
+   "nukta_qa_decomposed": {
+    "pass": true
+   },
+   "nukta_za_precomposed": {
+    "pass": true
+   },
+   "nukta_za_decomposed": {
+    "pass": true
+   },
+   "nukta_karz_precomposed": {
+    "pass": true
+   },
+   "nukta_karz_decomposed": {
+    "pass": true
+   },
+   "conjunct_ksha": {
+    "pass": true
+   },
+   "conjunct_jnya": {
+    "pass": true
+   },
+   "conjunct_tra_shra": {
+    "pass": true
+   },
+   "sanskrit_dense_conjuncts": {
+    "pass": true
+   },
+   "chillu_n_atomic": {
+    "pass": true
+   },
+   "chillu_n_legacy": {
+    "pass": true
+   },
+   "chillu_l_atomic": {
+    "pass": true
+   },
+   "emoji_zwj_family": {
+    "pass": true
+   },
+   "emoji_zwj_scientist": {
+    "pass": true
+   },
+   "emoji_flag_regional": {
+    "pass": true
+   },
+   "emoji_skin_tone": {
+    "pass": true
+   },
+   "whatsapp_forward_noise": {
+    "pass": true
+   },
+   "ocr_garbled_spacing": {
+    "pass": true
+   },
+   "hinglish_codemix": {
+    "pass": true
+   },
+   "currency_devanagari_digits": {
+    "pass": true
+   },
+   "mixed_bidi_marks": {
+    "pass": true
+   },
+   "repeated_zwnj_garbage": {
+    "pass": true
+   },
+   "bengali_conjunct": {
+    "pass": true
+   },
+   "tamil_agglutination": {
+    "pass": true
+   },
+   "malayalam_compound": {
+    "pass": true
+   },
+   "urdu_bidi_arabic_script": {
+    "pass": true
+   },
+   "empty_string": {
+    "pass": true
+   },
+   "pure_whitespace": {
+    "pass": true
+   },
+   "long_number_run": {
+    "pass": true
+   }
+  }
+ },
+ "method": "fertility_mean/p50/p95/p99: per-sentence tokens/whitespace-word ratio, distribution over FLORES dev+devtest lines. tokens_per_word: aggregate total_tokens/total_words (comparable to fertility_report_v3/v4's single number). tokens_per_grapheme: aggregate tokens / approximate UAX#29 extended-grapheme-cluster count (see grapheme_clusters()). bytes_per_token: aggregate UTF-8 bytes / tokens (higher = more compression). byte_fragment_rate: fraction of emitted tokens that are a single raw byte >=0x80 (i.e. an incomplete multi-byte UTF-8 fallback -- no merge existed for that character). renyi_efficiency_a2.5 + vocab_utilization: see renyi_efficiency() docstring; computed per-language from that language's own token-ID frequency distribution over this eval set."
+}

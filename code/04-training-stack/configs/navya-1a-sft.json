@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1a-sft: first-party chat corpus (sft_v3, navya-chat-v1 token template) on the navya-1a base. Near-memorization recipe proven on navya-0-sft2 (300 steps, lr 1e-4) but now with response masking + packing + RoPE reset from the v2 trainer.",
+  "data_dir": "../04-training-stack/data/sft_v3",
+  "out_dir": "../04-training-stack/out/navya-1a-sft",
+  "batch_size": 4,
+  "grad_accum": 4,
+  "max_steps": 300,
+  "lr": 1e-4,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 100,
+  "eval_iters": 8,
+  "ckpt_interval": 100
+}

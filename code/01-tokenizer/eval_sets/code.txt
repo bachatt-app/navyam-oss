@@ -1,0 +1,8 @@
+def emi(principal, annual_rate, years):
+    r = annual_rate / 12
+    n = years * 12
+    return principal * r * (1 + r) ** n / ((1 + r) ** n - 1)
+
+returns = prices.pct_change().dropna()
+beta = returns["stock"].cov(returns["index"]) / returns["index"].var()
+max_drawdown = ((prices / prices.cummax()) - 1).min()

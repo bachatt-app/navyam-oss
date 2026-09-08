@@ -1,0 +1,96 @@
+{
+ "tokenizer": "tokenizer-v0.3-64k.json",
+ "data_source": "eval_sets/*.txt — genuine native-script sentences, finance-domain, SMALL (~15-40 words/lang); NOT a large held-out general corpus. Indicative, not definitive.",
+ "indic_abs_target": 1.8,
+ "english_fertility": 1.178,
+ "per_language": {
+  "assamese": {
+   "fertility": 2.146,
+   "words": 41,
+   "tokens": 88
+  },
+  "bengali": {
+   "fertility": 1.905,
+   "words": 42,
+   "tokens": 80
+  },
+  "code": {
+   "fertility": 2.468,
+   "words": 47,
+   "tokens": 116
+  },
+  "english": {
+   "fertility": 1.178,
+   "words": 90,
+   "tokens": 106
+  },
+  "gujarati": {
+   "fertility": 2.143,
+   "words": 42,
+   "tokens": 90
+  },
+  "hindi": {
+   "fertility": 1.324,
+   "words": 74,
+   "tokens": 98
+  },
+  "hinglish": {
+   "fertility": 2.13,
+   "words": 69,
+   "tokens": 147
+  },
+  "kannada": {
+   "fertility": 2.111,
+   "words": 36,
+   "tokens": 76
+  },
+  "malayalam": {
+   "fertility": 2.778,
+   "words": 36,
+   "tokens": 100
+  },
+  "marathi": {
+   "fertility": 2.229,
+   "words": 35,
+   "tokens": 78
+  },
+  "odia": {
+   "fertility": 2.122,
+   "words": 41,
+   "tokens": 87
+  },
+  "punjabi": {
+   "fertility": 1.673,
+   "words": 55,
+   "tokens": 92
+  },
+  "tamil": {
+   "fertility": 2.444,
+   "words": 36,
+   "tokens": 88
+  },
+  "telugu": {
+   "fertility": 2.474,
+   "words": 38,
+   "tokens": 94
+  }
+ },
+ "indic_failing_1_8": [
+  "assamese",
+  "bengali",
+  "gujarati",
+  "kannada",
+  "malayalam",
+  "marathi",
+  "odia",
+  "tamil",
+  "telugu"
+ ],
+ "honest_finding": "Most Indic scripts (esp. Dravidian: Malayalam/Tamil/Telugu/Kannada) exceed the 1.8 tokens/word gate even on favorable in-domain text. The tokenizer does NOT pass its own Indic gate. Agglutinative Dravidian morphology is inherently token-dense; a flat 1.8 target may be unrealistic for them.",
+ "recommendations": [
+  "Source a real held-out corpus (FLORES-200 / AI4Bharat IndicCorp) for a definitive measurement — current samples are too small.",
+  "v0.4 tokenizer: allocate more merges/vocab to Dravidian scripts, or a per-script byte-fallback tuned for Malayalam/Tamil/Telugu.",
+  "Replace the flat 1.8 gate with per-script targets (e.g. Indo-Aryan <=1.8, Dravidian <=2.2) with a documented rationale.",
+  "Re-measure hinglish (2.13) — code-mixing inflates fertility; consider more Latin-Indic subwords."
+ ]
+}

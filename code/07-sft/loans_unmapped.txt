@@ -1,0 +1,304 @@
+16. Bajaj Finance se consumer durable loan lene par CIBIL me kya show karta hai?
+26. Bounce charge aur penal interest me kya difference hota hai?
+28. Loan agreement me "Force Majeure" clause ka kya matlab hota hai?
+44. Medical emergency me hospital bill pay karne ke liye instant medical loan kaise lein?
+57. Shuru ki EMIs me interest component principal se zyada kyu hota hai?
+58. FOIR (Fixed Obligation to Income Ratio) kya hota hai aur bank ise kaise calculate karta hai?
+61. Kya loan approval letter milne ke baad bank loan reject kar sakta hai?
+63. EMI date 5th of the month hai, isko 10th kaise karwayein bank me?
+66. Unsecured loan defaulter hone par bank police FIR kar sakta hai kya?
+71. Short tenure vs Long tenure: Total interest outgo me kitna farak padta hai?
+73. 1 lakh ka loan approved tha par bank ne account me sirf 96k daale, baki kahan gaye?
+75. CKYC (Central KYC) loan apply karte waqt bar bar kyu mangte hain?
+77. Loan pre-approval ka SMS aaya tha par apply karne pe reject ho gaya, kyu?
+78. Bank statement me minimum balance na hone se loan reject ho sakta hai?
+79. Salary account me kitne mahine ki credit history chahiye loan ke liye?
+86. Loan portfolio ko consolidate kaise karein (5 chhote loans ko 1 bade loan me)?
+87. Debt consolidation loan lene ke fayde aur nuksan kya hain?
+88. Apna credit profile unsecured loan ke bina sakt/majboot kaise banayein?
+89. NBFC ka license RBI ne cancel kiya ho to kya existing loan pay karna padega?
+90. Foreign travel ke liye holiday loan/travel loan lena financial sense banata hai?
+92. Overleveraging ka matlab kya hai retail lending me?
+95. Pension loan ki maximum limit kitni hoti hai PSU banks me?
+96. Army/Defense personnel ke liye shaurya loans saste kyu hote hain?
+97. Corporate tie-up wale companies ke employees ko rate of interest me kitna discount milta hai?
+99. Tier-1 city vs Tier-3 city me loan minimum income requirement alag kyu hoti hai?
+101. Home loan par current floating interest rates (SBI, HDFC, ICICI) kya chal rahe hain?
+105. Home loan lene ke liye property ka CERSAI registration zaroori kyu hai?
+111. Subvention scheme (No EMI till possession) real estate me trap kyu ban jati hai?
+113. Joint home loan wife ke sath lene par interest rate me discount milta hai?
+117. Ghar ka possession na mila ho to kya interest par tax benefit mil sakta hai?
+122. Plot kharidne ke liye land loan lene ke conditions kya hote hain?
+124. Land purchase aur uspar construction karne ke liye composite loan (SBI Maxgain) kaise lein?
+130. Fixed rate home loan me fore-closure charges 2% kyu lagte hain?
+131. Teaser rate home loan (shuru me sasta, baad me mehanga) trap kaise hote hain?
+133. MODT (Memorandum of Deposit of Title Deed) charges kya hote hain aur kisko pay karte hain?
+138. Builder ne project delay kar diya, bank EMIs waive off karega kya?
+144. Gram panchayat approved property par nationalized bank se home loan mil sakta hai?
+145. Lal Dora land / Gunthewari property par home loan apply karne me dikkat kyu aati hai?
+146. RERA registered project na hone par bank home loan reject kyu kar deta hai?
+153. Agar bank property ke original registry papers kho de to 1 crore tak ka compensation mil sakta hai?
+154. CERSAI portal se property ka charge/lien satisfy (remove) kaise hota hai loan close karne par?
+157. HUF (Hindu Undivided Family) property buy karne ke liye home loan le sakti hai?
+158. Agricultural land kharidne ke liye home loan ya mortgage loan milta hai kya?
+159. Commercial shop kharidne ke liye Commercial Property Loan (CRE) ka interest rate?
+163. Floating interest rate 1 saal me 3 baar change kyu ho gaya?
+165. Home loan tenure 30 saal tak rakhna samajhdari hai ya bewaqoofi?
+166. Age 45 hai, kya mujhe 20 saal ka home loan mil sakta hai? (Age limit restrictions)
+168. Step-up EMI home loan kya hota hai, jisme shuru me EMI kam hoti hai?
+169. Reverse mortgage loan senior citizens ko bina ghar beche regular income kaise deta hai?
+170. Reverse mortgage me principal amount return na karne par property ka kya hota hai?
+173. Home loan statement me "Principal Outstanding" calculate kaise hota hai?
+176. Home loan switch karne se pehle purane bank ko retention letter kaise likhein (rate match karne ke liye)?
+177. HFC (Housing Finance Company) jaise LIC HFL, PNB Housing bank se alag kaise operate karti hain?
+178. HFCs ka benchmark PLR (Prime Lending Rate) bank ke RLLR se zyada risky kyu hai?
+179. Under-construction se Ready-to-move property switch kar raha hu, existing loan transfer hoga?
+180. Property sell kar raha hu jisme abhi outstanding home loan hai, buyer ko transfer kaise karein?
+181. Tripartite agreement (Buyer, Seller, Bank) mortgaged property sale me kaise banta hai?
+182. Home loan ki "Sanction Validity" 6 mahine hoti hai, uske baad kya karna padta hai?
+183. Bank account change karne ke liye Home loan EMI auto-debit ka naya NACH mandate kaise lagayein?
+189. Self-constructed house ke liye architect's estimate aur progress report bank kyu mangta hai?
+191. CIBIL score -1 ya NH hone par home loan milne ke chances (new credit profile)?
+194. CERSAI charge search fee 118 rupay customer ko bear karni padti hai?
+195. Mortgage release deed (Release of lien) registry office me register karwana zaroori hai?
+196. Equitable mortgage aur Registered mortgage me cost aur legal difference kya hai?
+198. Agar home loan default ho aur property ki value loan se kam bache, to baki paisa?
+201. CIBIL score aur Experian/Equifax score me alag-alag numbers kyu show hote hain?
+205. CIBIL report me DPD (Days Past Due) me "000" aur "XXX" ka kya matlab hota hai?
+206. DPD column me "030", "060", "090" dikhne par loan approval kyu reject ho jata hai?
+208. Mere paas 3 credit cards hain (total limit 5 lakh), 4 lakh spend karne pe CIBIL drop hoga?
+211. CIBIL score repair karne ke liye Secured Credit Card (FD backed card) kaise kaam karta hai?
+219. Purana credit card close/cancel karne se CIBIL score par immediately kya asar padta hai?
+220. Average Age of Credit History (AAOA) girne ki wajah se score reduce hone ki maths?
+221. Credit card cash withdrawal (cash advance) karne par interest pehle din se kyu lagta hai?
+222. Cash advance ki entry CIBIL me credit risk behaviour indicate karti hai kya?
+223. Co-branded credit cards (Amazon Pay ICICI, Flipkart Axis) approval normal cards se easily milte hain?
+225. CIBIL V3 aur CIBIL V2 algorithm me risk grading ka kya difference hai?
+235. "NH" ya "-1" score history wale freshers (NTC - New To Credit) apna pehla card kaise lein?
+236. Add-on credit card use karne wale bache/spouse ka apna CIBIL score banta hai kya?
+238. RBI rules ke according saal me ek free detailed CIBIL report (FFCR) kaise download karein?
+239. Credit Score aur Credit Rating (CRISIL, ICRA) me kya difference hai?
+240. Credit card limit block (lien marking) EMI conversion me kaise hoti hai?
+242. Defaulted account ka data CIBIL me permanently rehta hai ya 7 saal baad remove ho jata hai?
+243. Credit repair companies (paise lekar CIBIL theek karna) scam kaise karti hain?
+244. Ek din ki EMI delay (Technical bounce) par grace period milta hai CIBIL me report hone se pehle?
+246. Credit card lost/stolen mark karne par limit aur CIBIL history naye card par transfer hoti hai?
+248. Telecom bills (Postpaid) aur Electricity bills delay hone se CIBIL impact hota hai?
+253. Credit card interest-free period (grace period) 45-50 days exactly kaise calculate hota hai?
+254. Statement date aur Due date (usually 15-20 days gap) ka calculation cycle?
+258. "Wilful Defaulter" list CIBIL me alag se maintain hoti hai RBI guidelines ke according?
+261. Auto-debit (SI) setup hone ke bawajood bank server failure ki wajah se CIBIL score drop hua, responsibility kiski hai?
+262. CIBIL report se "Suit Filed (Wilful Default)" status hatane ka court procedure?
+265. Credit card inactive (1 saal se no transaction) hone par RBI rules ke mutabiq auto-close kyu ho jate hain?
+266. Auto-closed credit card CIBIL me negative remark maana jata hai ya neutral?
+267. Multiple active credit cards hone par (10+ cards) lenders usse "credit hungry" kyu mante hain?
+269. Joint account me primary aur secondary holder dono ka CIBIL equally impact hota hai?
+270. Credit card upgrade (e.g., Regalia to Infinia) karne par existing limit split hoti hai ya CIBIL me naya account show hota hai?
+271. Merchant EMI (No Cost) me GST on interest amount (18%) hamesha extra kyu charge hota hai?
+272. CIBIL score kam hone par kya bank automatically interest rate bada kar (risk premium) loan dete hain?
+275. NRI credit history: US/UK FICO score ko Indian CIBIL score me transfer kiya ja sakta hai?
+276. FCNR deposit ke against loan lene par CIBIL score ki requirement hoti hai ya collateral based zero check?
+281. Experian score 850 hai par CIBIL 680 hai, bank kisko primary basis manega loan approve karne ke liye?
+283. Credit card closure email ke baad bhi bank yearly fee charge karke negative CIBIL entry dal de to refund/removal process?
+287. Credit health report me "High Risk" tag hamesha income vs EMI (FOIR) mismatch se lagta hai?
+288. CIBIL algorithm latest repayment ko zyada weightage deta hai (recent 12 months) purane defaults ke compare me?
+290. RTI file karke PSU Bank se loan rejection ka genuine reason CIBIL score drop ke ilawa manga ja sakta hai?
+293. Rent payment via credit card (Redgirraffe, CRED) par 1.5% extra charge dekar credit card miles banana sensible hai?
+294. Forex markup fee (3.5%) credit card par foreign transaction par lagne se credit limit exhaust hone ka risk?
+298. Overdue amount Rs. 100 se kam ho to CIBIL algorithm usko material default count karne me ignore karta hai?
+300. CIBIL "Refresh Score" button Paisabazaar me har din click karne se API latency me score lock ho sakta hai?
+306. CGTMSE (Credit Guarantee Fund Trust for Micro and Small Enterprises) scheme bank ko risk-free kaise banati hai?
+308. Working Capital Loan aur Term Loan me exact business operations ka farak kya hai?
+310. CC limit account me inventory aur debtors ke stock statement har mahine bank kyu submit karne padte hain?
+313. Business expansion loan ke liye pichle 3 saal ki Audited ITR aur Balance Sheet (P&L) mandatory kyu hai?
+318. Stand-Up India scheme SC/ST aur Women entrepreneurs ko 10 lakh se 1 crore tak loan me collateral free kaise karti hai?
+320. Commercial Vehicle (CV) loan truck/bus kharidne ke liye CIBIL ya Business vintage pe dependent hota hai?
+321. Loan against POS (Point of Sale) machines (Swipe machine loan) un businesses ke liye kaise kaam karta hai jinki cash/UPI sales zyada hai?
+323. Startup India Seed Fund Scheme me equity funding ki jagah debt funding (loan) mil sakta hai early stage startup ko?
+325. Letter of Credit (LC) aur Bank Guarantee (BG) non-fund based credit limits kaise hain?
+326. BG invoke hone par bank automatically fund based loan create karke penalty interest lagata hai?
+327. Export credit: Pre-shipment (Packing Credit) aur Post-shipment finance foreign currency me lene par interest sasta padta hai?
+334. Wilful Defaulter tag (paise hote hue bhi na chukana) lagne ke baad passport impound ya foreign travel ban ho sakta hai?
+339. Proprietorship firm aur proprietor ki PAN loan account/CIBIL me ek hi hoti hai, personal/business credit mix hota hai?
+343. PMEGP loan subsidy lock-in period 3 saal TDR (Term Deposit Receipt) form me kyu rakha jata hai?
+344. Agriculture Infrastructure Fund (AIF) me godown/cold storage banane ke liye interest subvention 3%?
+345. Kisan Credit Card (KCC) limit crop aane par pay hoti hai, uspar interest 7% se 4% subsidy prompt repayment pe kaise hoti hai?
+346. Dairy farming (Pashupalan loan) NABARD subsidy scheme ke through bank branch se directly leni chahiye?
+348. DSCR < 1 hone ka matlab business profit EMIs pay karne ke liye insufficient hai?
+349. Current Ratio (Current Assets / Current Liabilities) > 1.33 Tandon Committee norm bank CC limit banate waqt evaluate karta hai?
+350. Quick Ratio (Acid Test) immediate liquidity show karta hai bank ko?
+352. Inventory turnover ratio slow hone par CC Drawing Power (DP) bank kyu reduce kar deta hai?
+357. PSBloansin59minutes portal se in-principle approval aane ke baad bhi bank collateral kyu maangta hai?
+362. RBI ke guideline ke mutabiq default SMS and Email alert 24 hour me bhejna zaroori hai?
+363. Defaulter hone par bank relatives/friends (reference number) ko call karke pareshan kare to cyber bullying case?
+368. Legal heir sirf utna hi liable hota hai jitna usne property inherit ki hai (Inheritance law applied to debts)?
+372. Loan application me fake ITR (CA forged seal) detect hone par Section 420 IPC (cheating/forgery) ki FIR bank dvara?
+380. E-commerce sellers (Amazon/Flipkart) ke liye special seller financing revenue based financing (RBF) NBFCs (Klub, Velocity) se?
+381. Venture Debt vs Venture Capital Equity: Startups equity dilute kiye bina debt fund loan (e.g. Alteria, Trifecta) se working capital?
+386. Commercial real estate (CRE) property lene ke liye risk weight bank loan me zyada kyu hota hai, leading to higher interest?
+388. Franchisee business set up karne (e.g., Domino's/KFC) ke liye bank Franchise Finance deta hai?
+390. Commitment charge on unutilized limits: Bank ne 5 crore CC sanction ki par aapne sirf 1 crore use ki, baaki pe bank penalty leta hai?
+400. Export Credit Guarantee Corporation of India (ECGC) policy bank cover exporter's foreign buyer default on loans?
+426. PPF (Public Provident Fund) se loan 3rd se 6th financial year me lene par PPF interest + 1% interest return charge padta hai?
+427. EPF (Employee Provident Fund) advance for house purchase / marriage "loan" nahi hota balki apka hi paisa pre-withdraw hota hai (non-refundable)?
+428. Tractor loan agriculture machinery pe collateral structure aur repayment crop cycle (half-yearly EMI) ke according fix hota hai?
+431. Forex Loan (FCNR/LIBOR/SOFR linked) import-export businesses ke liye sasta (3-5%) vs Indian Rupee rate (9-11%) parity aur currency hedging (forward contracts)?
+437. White-label ATMs vs Bank ATMs EMI payment option via debit card auto-swipe loan facility (e.g., HDFC EasyEMI on debit card)?
+446. RERA authority me builder ke against order pass hone par bhi bank EMIs chalu rakhta hai, CIBIL kyu target hota hai (Contract act)?
+453. Used machinery import term loan me LC (Letter of Credit) customs clearance tak margin limit (DP) block rakhta hai?
+457. Legal opinion report (Title search report) advocate property ki chain of documents 30 years tak check karta hai (Encumbrance certificate/EC).
+458. Sub-registrar office me EC (Encumbrance Certificate) online check karke verify karein ki property bank ke pas mortgaged hai ya free?
+460. Aadhar e-Sign enabled NACH mandate E-Mandate portal pe (NPCI) set karne ki maximum limit ₹1 lakh per transaction kyu hai (pehle 10k thi)?
+462. CKYC registry 14-digit number CERSAI update hone se sabhi lending apps ek click me aapka PAN, Aadhaar, photo access karke paperless loan 2 min me de deti hain.
+463. CIBIL score 900 me se 900 laana theoretically aur practically Indian credit market me possible kyu nahi hai?
+464. Experian aur CRIF Highmark me 900 score laana CIBIL ke compare me technically easier (algorithm variance) hota hai?
+467. Interest calculation days convention: Loan interest Actual/365 days formula par hota hai, leap year me 366 divisor bank system interest adjust kaise karta hai?
+468. Unclaimed deposits/loans (10 saal se koi transaction nahi) bank DEA Fund (Depositor Education and Awareness Fund) RBI ko transfer kar deta hai.
+487. Bank merger (e.g. Syndicate Bank into Canara Bank) purane fixed rate home loan agreements ki sanctity aur IFSC code change on EMI mandate.
+490. EMI date weekend ya public holiday par fall ho (Sunday) to debit T-1 (Friday) hota hai ya T+1 (Monday) as per NACH RBI rules?
+491. Auto-debit limit > Loan EMI amount - Mandate me maximum limit 2X loan EMI kyu hoti hai (bounce charges/penalty cover karne ke liye)?
+494. Credit score simulator vs Real score jump: Loan close karne par short term score drop (credit mix closing effect) 1 mahine baad recover kaise hota hai.
+498. Sovereign Guarantee vs Bank Guarantee in Govt project financing loans.
+499. Agriculture loan (Crop loan) default scheme waiver (Kisan Karz Mafi) state govt announcement and bank recapitalization mechanism.
+506. Kya bank defaulter ka naam aur photo newspaper me publish kar sakta hai?
+508. ECS ya NACH mandate bounce hone par kya criminal case file ho sakta hai (Section 25 Payment Act)?
+511. Wilful defaulter aur genuine defaulter me RBI ke mutabiq kya main difference hai?
+512. Wilful defaulter list me naam aane par passport impound ya travel restriction lag sakti hai?
+517. Death of borrower ke case me agar loan insured nahi hai, to kya bank legal heirs ko force kar sakta hai?
+522. Bank ne original property documents guma diye hain, consumer court me kitna compensation claim kar sakte hain?
+529. Kya bank defaulter ki PF (Provident Fund) ya Gratuity ka paisa freeze/attach karwa sakta hai court ke through?
+530. Legal notice aane ke kitne din baad bank actual civil suit (recovery suit) file karta hai?
+531. Garnishee order kya hota hai aur bank iska use defaulter ki salary attach karne me kaise karta hai?
+535. Digital lending apps dvara phone contacts aur gallery access karne par data privacy laws kaise apply hote hain?
+536. Key Fact Statement (KFS) na dene par loan agreement ki legal validity nullify ho sakti hai?
+541. "Loss of job" insurance cover me bank 3 mahine ki EMI pay karta hai, iska claim process kya hai?
+542. Legal heir indemnity bond kaise banayein jab death claim me will na ho aur loan outstanding ho?
+543. CERSAI portal par lien charge satisfaction bank loan close hone ke 30 din me na kare to kya consequence hai?
+546. Builder ne possession nahi diya aur RERA me case chal raha hai, kya main home loan EMI rok sakta hu?
+548. Loan application form me false income proof (forged ITR) lagane par Section 420 IPC ki FIR?
+553. E-stamp aur Aadhaar e-sign wale digital loan agreements Indian Evidence Act me valid proof hain?
+554. Blank cheque par sign le kar NBFC ne extra amount fill karke bounce karwa diya, legal defense kya hai?
+555. Post Dated Cheques (PDC) vs NACH mandate: Legal force of action default me kiski zyada hai?
+556. Consumer forum me "Deficiency of service" for wrong interest calculation suit file karne ki fee?
+562. CIBIL DPD (Days Past Due) mismatch from bank statement: Correct karwane ka escalation matrix?
+563. "Suit Filed" status CIBIL report me kitne saal dikhta hai aur kya waha se naya loan milna impossible hai?
+566. Bounced cheque return memo me "Funds Insufficient" vs "Signature Mismatch" criminal case severity?
+573. Tehsildar ke through KCC recovery aur revenue recovery certificates (RRC) ka rural implementation?
+576. Gadi tow (repossess) hone ke baad uski inventory banakar borrower ko pre-sale notice dena zaroori kyu hai?
+586. Co-operative banks ke recovery rules scheduled commercial banks se alag hote hain (MCS Act)?
+587. Microfinance institutions (MFI) joint liability group (JLG) me ek defaulter hone par pure group ka CIBIL spoil kyu karti hain?
+590. Pre-payment penalty waver email confirmation bank branch ne di par head office ne charge laga diya.
+594. Bank statement analyzer software se bank ne undisclosed gambling/crypto transactions trace karke loan reject kiya.
+595. High-risk CIBIL alert flag (e.g. matching with OFAC/UN sanction lists) loan freeze KYC compliance.
+597. Extradition or passport revocation for large corporate defaulters escaping to UK/UAE.
+598. Bank amalgamation: Dena Bank defaulter ab Bank of Baroda ka defaulter legally kaise treat hoga?
+599. Legal entity death: Proprietorship band hone par proprietor ki personal assets collateral na hote hue bhi liable hain?
+609. Joint owners tax deduction tabhi claim kar sakte hain jab EMI bank account se proportionally deduct ho rahi ho?
+614. Business owner home loan interest ko personal ITR (House property) ki jagah Business Expense (P&L) me claim kar sakta hai agar ghar business ke liye use ho?
+634. KCC (Kisan Credit Card) 7% interest par 3% prompt repayment incentive (PRI) income tax free agricultural income benefit?
+637. Section 194A TDS on fixed deposit lagta hai, par kya EMI me pay kiye gaye loan interest par HNI ko TDS kaatna padta hai bank ko?
+639. Loan to relatives: Dost ko 1 lakh loan bank transfer/UPI se diya bina interest ke, income tax implications?
+640. Zero interest loan to employee by employer: SBI lending rate ke hisab se perquisite value income tax me salary me kaise add hoti hai?
+643. Property sale karte waqt buyer bank ko seedha cheque/draft deta hai loan close karne, TDS u/s 194-IA (1%) total sale value par katega ya loan net value par?
+644. Reverse mortgage receipts monthly aati hain, wo taxable income (salary/pension) me count nahi hoti (Section 10(43))?
+647. Export Finance (Packing credit) foreign currency (USD/EUR) me lene par exchange rate fluctuation loss business expense me tax deductible hai?
+652. Unsecured loan from Directors in Pvt Ltd company interest-free allowed under Companies Act aur tax implications?
+653. Section 54/54F capital gain tax exemption: Purana ghar bech kar naya ghar loan lekar lene par exemption calculate limit?
+657. Medical loan for treating specified diseases (80DDB) interest payment pe koi extra deduction nahi, sirf actual medical cost pe limit.
+662. Credit card reward points value (milestone benefits) income tax section 56(2)(x) me taxable 'gift' ya perquisite category me?
+670. Interest equalization scheme on pre and post shipment rupee export credit (subvention rates updated by RBI).
+678. Subsidized loan to disabled persons (NHFDC) rebate in interest rates and 80U interaction.
+682. Credit card usage for business expenses (SaaS, Ads) claiming GST input tax credit (ITC) with personal name on card?
+685. Tax clearance certificate (Section 281) requirement for creating mortgage on business properties to avoid attachment by IT dept.
+689. Buying a second home while claiming HRA for the same city if the home is under construction vs ready to move.
+695. Subvention scheme interest taxation - is it capital receipt reducing property cost or revenue receipt?
+698. Mutual fund portfolio lien mark karke loan lene pe STT/Capital gains trigger nahi hota (tax efficient borrowing).
+699. Zero-coupon bond taxation vs regular interest-bearing loan instruments.
+700. Post-budget 2026 updates on interest deduction limits on housing loan.
+706. Digital Lending Guidelines 2022: Loan ka paisa seedha borrower bank account me aana chahiye, third party (app) pool me nahi.
+709. Cooling-off period in digital loans: 3 din ke andar loan bina prepayment penalty ke wapas cancel karne ka right.
+717. Account Aggregator (AA) framework: Sahamati pe consent dekar lending apps ko 1 second me bank statement share karna.
+718. Account Aggregator consent revoke (cancel) karne ke baad lending app future bank data nahi dekh sakti?
+719. Micro-loans (₹1,000 to ₹5,000) apps (Branch, Tala) bina CIBIL ke alternative data (SMS, device data) pe loan approve karti hain?
+720. FLDG (First Loss Default Guarantee) model me fintech company NBFC ko default loss cover karti hai (RBI 5% limit).
+721. E-Mandate (Aadhaar/Netbanking via NPCI) cancel karna fintech app se nahi, direct apne bank app se stop payment kaise lagayein?
+724. Whatsapp based loan approval (e.g. CASHe, HDFC WhatsApp banking) end-to-end encryption aur KYC validation.
+732. Supply Chain Finance (KredX) invoice discounting platform par vendor ko cash 24 hour me mil jana at discount.
+733. Revenue Based Financing (Klub, Velocity) e-commerce D2C brands ko fixed EMI ki jagah daily sales ka percentage as repayment.
+735. CKYC registry check: Apps aapki photo aur PAN CERSAI database se utha kar KYC friction zero kar deti hain.
+739. Device binding security: Loan app sirf usi phone pe khulegi jisme SIM card verified (SMS bind) hai.
+742. UPI credit line interest grace period (interest-free days) credit card jaisa hai ya day 1 se interest meter chalu hoga?
+745. "Zombie" lending apps (Play store se ban hone ke baad APK share karke loan aur recovery chalana).
+746. Loan aggregator platforms (Paisabazaar, BankBazaar) commission base pe data banks ko lead pass karte hain.
+748. Consent architecture: App installation ke time SMS (financial transactions read karne ka) consent loan algorithm ke liye crucial hai.
+749. UPI AutoPay (NPCI) for recurring EMI deduction, ₹1,00,000 tak limit authentication with PIN.
+750. AutoPay mandate revoke karne ka UPI app (GPay/PhonePe) me direct setting option.
+751. Subscription trap loan: App free trial loan deti hai phir heavy rolling interest (rollover fee) har hafte charge.
+754. Virtual Credit Cards (SBM Bank / OneCard) FD backed instant generation for online EMIs.
+755. Crypto-backed loans (Binance / Nexo) India me legal tax ambiguity and FEMA violations.
+756. Tokenization of card details on loan apps for recurring payments (RBI mandate to prevent card data theft).
+759. "Piggybacking" CIBIL score: Authorized user / Add-on card India me score transfer nahi karta (US unlike).
+760. Fintech algorithmic bias: PIN code (red-lining) ya email domain (e.g. generic vs corporate) se loan reject karna.
+770. Truecaller loan SDK: Phone number profile reputation based lending score logic.
+771. UPI based merchant cash advance limit calculation (Average daily QR code credit volume * 30 days).
+772. Cloud-lending software (Lendingkart, KredX) AI underwriting models taking 3 minutes instead of 3 weeks (bank process).
+775. ONDC credit network me consumer app (Buyer app) aur Lender app (Seller app) ke beech protocol transaction (Beckn).
+776. Consent artefact XML signature validation to ensure loan app didn't modify user consent terms later.
+782. Cross-border digital loans (Remitly, Wise) Indian diaspora sending loan EMIs to India directly.
+784. "Skin in the game" rule for fintechs originating loans before selling to larger banks (co-lending model 20:80).
+789. App deletion vs Account deletion: In-app option to legally erase financial data post loan closure (DPDP Act).
+790. Reverse engineering lending algorithms (e.g. maintaining 25% battery and 500 contacts to increase approval odds - myth vs reality).
+791. Smart contracts / Blockchain in syndicated corporate loans (India pilot phases via IBBIC).
+795. UPI ID based underwriting: Fetching recurring expenses (Netflix, Rent UPI payments) to estimate disposable income.
+796. Wearable tech EMI (Apple Watch) via direct credit card integration without loan app.
+800. Conversational AI voicebots (like me) negotiating loan EMI collections in regional Indian languages.
+802. Bina CIBIL ke 10,000 ka loan kaise lein?
+803. Home loan SBI se lu ya HDFC se?
+805. Kya CIBIL score check karne se score kam hota hai?
+813. CIBIL 650 hai, loan reject kyu ho raha hai?
+821. CIBIL se enquiry remove kaise karein?
+822. Home loan ka interest rate kam kaise karwayein?
+823. FD par loan lene ka fayda kya hai?
+829. PF account se property lene ke liye advance kaise nikalein?
+831. Joint loan me se apna naam kaise hatwayein?
+832. EMI stop karwane ka koi tarika hai kya bank se?
+835. KCC (Kisan Credit Card) limit kaise badhwayein?
+838. Credit card EMI pe GST 18% kyu lagta hai?
+843. CIBIL report me DPD 90 ka kya matlab hai?
+845. Credit card limit increase karne pe CIBIL score badhta hai?
+847. Credit card reward points loan EMI me adjust hote hain?
+848. OTM / E-mandate cancel kaise karein app se?
+849. Loan agreement par e-sign court me valid hai?
+855. EMI date 5th se 10th change ho sakti hai?
+857. Teaser home loan saste hote hain shuru me?
+860. CIBIL score -1 ya 0 kyu dikha raha hai?
+861. Student credit card bina income proof ke kaise lein?
+863. Naya ghar lene ke liye purana ghar bechne tak bridge loan milega?
+867. Home renovation loan 80C me aata hai kya?
+871. Bank valuation property ki market rate se kam kyu nikalta hai?
+872. E-auction property kharidne ka process kya hai?
+874. Credit card cash withdrawal pe penalty kitni lagti hai?
+878. TReDS platform pe invoice discount kaise karwayein?
+879. CIBIL V3 aur V2 me score alag kyu aa raha hai?
+880. Bank of Baroda se SBI me home loan shift karne ka kharcha?
+883. Fixed obligation to income ratio (FOIR) bank kaise calculate karta hai?
+884. Loan rejection reason bank se written me maang sakte hain?
+889. RERA registered project pe hi home loan kyu milta hai?
+890. Gram panchayat plot par home loan LIC HFL se milega?
+891. Loan application fake lagane par IPC 420 case lag sakta hai?
+893. Credit card settle kar liya, ab dubara loan kab milega?
+897. Property ki chain of documents (30 years) title search kaise hoti hai?
+898. CERSAI portal pe ghar ka encumbrance kaise check karein?
+909. 1 Crore ka home loan 30 saal (8.5%) vs 20 saal (8.5%). 30 saal me EMI kam aayegi par interest zyada jayega. Agar main 30 saal ka loan lekar bacha hua paisa Nifty 50 (12% CAGR) me SIP karun, to kya ye arbitrage financially smart hai?
+926. Credit card foreign transactions markup fee (3.5%) + GST (18% on fee). Maine Dubai me 5 Lakh ki shopping ki. Reward rate 2% hai. Total markup loss calculate karo aur batao kya Forex card (0 markup) lena better tha?
+956. "Credit Shield insurance claim rejection due to pre-existing disease clause during loan borrower death."
+962. "Co-origination loans (SBI + NBFC) priority sector lending classification and interest rate transmission asymmetry."
+963. "Loan against term deposits (Tax saver 5-year FD) lock-in period exception for emergency liquidity."
+970. "Income Tax scrutiny on unsecured loan from friends > Rs 20,000 via cash violating Section 269SS."
+972. "Mortgage redemption insurance vs standard term life insurance assigning to bank - premium load and cover variance."
+981. "Standup India collateral free 10L to 1Cr loan scheme for SC/ST/Women enterprise greenfield project definitions."
+987. "Foreign currency non-resident (FCNR) deposit backed rupee loan vs directly remitting funds for real estate purchase."
+989. "Tokenization of debit/credit cards on merchant sites preventing unauthorized auto-debit recurring loan EMIs."
+990. "Artificial Intelligence based algorithmic credit scoring using alternative data (e-commerce returns, utility payments) replacing traditional CIBIL."
+991. "The effect of RBI's macroprudential risk weight increase (by 25%) on unsecured consumer loans on retail interest rates."
+998. "Leveraging the PM Vishwakarma scheme for an artisan to transition from informal money lenders to 5% subsidized formal credit."

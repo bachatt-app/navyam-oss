@@ -1,0 +1,378 @@
+15. Day-care procedures kya hote hain aur kya cataract surgery isme cover hoti hai?
+16. OPD (Outpatient Department) cover wale health insurance plans mehanga kyu aate hain?
+20. Kya health insurance me IVF ya infertility treatment cover hota hai?
+21. Restoration benefit (Recharge) policy me sum insured exhaust hone par kaise active hota hai?
+22. Kya restoration benefit same disease ke liye usi saal dubara use kiya ja sakta hai?
+28. Domiciliary hospitalization (ghar par ilaaj) kin conditions me insurance se cover hota hai?
+29. Ayurveda, Unani, Siddha, aur Homeopathy (AYUSH) treatment ki limit health policy me kitni hoti hai?
+30. Bariatric surgery (weight loss) cosmetic surgery mani jati hai ya health insurance me cover hoti hai?
+31. Dental treatment health insurance me accident ke ilawa kabhi cover hota hai?
+38. Job chhodne par corporate health policy ko personal policy me convert kaise karein?
+39. Disease-specific plans (jaise Star Cardiac Care ya Diabetes Safe) regular plans se mehnge kyu hote hain?
+42. Zone-based pricing (Zone A vs Zone B) se premium me kitna difference aata hai?
+45. Tele-consultation aur e-pharmacy discounts health insurance app pe use karne ka limit hota hai?
+47. Mental health illness (Depression, Schizophrenia) hospitalization cover ab IRDAI ne mandatory kiya hai?
+52. Pura bill 10 lakh ka hai, employer policy 5 lakh ki hai. Bacha hua 5 lakh personal policy se lene ka process?
+66. Health insurance premium zone change karne (e.g. Delhi se Jaipur shift) par modify kaise karwayein?
+67. "Reasonable and Customary Clause" bol kar insurance company hospital ka bill kyu kaat deti hai?
+70. Maternity cover me newborn baby ka 1st day se vaccination aur complications cover hote hain?
+71. Ayushman Bharat (PM-JAY) 5 Lakh cover me eligible hone ka criteria kya hai aur private hospital me ye kaise chalta hai?
+72. Kya bariatric surgery life-saving na ho to bhi health insurance claim pas karta hai?
+74. Genetic disorders (jaise Thalassemia) ab health insurance me cover hote hain as per court rulings?
+75. Health insurance policy wordings me "Exclusions" section padhna "Inclusions" se zyada zaroori kyu hai?
+79. Transgender persons ke liye gender affirmation surgery kya health insurance me cover hoti hai?
+80. Health insurance agents ko kitna commission milta hai pehle saal aur renewal par (jisse unka bias pata chale)?
+81. Direct health insurance (online website se) lene par premium me kitna discount milta hai vs Agent?
+85. GIPS (General Insurance Public Sector) companies jaise New India Assurance aur private players HDFC Ergo me service difference?
+89. Non-medical expenses (NME) health claim bill ka 10-15% hissa kyu hote hain jo jeb se dena padta hai?
+91. Organ transplant me organ donor (jo kidney de raha hai) ka hospitalization bill receiver ki policy me cover hoga?
+95. Moratorium period (8 years) ke baad health insurance policy me fraud prove hone pe bhi claim pay karna padta hai?
+97. Health insurance premiums age brackets (jaise 30, 35, 40) pe sudden jump kyu maarte hain?
+98. Unani ya Homeopathy ilaaj govt recognized hospital me hone par hi health insurance se cover hota hai?
+106. Pure Term Plan vs TROP: Jo extra premium TROP me jata hai use mutual fund me daalne pe ROI comparison?
+122. Job change ho gayi (software engineer se factory worker ya mining), kya term insurance company ko batana padega (Hazardous occupation)?
+124. NRI term insurance me death abroad hui to death certificate attestation Indian embassy se karwana mandatory hai?
+125. Early death claim (within 3 years of policy inception) me insurance company deep investigation (Section 45 rules) kyu karti hai?
+128. E-Insurance Account (eIA) me term policy dematerialized rakhne ke fayde aur CAMS REP ka role?
+132. Premium payment mode: Annual mode par monthly mode ke mukable 5-8% discount kyu milta hai?
+137. Participating (Par) aur Non-Participating (Non-Par) life insurance policies me kya difference hai?
+138. Bonus (Reversionary bonus, Terminal bonus) LIC policies me kab aur kitna declare hota hai?
+139. Whole Life insurance (Jeevan Umang) me 100 saal tak 8% tax-free return sach me 8% hota hai ya XIRR 5.5% aata hai?
+140. Section 45 of Insurance Act: 3 saal ke baad policy "unquestionable" ho jati hai, kya fraud/suppression of facts pe bhi claim pass hoga?
+146. High Sum Insured discount (1 Crore vs 50 Lakh) me kai baar 1 Crore ka premium 90 Lakh se bhi sasta kyu nikalta hai?
+148. Credit Life insurance single premium bank home loan me add kar deta hai, ispe interest kyu avoid karna chahiye?
+149. CIBIL score term insurance premium ko affect karta hai (India vs US market risk profiling)?
+150. Housewife ko independent term insurance (without earning husband's cover) kitni limit tak mil sakta hai?
+151. Term plan me "Increasing Cover" option (e.g. 5% sum insured increase every year) inflation beat karne ka sahi tarika hai?
+152. "Life Stage Benefit" (Marriage, Childbirth pe extra cover without medicals) option exercise karne ka process?
+154. Death due to natural disasters (Earthquake/Tsunami) term insurance me "Act of God" bolkar exclude to nahi hoti?
+155. Policyholder missing ho jaye (Laapata), to kitne saal baad (Indian Evidence Act - 7 years) insurance claim mil sakta hai?
+159. Successor certificate / Legal heir certificate tab zaroori hota hai jab nomination incomplete ya invalid ho?
+161. Bacha 18 saal ka ho jaye tab Appointee automatically remove ho jata hai ya form submit karna padta hai?
+162. Terminal Illness benefit (Death se pehle paise mil jana agar 6 mahine ki life bachi ho) standard term plans me in-built hota hai?
+163. Death abroad hui (USA me NRI), wahan ki local authority ka death certificate yaha claim ke liye valid hoga directly?
+165. Pilot, Army personnel, ya Merchant Navy ke logon ko standard term insurance easily kyu nahi milta (Special risk class)?
+166. Term insurance maturity pe ₹0 milta hai, ye psychological barrier tod kar investment aur insurance alag kyu rakhna chahiye?
+167. Micro-insurance products (PMJJBY - Pradhan Mantri Jeevan Jyoti Bima Yojana) 436 rupay me 2 lakh ka cover kaise dete hain?
+172. LIC agents term insurance e-Term ya Tech-Term promote kyu nahi karte (Low commission issue)?
+174. Assigning a policy: Life insurance policy bank ko assign (girvi rakhna) loan lene ke liye kaise kaam karta hai?
+175. Absolute assignment vs Conditional assignment me rights transfer bank ko kaise hote hain?
+176. Re-assignment of policy jab loan pura pay ho jaye, to bank wapas policy aapke naam kaise karta hai?
+177. KYC / CKYC update for life insurance: Agar aadhar pan mismatch hai to maturity ya death claim fas sakta hai?
+178. Policy document kho (lost) gaya hai, duplicate bond paper issue karwane ka indemnity bond aur newspaper ad process?
+180. Backdating a policy (Pichli date se policy shuru karna lower age bracket ka premium lene ke liye) permitted hai?
+181. Underwriting process: Financial underwriting (Salary/ITR check) aur Medical underwriting term insurance me kaise interlink hote hain?
+183. COVID-19 pandemic ke time liye gaye term plans me vaccine certificate mandatory kyu kiya tha underwriters ne?
+184. Premium calculation by Actuaries: Mortality tables (LIC 2012-14) kaise decide karte hain ki 30 saal ke aadmi ke marne ke chances kya hain?
+185. Risk pooling concept: Life insurance fundamentally mathematics of large numbers pe kaise survive karta hai?
+186. Sub-standard risk: Agar over-weight (high BMI) hai, to underwriter premium me "extra loading" (e.g. +20%) laga kar approval deta hai.
+187. Re-insurance companies (Munich Re, Swiss Re) Indian companies (HDFC, SBI Life) ka risk piche se kaise cover karti hain?
+191. Agent commission term insurance me 1st year premium ka 20-40% hota hai, jabki direct plan me zero?
+192. Web aggregators (Policybazaar) direct plans bechte hain ya regular broker plans jisme unko commission milta hai?
+197. IRDAI Bima Sugam platform: Dematerialized single window for all life and health policies (UPI like moment for insurance)?
+200. Claim dispute: "Material Fact" concealment. Hypertension 5 saal pehle tha, theek ho gaya, ab form me nahi dala. Claim investigation usko fraud maan sakti hai?
+218. Personal Accident (PA) cover ₹15 Lakh ka owner-driver ke liye mandatory hai, isko waive off (opt-out) kaise karein agar pehle se cover ho?
+219. Unnamed passenger cover (PA for passengers) add karna cab/taxi vs private car me?
+222. Pay As You Drive (Usage-based insurance / Telematics) kam gadi chalane walo ke liye premium sasta kaise karta hai?
+223. Car chori (Theft claim) hone par dono original chabiyan (keys) insurance company ko dena mandatory kyu hai?
+225. Second-hand car kharidne par 14 din ke andar (Ownership transfer window) insurance apne naam par transfer na karne ka risk?
+226. Commercial Vehicle (Yellow number plate) insurance premium private car se double-triple kyu hota hai?
+227. Two-wheeler long term insurance (3-5 years) ek sath lene ke fayde aur premium locking benefits?
+232. Hit and run case me Solatium fund se victim ko 2 lakh (death) ya 50,000 (injury) government fund se kaise milta hai?
+235. Home loan ke sath bank jo insurance jabardasti deta hai wo over-priced hota hai, usse cancel karwa ke independent policy le sakte hain?
+243. Consequential Loss (Fire Loss of Profit - FLOP) policy aag lagne ke baad business band hone par dukan ka rent/salary kaise pay karti hai?
+250. Insurance salvage: Total loss gaadi (kabada) ko company scrap dealer ko bech kar paisa recover (salvage value) kaise karti hai?
+253. Knock-for-Knock agreement: Do gaadiyo ka accident hone par dono apni-apni company se claim kyu lete hain bajaye ek dusre pe case karne ke?
+254. Subrogation right: Insurance company mera loss pay karke meri jagah at-fault party se court me paise recover karti hai.
+255. Fastag toll data aur telematics gaadi ke accident location aur time ki location verify karke fraud (fake accident location) detect karte hain.
+260. Claim intimation window: Accident hone ke 24-48 hours ke andar call na karne par delay intimation grounds pe rejection?
+261. Spot survey: Heavy damage (e.g. >1 Lakh) ke case me spot se gadi hatane se pehle surveyor visit kyu insist karte hain?
+262. Third party property damage (jaise gadi electric pole ya kisi ki boundary wall me ghus jaye) ki 7.5 lakh tak ki limit in motor TP.
+267. Kidnap and Ransom (K&R) insurance high net worth individuals (HNI) ke liye India me secretly kaise operate karta hai?
+268. Art and Antiques insurance valuation: Agreed value policy vs Market value policy at the time of claim.
+272. Loss of personal belongings in car (e.g. laptop chori ho gaya gadi ka shisha tod kar) motor policy me cover hota hai? (Specific add-on required).
+276. PUC (Pollution Under Control) certificate invalid hone par insurance claim deny kar sakte hain supreme court ke ruling ke according?
+278. Car modification (Alloy wheels, spoiler, wrap) insurance company ko declare karke extra premium (electrical/non-electrical accessories) bharna.
+279. Mismatch in chassis/engine number in policy document aur actual RC: Typo error claim ke time kitna bada issue ban jata hai?
+281. Short term motor insurance (1 mahine ke liye) available hai ya minimum 1 saal ki policy leni hoti hai?
+284. Surveyor bribe (Commission) issues: Surveyor gaadi total loss declare karne ke liye extra paise maange to insurance company vigilance cell.
+285. Salvage retention: Total loss me main gaadi ka kabad apne paas rakhna chahta hu, to insurance company payout kam kaise karegi?
+288. E-Policy (Digital issuance): DigiLocker me padi PDF insurance document traffic police accept karne ke liye legally bound hai (IT Act).
+289. "Compulsory Excess" vs "Imposed Excess": High risk driver (multiple claims) pe agle saal company imposed excess lagati hai.
+293. Trade certificate insurance (Showroom/Dealer plate) transit damage cover before permanent registration.
+294. Motor Insurance pool (Declined Risk Pool) high loss commercial vehicles ko cover dene ke liye IRDAI mandated mechanism.
+295. Title insurance (Real estate): Ghar kharidne par builder ka legal title defective nikle to financial loss bachaane wali RERA backed policy.
+296. Wedding insurance: Barish, dange (riots), ya halwai (caterer) food poisoning hone par shadi cancel/postpone ka event coverage.
+298. Credit insurance (Trade Credit): B2B business me agar buyer bankrupcty me chala jaye to supplier ka invoice amount insure hota hai.
+307. Discontinued Policy Fund me 4% minimum interest milta hai aur paise 5th year complete hone par bahar nikalte hain.
+315. Partial withdrawal 5 saal lock-in khatam hone ke baad tax-free nikal sakte hain (maximum 20% of fund value)?
+316. Pension Plans (Annuity) kya hote hain aur retirement corpus ko regular income me kaise convert karte hain?
+317. Deferred Annuity vs Immediate Annuity me farak kya hai retirement planning ke time?
+318. Immediate Annuity lene ke agle hi mahine se pension shuru ho jati hai (Single premium dekar).
+319. "Annuity for life with Return of Purchase Price" (ROPP): Pension aati rahegi aur death pe original amount nominee ko wapas mil jayega.
+320. ROPP annuity me pension yield (e.g. 6%) bina ROPP wali annuity (e.g. 8%) se kyu kam milti hai?
+321. NPS (National Pension System) vs Insurance Company Annuity: NPS mature hone pe 40% amount mandatory annuity me daalna padta hai.
+322. Annuity income tax free hoti hai ya salary ki tarah regular tax slab pe tax hoti hai? (Fully Taxable).
+324. Section 80CCC pension plans aur annuity premiums contribution limit (Clubbed with 80C).
+336. DTAA (Double Tax Avoidance Agreement): UK/US NRI ke liye India me tax-free maturity waha ki government tax kar sakti hai?
+338. Child plan me maturity bachhe ki age (18 ya 21) se sync karke withdrawal milestones (18th, 19th, 20th year) set karte hain.
+347. Saral Jeevan Bima: IRDAI mandated standard term insurance (5 Lakh to 25 Lakh) jisme exclusions sabhi companies ke liye strictly same hain.
+348. Bima Kiran / Bima Jyoti guaranteed traditional plans me IRR calculation ko lock-in karna falling interest rate regime me.
+349. Guaranteed Additions (GA) aur Loyalty Additions (LA) LIC policies me end of the term pe compounding boost kaise dete hain.
+350. LIC policies (Par plans) sovereign guarantee back karti hai (Section 37 of LIC Act), yani govt of India ensures payout, private me nahi.
+351. Reversionary bonus accrued har saal declare hota hai but encash maturity ya death pe hi ho sakta hai (time value loss).
+355. Micro-insurance tax-free limit: Chhoti policies rural India me tax radar se bahar rehti hain distribution friction kam karne ke liye.
+359. GST waiver on pure term insurance vs GST input credit on employer-sponsored term life for employees.
+360. TDS under Section 194DA: If life insurance maturity is taxable, 5% TDS is deducted on the income component (Maturity - Premium paid).
+361. TDS is not deducted if the total payout is less than ₹1 Lakh in a financial year.
+369. Assignment of life policy to a trust (Estate planning) to bypass inheritance tax (if introduced in India) and protect from creditors.
+370. Unit-linked Pension Plan (ULPP): Pension accumulation phase in market-linked funds, but vesting phase forces 1/3rd lumpsum and 2/3rd annuity.
+371. Commutation of pension (Withdrawing a lumpsum up to 1/3rd or 60% in NPS at retirement age tax-free).
+373. Participating policy yield drags: Traditional plans invest heavily in G-Secs (IRDAI norm 50%+ in govt bonds), capping maximum IRR at 5-6%.
+376. Senior citizen tax planning: Investing in immediate annuity gives fixed 7-8% return but fully taxable, comparing post-tax yield with SCSS.
+380. Life Insurance Corporation (LIC) agent rebating: Agents illegally passing back 50% of their first-year commission to customer as discount (Prohibited under Sec 41).
+384. Propensity to pay models: Insurers using credit bureau (CIBIL) data to predict if a term plan customer will default on renewal premiums (Persistency ratio).
+389. Point of Sales Person (PoSP): Simplified license to sell basic standard products (two-wheeler, term life) with minimal training (15 hours).
+390. Buying insurance from bank RM (Bancassurance) vs independent broker: Bank RMs hard-selling single premium toxic products for high targets.
+391. Credit life refund: Foreclosing a 20-year home loan in 5 years, how to calculate and demand the pro-rata refund of the single premium credit life insurance.
+395. Salary restructuring: Opting for employer-provided superannuation/annuity fund to reduce taxable salary perquisite limits.
+407. Principle of Utmost Good Faith (Uberrimae Fidei): Insurance contract me customer aur company dono details chhupa nahi sakte.
+408. Principle of Indemnity: Life insurance me apply nahi hota, par health/motor me sirf actual loss recover hota hai, profit nahi.
+414. Ex-gratia claim settlement: Jab legally claim deny hota hai, par company good faith/humanitarian ground pe 50% pay kar deti hai.
+418. Fraud ring detection: Ek hi agent ki sabhi policies me 2 saal baad deaths claim aana, data analytics fraud detect karta hai.
+420. Staged accident (Motor fraud): Puraani damage gadi ko intentionally thoka dikha kar claim lene ki koshish.
+421. Non-disclosure of occupation hazards (e.g. working in a chemical plant) leading to life insurance claim repudiation.
+422. Intentional self-injury (Attempted suicide) health insurance aur personal accident policy me strictly excluded kyu hota hai?
+424. War and Nuclear peril exclusions: Dange (riots) aur war (terrorist attack) me farak aur inka general insurance coverage.
+425. Terrorism pool in India: Terror attacks (like 26/11) ke damages ko cover karne ke liye GIC Re dwara banaya gaya special fund.
+429. Standardization of Exclusions (IRDAI 2019): Sabhi health insurers ki policy wordings aur exclusion definitions ek jaisi mandatory kar di gayi.
+434. Bima Vahak aur Bima Vistaar: Gram panchayat level pe standard micro-insurance bechne aur IRDAI penetration drive.
+435. File and Use guideline: Insurance company naya product launch karne se pehle IRDAI se approval kaise leti hai?
+436. "Use and File" system (Regulatory Sandbox): Innovative / experimental insurance products (e.g. pay-as-you-drive) fast track launch karna.
+437. Solvency Margin Ratio (Min 1.5): Insurance company ke paas claim dene ke liye reserves (paisa) hain ya nahi, ye metric kaise check karein?
+440. Audio-visual (Video) verification senior citizens ko life insurance bechne pe fraud rokne ke liye mandatory.
+443. Twisting and Rebating: Insurance industry ke 2 sabse bade unethical practices IRDAI strictly punish karti hai.
+444. Fake caller claim: "IRDAI se bol raha hu, aapki policy me 2 lakh fasa hai, tax jama karo release karne ke liye" (Common scam).
+445. IRDAI kabhi directly customers ko call nahi karta ya funds hold nahi karta - public awareness campaign (Bima Bemisaal).
+449. If surveyor's assessed loss is ₹50,000 but workshop bill is ₹70,000. Customer has to pay ₹20,000 out of pocket (depreciation + non-payable).
+455. Medical confidentiality vs Insurance consent: Patient ka medical data insurance company CIBIL/Experian ki tarah health registry (IIB) me share karti hai.
+456. Insurance Information Bureau (IIB): Motor aur Health claims ka centralized database fraud cross-checking ke liye.
+462. Policy wording ambiguity (Rule of Contra Proferentem): Agar contract ki bhasha unclear hai, to court hamesha customer (jo contract sign kar raha hai) ke favour me decision dega.
+463. Insurable Interest: Main apne padosi ya dost ki life/car insure nahi kar sakta, blood relation ya financial interest mandatory (e.g. wife, employee, debtor).
+465. Corporate tail policy: Job chhodne ke baad existing maternity ya upcoming surgery ko cover rakhne ke liye extension premium bharna.
+467. Delay in claim settlement: Health insurance company has to pay 2% above bank rate as penalty if claim delayed beyond 30 days of last document.
+472. Personal Accident cover (15 Lakh mandatory CPA) 1 saal ka lene ke baad multiple vehicles (2 car, 1 bike) drive karne pe valid hai (linked to driver, not car).
+473. PA cover standalone policy me Permanent Partial Disability (PPD) - e.g. loss of one finger - claim 10% ya 5% of Sum insured kaise calculate hota hai.
+477. Over-insurance vs Under-insurance: 1 Crore ki factory ko premium bachane ke liye 50 Lakh me insure kiya (Average clause penalty applied in claim).
+478. "Condition of Average" formula: Loss = Actual Damage x (Sum Insured / Actual Value). If 50% under-insured, claim payout is halved.
+484. Robotic surgery / CyberKnife / Stem cell therapy exclusions standard policies me abhi bhi kyu hain (Experimental treatments definition).
+487. IRDAI Master Circular 2024: De-listing of hospital lists transparency mandate on insurer websites to avoid customer harassment at 11th hour.
+488. Post-mortem delay / autopsy waiver in Covid-19 or natural death, but strict enforcement in accidental term life death payouts.
+489. Settlement of claims by non-life insurers using AI (Artificial Intelligence) damage assessment through car photos (Instant ₹20k payout without surveyor).
+492. Cyber policy inclusions: Ransomware attack on personal PC. Does insurance pay the bitcoin ransom or just IT recovery cost? (Usually recovery/legal cost).
+493. Title dispute in inherited property vs Title insurance commercial usage (RERA project delay / builder fraud claims).
+495. Insurance Marketing Firm (IMF) compliance: Mis-selling by IMF leads to RBI/IRDAI joint penalties, strict KYC AML norms.
+496. Bima Sugam protocol integrations: e-KRA (KYC), NSDL (e-policy demat), and IIB (claims data) seamless API connectivity.
+498. E-commerce instant refund vs Insurance slow claim: Payment gateway chargebacks vs Insurance complex investigation fundamentals (Prevention of moral hazard).
+499. "Moral Hazard": Insurance lene ke baad car care-less drive karna ya health ignore karna, assuming "Company to pay karegi hi". Underwriting tackles this.
+503. Self-employed logo ko term insurance ke liye kitne saal ki ITR lagani padti hai?
+504. ITR me agricultural income show hoti hai, kya private insurers term life cover denge?
+505. Tele-medical (phone pe medical) vs Physical medical test: claim ke time kaunsa zyada safe hota hai?
+511. Husband ke term cover ka kitna percent term insurance wife ko mil sakta hai?
+512. 18 saal ke college student ko term insurance kyu nahi milta?
+513. Human Life Value (HLV) calculate karte waqt existing loans aur liabilities ko kaise factor-in karein?
+514. Annual salary 10 Lakh hai, 25X HLV ke hisab se 2.5 Crore ka term insurance sanction ho jayega?
+517. TROP plan me jo extra premium jata hai, usko index fund me daalne par 30 saal me kitna corpus banega?
+519. MWP Act policy ko kya Income Tax department ya bankruptcy court attach kar sakta hai?
+521. Section 45 of Insurance Act kya kehta hai 3 years completion ke baad death claim ke bare me?
+522. Agar 3 saal ke baad pata chale ki customer ne fraud kiya tha, tab bhi claim pay hoga?
+524. Death intimation ke kitne din ke andar insurance company ko claim settlement complete karna padta hai?
+525. Agar company 30 din me claim settle na kare, to penal interest kitna milta hai?
+528. Minor nominee hone par Appointee ka KYC aur address proof submit karna kyu compulsory hai?
+529. Succession certificate kab court se lana padta hai life insurance claim lene ke liye?
+530. Missing person (laapata vyakti) ka death claim 7 saal intezaar kiye bina lene ka koi exception hai?
+531. Flight crash ya natural disaster me body na milne par insurance payout ka fast-track process kya hai?
+532. Suicide exclusion clause 12 months ke baad term insurance me kaise operate karta hai?
+534. War, civil unrest ya terrorist attack me death hone par term insurance cover karta hai?
+535. Hazardous occupation (e.g., merchant navy, mining, police) ke liye special loading premium kitna hota hai?
+538. Foreign country me death hone par local death certificate ko Indian embassy se apostille kaise karwayein?
+548. Terminal illness me doctor agar certify kare ki 6 mahine se kam life bachi hai, to 100% advance payout kaise milta hai?
+551. "Pay till 60" retirement age ke hisab se opt karna kyun safe rehta hai?
+552. Whole life term plan (up to 99 years) unviable kyu hota hai normal wealth creation ke samne?
+553. Joint Life term plan (husband aur wife) me first death vs second death payout rule kya hai?
+560. Saral Jeevan Bima (IRDAI standard term plan) me max limit 25 Lakh kyu rakhi gayi hai?
+566. E-mandate cancel hone par credit card se term plan premium auto-debit kaise setup karein?
+570. High BMI / Obesity hone par underwriter kitne percent extra premium load karta hai?
+571. Family history me cancer ya cardiac issues hone par term insurance underwriting me extra tests kyu hote hain?
+574. GST (18%) on term insurance premium kya removal consideration me hai?
+575. Assignment of life insurance policy bank ko conditional assign karke personal loan lene ka legal process?
+577. Policy re-assignment loan close hone ke baad bank se NOC lekar policy bond par endorsement kaise karein?
+579. Death certificate me name spelling mistake ho to municipal corporation se theek karwane ka timeline?
+582. High Altitude mountaineering expedition me death hone par standard term policy cover karti hai?
+583. Commercial airline pilot ke liye aviation loading premium normal rate se kitna high hota hai?
+585. Substandard life profile: Kidney stone ya thyroid history walo ka counter-offer accept kaise karein?
+586. Policy schedule document ghum jaye to duplicate bond ke liye indemnity bond affidavit format kya hai?
+587. Backdating term insurance me allowed kyu nahi hoti jabki traditional policies me allow hai?
+588. Direct online term plan aggregator website (e.g. Policybazaar) se lene me commission savings premium me reflect hoti hai?
+589. Re-insurance companies (Swiss Re, Munich Re) Indian retail term covers ko retrocede kaise karti hain?
+592. Child birth par bina fresh income proof ke 25 Lakh extra term cover add karne ka time limit (within 180 days)?
+594. NRI paying term premium from US Bank Account via international wire: FIRC certificate submit karna zaroori hai?
+597. Multiple term plans hold karna (e.g. 1 Cr in HDFC + 1 Cr in ICICI): dono companies ko cross-declare karna compulsory kyu hai?
+598. Financial underwriting me net worth certificate CA se tab maanga jata hai jab cover 5 Crore cross kare?
+600. Overleveraging / Heavy unserved debt profile hone par underwriter moral hazard flag kyu lagata hai?
+604. Cause of Death certificate me "Cardiopulmonary Arrest" generic term likhne par insurer detailed medical record kyu maangta hai?
+607. Policyholder's age discrepancy between Aadhaar and School Leaving Certificate: claims division kisko final manegi?
+608. Appointee ki death minor ke major hone se pehle ho jaye to court guardian appoint kaise hota hai?
+609. Term insurance premium online auto-debit debit card se fail hone par link payment mode active kitne din rehta hai?
+610. Claim release authorization form (NEFT mandate) ke sath cancelled cheque leaf pe pre-printed name matching rule?
+613. Gender transition / reassignment surgery ke baad life insurance policy record me sex/gender update process?
+614. Third gender (Transgender) individuals ke liye life insurance underwriting guidelines in India?
+616. Terminal illness payout par tax deduction TDS Section 194DA ke under exempt hota hai?
+618. Incontestable clause apply hone ke baad insurer company court me consent fraud kaise prove karti hai?
+619. Re-issuance of policy schedule after marriage for surname change: Gazette certificate requirement?
+621. Actuarial mortality tables update hone se nayi term policies ke rate hike hone ka annual trend?
+622. Premium payment frequency (Monthly, Quarterly, Half-Yearly, Yearly) me loading percentage difference?
+623. Unclaimed life insurance settlement funds IRDAI ke Senior Citizens' Welfare Fund (SCWF) me kab transfer hote hain?
+624. Bima Vistaar all-in-one affordable micro insurance cover for rural families structure?
+637. Engine and Gearbox Protection cover barish ke mausam me water-ingression (hydrostatic lock) se engine damage cover karta hai?
+647. Network garage par surveyor preliminary survey aur final dismantling survey kitne din me complete karta hai?
+648. Self-inspection app (AI-based photo upload) se policy break-in hone par 15 minute me renew kaise karein?
+653. Total Loss settlement me gadi ki RC RTO me permanently cancel karwana mandatory kyu hai?
+654. Salvage value retention: Scrap car ka structure apne paas rakh kar insurance company se net-of-salvage payout lena?
+655. Compulsory Personal Accident (CPA) cover ₹15 Lakh owner-driver ke liye driving license ke sath mandatory kyu hai?
+656. Agar mere paas pehle se standalone personal accident cover hai, to CPA motor policy se opt-out kaise karein?
+659. EV charging surge damage / Wall-box charger damage motor insurance me covered hota hai?
+664. Learner's License (LL) par gadi chalate waqt sath me valid permanent DL holder na hone par accident claim pass hoga?
+666. Name on RC vs Name on Insurance policy mismatch hone par claim payout complete reject ho jata hai?
+669. Two-wheeler 5 years bundled policy (1 year OD + 5 years TP) naye bike kharidte waqt supreme court mandate kyu hai?
+673. Pay As You Drive (PAYD) insurance GPS tracker ya odometer reading se saal me 5,000 km se kam chalane walo ko 40% discount deta hai?
+678. Gadi ke upar builder ki construction building se concrete slab gir jaye, to third-party claim builder par karein ya apni OD policy se?
+679. Commercial goods carrying vehicle (Truck) overloading (over-weight pass limit) hone par accident claim 50% cut kyu hota hai?
+680. Fitness Certificate (FC) expired commercial vehicle ka accident ho jaye to TP claim Court me stand karega?
+681. National Permit (NP) valid na hone par interstate truck accident insurance cover void ho jata hai?
+682. School bus insurance policy me mandatory safety camera aur speed governor equipment cover included hota hai?
+684. Spot survey required for heavy commercial vehicle damage exceeding ₹50,000 prior to vehicle movement.
+685. Digital survey through smartphone video streaming directly with insurance company surveyor for instant approval.
+688. Wooden parts used in vintage or commercial vehicles attract flat 20% depreciation per IRDAI scale.
+689. Metallic parts replacement depreciation schedule: 0% in first 6 months scaling up to 50% for vehicles > 10 years.
+690. Paint job depreciation calculation: 25% on material if composite paint bill, or 50% split on paint materials vs labor.
+691. Knock-for-knock agreement between insurers avoiding inter-company litigation for minor rear-end collisions.
+692. Right of Subrogation executed via Letter of Subrogation (LoS) empowering insurer to sue negligent third party.
+693. Hit and run victim compensation under amended Motor Vehicles Act: 2 Lakh for death and 50,000 for grievous hurt.
+694. Motor Accident Claims Tribunal (MACT) awards compensation based on structured formula multiplying victim's annual income.
+696. Driving without valid Pollution Under Control (PUC) certificate: IRDAI clarified valid claims cannot be denied solely for expired PUC.
+702. Geographical extension endorsement: Extending Indian motor policy cover for travel into Nepal, Bhutan, or Bangladesh (IMT 1).
+704. Motor fleet discount: Logistics company insuring 50+ trucks together getting up to 35% discount on OD tariff.
+706. ARAI approved anti-theft device (Gear lock / GPS immobilizer) installed gives 2.5% discount on OD premium (max ₹500).
+709. Emergency hotel accommodation and travel expenses cover when vehicle breaks down > 100 km away from registered address.
+713. Fastag toll record cross-verification by insurance forensic investigator to confirm exact accident time and speed.
+719. Supplementary claim: Garage discovering internal chassis crack after dismantling parts requiring secondary surveyor approval.
+720. Re-inspection of repaired vehicle by surveyor to verify replacement of damaged parts with genuine OEM spares.
+721. Used auto spares (Scrap yard parts) installed by garage rejected by insurance surveyor during final bill audit.
+722. Garage storage charges (Demurrage) due to delay in owner approving estimate are not payable by insurance company.
+724. Ambulance and emergency medical vehicle insurance priority claims and specialized equipment (defibrillator) add-on.
+728. Earthquake zone 4 aur zone 5 me flat lene par building insurance premium me seismic loading kitna hota hai?
+729. Multi-story apartment building me flat owner building structure ka insurance kaise le agar society cooperative policy na le?
+732. Bharat Sookshma Udyam Suraksha policy small enterprise (total risk < 5 Crore) ko aag, flood, aur dange se kaise protect karti hai?
+733. Standard Fire and Special Perils (SFSP) policy me aag lagne par "Stock in trade" ka claim pass karne ke liye GST invoices kyu maangte hain?
+735. Fire Loss of Profit (FLOP) / Consequential Loss insurance factory band rehne par regular rent aur worker salary kaise pay karti hai?
+736. Machinery Breakdown (MBD) insurance policy mechanical failure aur electrical burnout cover karti hai bina aag lage?
+737. Boiler and Pressure Plant (BPP) insurance explosion damage to surrounding factory buildings cover karta hai?
+739. Institute Cargo Clauses: ICC (A) all-risk cover, ICC (B) basic perils, aur ICC (C) major accident cover me difference?
+762. Product Recall Insurance: Defective cars ya pharma batches ko market se wapas khinchne ka logistics aur marketing expense.
+766. Erection All Risks (EAR) Insurance: Thermal power plant me turbine installation ke time mechanical breakdown cover.
+767. Workmen’s Compensation (WC) Insurance: Laborers getting injured during factory shift covered under Employee's Compensation Act.
+769. Fidelity Guarantee Insurance: Accounts manager dwara cash embezzlement ya company fund chori karne ka financial cover.
+771. Burglary and Housebreaking Insurance: Factory godown me forcibly tala tod kar maal chori hone par claim pass hota hai (Theft without force excluded).
+774. Banker’s Blanket Bond (BBB) policy covers ATM robbery, forged cheques, fake currency notes, and employee dishonesty for banks.
+775. Clinical Trials Insurance: Pharmaceutical companies testing new vaccine on volunteers paying compensation for adverse drug reaction.
+776. Event Cancellation Insurance: Cricket match ya concert heavy rainfall ya artist illness ki wajah se cancel hone par ticketing loss cover.
+777. Film Production Insurance (Cast Insurance, Set Fire, Negatives damage) Bollywood/Tollywood budgets secure karta hai.
+779. Pradhan Mantri Fasal Bima Yojana (PMFBY): Non-preventable natural risks (drought, flood, pest) covering farmer loans.
+781. Aquaculture / Shrimp Farm Insurance: Disease outbreak (White Spot Syndrome) wiping out prawn harvest covered under specialized terms.
+782. Poultry Insurance covers broilers and layers against epidemic diseases (Bird Flu / Ranikhet) with mandatory culling certificates.
+783. Forestry / Plantation Insurance (Teak, Rubber, Eucalyptus) against wildfire and storm damages.
+784. Satellite and Space Insurance covers launch vehicle explosion on pad and in-orbit satellite transponder failure.
+785. Drone / Unmanned Aerial Vehicle (UAV) Insurance covers physical drone crash and third-party property/bodily damage under DGCA rules.
+786. Title Insurance for Real Estate Projects: Defective land ownership titles emerging after 10 years covered under RERA mandate.
+788. Kidnap, Ransom, and Extortion (K&R) Insurance handles corporate executive hostage negotiation fees and ransom payment recovery.
+789. Fine Art and Antiques Specie Insurance: Art gallery museum masterpieces transit and exhibition damage coverage.
+790. Key Performance Indicator (KPI) / Parametric Insurance: Solar farm generating less than benchmark units due to cloud cover triggers automatic payout.
+793. Aircraft Hull and Spares Insurance covers commercial Boeing/Airbus plane bird-strike damage and engine replacement.
+794. Aviation War and Hijacking Risk Insurance covers passenger hostage trauma compensation and aircraft recovery.
+796. Extended Warranty / Mechanical Breakdown Insurance on Consumer Electronics (TV/Refrigerator) post OEM warranty expiration.
+799. Specialized Bloodstock Insurance: High-value thoroughbred racing horse injury, fertility loss, and natural death coverage.
+800. Industrial All Risks (IAR) policy covering all physical loss/damage unless specifically excluded for mega factories (AUM > 100 Cr).
+801. Terrorism Risk Insurance Pool (Indian Market Terrorism Risk Pool managed by GIC Re) for property damages during terror attacks.
+802. Excess of Loss (XOL) reinsurance treaties protecting general insurance companies from catastrophic cyclone/flood payouts.
+803. Under-insurance Penalty (Average Clause) in Fire claim: Factory worth 10 Cr insured for 5 Cr gets only 50% payout of actual damage.
+804. Salvage buyer bidding platform for scrap metal / burnt industrial inventory disposal post fire claim settlement.
+806. Business Interruption Insurance Indemnity Period (12 months vs 24 months) estimating time needed to rebuild destroyed industrial unit.
+809. Escalation Clause in Industrial Property: Automatically increasing insured building value by 5-10% annually to match construction inflation.
+814. Cold Storage Insurance (Deterioration of Stocks) covering rotten potatoes/apples due to ammonia gas leak or power outage.
+815. Electronic Equipment Insurance (EEI) covering data center servers against sudden voltage fluctuations and external power spikes.
+817. Plate Glass Insurance replacing showroom glass panels shattered during local riots or stone pelting.
+819. Baggage Insurance for domestic train journeys covering stolen suitcases under booked luggage receipt.
+820. Multi-Peril Package Policy for petrol pumps covering underground fuel tank leaks and cash counter robbery.
+821. Hotelier's Package Insurance covering guest food poisoning, guest room theft, and restaurant kitchen fire.
+823. Hospital Package Policy covering expensive MRI/CT scan hardware breakdown, pharmacy drug spoilage, and elevator accidents.
+825. SFT Benchmark: "Meri chemical factory me aag lag gayi jisse 2 Crore ka raw material jal gaya aur factory 6 mahine band rahi. Mere paas Bharat Sookshma Udyam policy aur Fire Loss of Profit (FLOP) cover hai. Surveyor loss calculate karte waqt fixed costs aur stock value ko kaise balance karega?"
+828. Agar GRO 30 din me reply na de ya rejection letter bhej de, to Ombudsman me file karne ka window 1 saal hota hai?
+830. Agar insurer Ombudsman ka order na maane, to IRDAI us company par per day penalty kaise enforce karta hai?
+832. District Consumer Disputes Redressal Commission (DCDRC) me 50 Lakh tak ke insurance deficiency claims file karne ka process?
+836. Rule of Contra Proferentem: Insurance policy clause me do ambiguous meanings nikalte hon to court customer ke favor me interpret kyu karti hai?
+837. Doctrine of Subrogation vs Doctrine of Contribution in property insurance disputes.
+839. Motor Accident Claims Tribunal (MACT) award interest rate (usually 7.5% - 9% from date of petition) insurance company pay karti hai?
+842. MACT settlement through Lok Adalat: Insurance company advocate aur claimant compromise order sign karke instant cheque kaise lete hain?
+843. Repudiation of claim on grounds of "Delayed Intimation" (e.g., informed after 7 days due to funeral) Supreme Court ruling against rejection?
+849. Ex-gratia payment accept karne par "Full and Final Discharge Voucher" sign karne ke baad kya bache hue balance par case kar sakte hain?
+854. Concealment of previous policy rejection: Agar maine LIC application reject hone ki baat HDFC Life se chhupayi, to ye ground for rejection banega?
+856. Commorientes rule (Section 21 Hindu Succession Act): Presumption that the elder died first in simultaneous disaster, impacting nominee claim path.
+861. FIR quashing in motor accident: If driver is acquitted of rash and negligent driving in criminal court, does MACT claim still stand? (Yes, preponderance of probability).
+862. Staged car theft fraud: Selling car parts in scrap market and filing fake theft FIR with duplicate key; forensic key wear-pattern analysis.
+863. Arson investigation in factory fire: Traces of kerosene/petrol found by chemical lab forensic team immediately voids fire policy claim.
+864. Stock register manipulation during fire claim: Tallying electricity consumption bills with production output to catch inflated inventory claims.
+865. Cyber extortion claim dispute: Company paid ransom without informing insurance incident response team, leading to claim denial.
+869. Motor claim dispute: Insurer deducting 50% on headlamp assembly claiming it is plastic, while OEM certifies it as polycarbonate structural unit.
+873. Cancellation of policy by insurer for fraud: Insurer must return pro-rata unexpired premium unless fraud was committed at inception (Section 45).
+879. Newborn baby coverage dispute: Hospitalization on 85th day denied because policy clause stated newborn covered from 91st day.
+881. Genetic disorder claim dispute: High Court striking down genetic exclusion clauses as discriminatory and unconstitutional.
+882. Mental healthcare hospitalization dispute: Insurer capping depression therapy at ₹50,000 while general ICU limit is ₹5 Lakh, violating Mental Healthcare Act 2017.
+885. Organ donor expense dispute: Insurer paid donor kidney harvesting surgery but refused to cover donor post-operative ICU complication treatment.
+891. Pre-hospitalization diagnostics dispute: MRI done 45 days prior to admission denied because policy covered only 30 days pre-hospitalization.
+892. Post-hospitalization physiotherapy dispute: 10 sessions of home physiotherapy post knee replacement denied due to lack of doctor prescription.
+893. Personal accident disability dispute: Doctor certifying 40% permanent partial disability, insurance medical board revising disability to 15%.
+897. Hit-and-run compensation dispute: Collector office delaying disbursement from Solatium Fund beyond 30 days statutory mandate.
+900. Fire loss dispute: Insurer applying average clause because raw material inventory was stored in open yard instead of licensed warehouse.
+901. Machinery breakdown claim dispute: Insurer alleging failure occurred due to prolonged lack of routine maintenance and lubricative failure.
+905. Annuity rate change dispute: Proposal signed at 7.5% guaranteed annuity, company issuing policy bond at 6.8% prevailing rate during vesting.
+908. Death outside India in conflict zone (e.g. Ukraine / Middle East): Travel advisory violation impact on life insurance claims.
+919. Burglary claim dispute: Security guard was asleep during warehouse break-in; insurer alleging complicity and gross negligence.
+921. Clinical trial subject compensation dispute: Volunteer suffering permanent liver toxicity; calculating formula based on age and income under DCGI guidelines.
+926. Commercial lease property insurance: Landlord insured building structure, tenant insured interior fit-outs; fire destroying both, dual claim coordination.
+927. Loss of rent insurance dispute: Tenant stopped paying rent after flood damage; insurer capping payout to 3 months instead of 12 months indemnity period.
+929. Ship grounding dispute: Vessel captain taking dangerous shortcut through coral reef; navigational error covered under Institute Hull clauses.
+931. Trade credit insurance buyer default dispute: Foreign buyer raising fake quality dispute to avoid paying invoices; arbitration prerequisite before claim payout.
+932. Bank guarantee invocation insurance dispute: Contractor defaulting on government road project, insurer honoring performance bond payout.
+937. Pedestrian jaywalking on expressway hit by car: MACT reducing compensation award by 25% due to contributory pedestrian negligence.
+938. Drunk driving victim claim: MACT awards 50 Lakh to pedestrian family, insurance company pays victim and files execution petition against drunk driver.
+939. Second-hand car ownership transfer delay: Previous owner sued in MACT because buyer did not transfer RC; Supreme Court ruling registered owner remains liable.
+940. Fake registration number plate accident: Criminals using stolen car with forged plates; identifying engine/chassis number to trace true insurer.
+947. Film star injury delaying movie release: Film production insurance paying daily interest on bank loan and idle set rental charges.
+948. Saffron plantation hail damage: Parametric weather policy paying automated relief based on regional automatic weather station (AWS) rainfall/hail logs.
+949. Drone crashing into high-voltage power line: Third-party property damage claim by state electricity board against drone operator policy.
+960. Bancassurance agent forging customer annual income as 25 Lakh (Actual 3 Lakh) to sell 5 Lakh premium policy; forensic signature verification.
+961. Credit life single premium refund: Home loan closed in year 3 of 20; bank refusing to refund remaining 17 years unexpired insurance premium.
+962. Property insurance title defect: Bank auction buyer discovering property had prior municipal demolition notice; title insurance indemnification.
+963. Fire claim stock valuation: Using weighted average cost (FIFO) vs market selling price to assess burnt retail inventory value.
+971. Commercial vehicle overloaded by 10%: Insurer applying 25% non-standard claim deduction formula as per GIC guidelines.
+973. Private car used for carrying election campaign materials involved in crash: Policy breach vs casual carrying of personal goods interpretation.
+975. Rat entering car AC vent and dying: Foul smell requiring complete dashboard dismantling and AC evaporator replacement claim validity.
+979. Tractor pulling trolley carrying wedding procession overturning: Passengers in goods vehicle exclusion; MACT order to pay and recover from owner.
+982. Cold storage ammonia pipe blast destroying 50,000 potato sacks: Spoilage of goods endorsement claim valuation.
+985. Trade credit insurance buyer bankruptcy: Submitting claim proof to liquidator and assigning debt recovery rights to insurance company.
+987. Film negative hard drive corruption during post-production: Re-shooting costs cover under film producers indemnity package.
+994. Ayushman Bharat PM-JAY pre-authorization denial at private empaneled hospital: Filing grievance with State Health Agency (SHA).
+996. Term policy issued under MWP Act: Trust dissolution upon death of beneficiaries and estate transfer mechanics.
+998. Property insurance average clause: Re-evaluating plant machinery post currency devaluation to avoid 40% under-insurance claim penalty.
+999. Ombudsman award non-compliance: Filing execution petition under Consumer Protection Act Section 71/72 for attachment of insurer bank accounts.

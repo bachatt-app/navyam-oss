@@ -1,0 +1,18 @@
+{
+  "_doc": "Native DPO for navya-1c-sft (1.31B). Pure torch on model.py — no trl.",
+  "tokenizer": "../01-tokenizer/tokenizer-v0.3-64k.json",
+  "out_dir": "out/navya-1c-sft-dpo",
+  "beta": 0.1,
+  "lr": 5e-7,
+  "min_lr_frac": 0.1,
+  "weight_decay": 0.0,
+  "grad_clip": 1.0,
+  "grad_accum": 8,
+  "max_steps": 600,
+  "warmup_steps": 30,
+  "ce_chunk": 1024,
+  "act_ckpt": true,
+  "min_pairs": 200,
+  "log_interval": 10,
+  "seed": 1337
+}

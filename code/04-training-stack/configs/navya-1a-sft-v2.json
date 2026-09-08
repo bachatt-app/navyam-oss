@@ -1,0 +1,21 @@
+{
+  "_comment": "Production SFT-v2 config for navya-1a. Deliberately refuses to run until at least 10,000 reviewed training conversations exist; the current ~300-example seed is for mechanics/style validation, not model promotion. Build with build_chat_data.py --seq-len 2048, then warm-start the navya-1a base checkpoint.",
+  "data_dir": "../04-training-stack/data/navya-1a-sft-v2",
+  "out_dir": "../04-training-stack/out/navya-1a-sft-v2",
+  "min_train_conversations": 10000,
+  "batch_size": 4,
+  "grad_accum": 8,
+  "max_steps": 300,
+  "lr": 0.00005,
+  "min_lr_frac": 0.1,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "beta1": 0.9,
+  "beta2": 0.95,
+  "grad_clip": 1.0,
+  "seed": 1337,
+  "log_interval": 10,
+  "eval_interval": 25,
+  "eval_iters": 10,
+  "ckpt_interval": 50
+}

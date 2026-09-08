@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1a-sft6: sft_v8 = tranche-2 across all six banks (34 new markdown-style canonical intents; coverage 57-70% per bank). 3,729 train convs / 779,811 sup tokens. Steps 700->800.",
+  "data_dir": "../04-training-stack/data/sft_v8",
+  "out_dir": "../04-training-stack/out/navya-1a-sft6",
+  "batch_size": 2,
+  "grad_accum": 8,
+  "max_steps": 800,
+  "lr": 0.0001,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 100,
+  "eval_iters": 8,
+  "ckpt_interval": 100
+}

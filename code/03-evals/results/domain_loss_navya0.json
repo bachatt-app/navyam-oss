@@ -1,0 +1,36 @@
+{
+ "ckpt": "/Users/ankurjhavery/Bachatt/navyam-gpt/code/04-training-stack/out/navya-0/ckpt_last.pt",
+ "step": 9999,
+ "domains": {
+  "code": {
+   "val_loss": 1.5966,
+   "ppl": 4.94,
+   "val_tokens": 925012
+  },
+  "finance_econ_law": {
+   "val_loss": 2.0221,
+   "ppl": 7.55,
+   "val_tokens": 530428
+  },
+  "global_english": {
+   "val_loss": 3.5435,
+   "ppl": 34.59,
+   "val_tokens": 3738329
+  },
+  "indian_english": {
+   "val_loss": 3.2843,
+   "ppl": 26.69,
+   "val_tokens": 1781346
+  },
+  "indian_languages": {
+   "val_loss": 3.8574,
+   "ppl": 47.34,
+   "val_tokens": 390131
+  },
+  "math_reasoning": {
+   "val_loss": 3.392,
+   "ppl": 29.73,
+   "val_tokens": 304404
+  }
+ }
+}

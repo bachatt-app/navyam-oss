@@ -1,0 +1,236 @@
+[
+ {
+  "tok_s": 26854,
+  "mfu": 0.1947,
+  "steady_peak_gb": 14.8,
+  "startup_peak_gb": 14.8,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 0,
+  "compile": "",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 26527,
+  "mfu": 0.1923,
+  "steady_peak_gb": 15.06,
+  "startup_peak_gb": 15.06,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 0,
+  "compile": "",
+  "gqa": "expanded"
+ },
+ {
+  "tok_s": 40945,
+  "mfu": 0.2968,
+  "steady_peak_gb": 9.58,
+  "startup_peak_gb": 9.58,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 0,
+  "compile": "default",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 40692,
+  "mfu": 0.295,
+  "steady_peak_gb": 9.84,
+  "startup_peak_gb": 9.84,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 0,
+  "compile": "default",
+  "gqa": "expanded"
+ },
+ {
+  "tok_s": 22922,
+  "mfu": 0.1662,
+  "steady_peak_gb": 14.82,
+  "startup_peak_gb": 14.82,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 8192,
+  "compile": "",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 22739,
+  "mfu": 0.1648,
+  "steady_peak_gb": 15.08,
+  "startup_peak_gb": 15.08,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 8192,
+  "compile": "",
+  "gqa": "expanded"
+ },
+ {
+  "tok_s": 38542,
+  "mfu": 0.2794,
+  "steady_peak_gb": 7.53,
+  "startup_peak_gb": 7.53,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 8192,
+  "compile": "default",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 38212,
+  "mfu": 0.277,
+  "steady_peak_gb": 7.79,
+  "startup_peak_gb": 7.79,
+  "grad_accum": 64,
+  "micro_batch": 4,
+  "ce_chunk": 8192,
+  "compile": "default",
+  "gqa": "expanded"
+ },
+ {
+  "oom": true,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 0,
+  "compile": "",
+  "gqa": "native"
+ },
+ {
+  "oom": true,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 0,
+  "compile": "",
+  "gqa": "expanded"
+ },
+ {
+  "tok_s": 42744,
+  "mfu": 0.3098,
+  "steady_peak_gb": 16.39,
+  "startup_peak_gb": 16.39,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 0,
+  "compile": "default",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 42602,
+  "mfu": 0.3088,
+  "steady_peak_gb": 16.92,
+  "startup_peak_gb": 16.92,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 0,
+  "compile": "default",
+  "gqa": "expanded"
+ },
+ {
+  "tok_s": 23699,
+  "mfu": 0.1718,
+  "steady_peak_gb": 20.58,
+  "startup_peak_gb": 20.58,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 8192,
+  "compile": "",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 23523,
+  "mfu": 0.1705,
+  "steady_peak_gb": 21.09,
+  "startup_peak_gb": 21.09,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 8192,
+  "compile": "",
+  "gqa": "expanded"
+ },
+ {
+  "tok_s": 38421,
+  "mfu": 0.2785,
+  "steady_peak_gb": 16.38,
+  "startup_peak_gb": 16.38,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 8192,
+  "compile": "default",
+  "gqa": "native"
+ },
+ {
+  "tok_s": 38611,
+  "mfu": 0.2799,
+  "steady_peak_gb": 16.92,
+  "startup_peak_gb": 16.92,
+  "grad_accum": 32,
+  "micro_batch": 8,
+  "ce_chunk": 8192,
+  "compile": "default",
+  "gqa": "expanded"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 0,
+  "compile": "",
+  "gqa": "native"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 0,
+  "compile": "",
+  "gqa": "expanded"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 0,
+  "compile": "default",
+  "gqa": "native"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 0,
+  "compile": "default",
+  "gqa": "expanded"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 8192,
+  "compile": "",
+  "gqa": "native"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 8192,
+  "compile": "",
+  "gqa": "expanded"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 8192,
+  "compile": "default",
+  "gqa": "native"
+ },
+ {
+  "oom": true,
+  "grad_accum": 16,
+  "micro_batch": 16,
+  "ce_chunk": 8192,
+  "compile": "default",
+  "gqa": "expanded"
+ }
+]

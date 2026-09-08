@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1a-sft4: sft_v6 = v5 + 115 authored thin-intent paraphrase variants (fixes CIBIL-700-style blending on intents with <10 phrasings). 1,961 convs / 363,363 sup tokens.",
+  "data_dir": "../04-training-stack/data/sft_v6",
+  "out_dir": "../04-training-stack/out/navya-1a-sft4",
+  "batch_size": 2,
+  "grad_accum": 8,
+  "max_steps": 500,
+  "lr": 0.0001,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 100,
+  "eval_iters": 8,
+  "ckpt_interval": 100
+}

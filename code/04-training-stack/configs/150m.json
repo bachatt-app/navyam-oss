@@ -1,0 +1,22 @@
+{
+  "_comment": "BachattLM-1 target shape (~158M params w/ 64K vocab embed). A10 @ ~30% MFU: ~40K tok/s -> 2B tokens ~ 14h. Needs the Week-1 bulk corpus for a real run; on the current 7.6M-token snapshot use it only as a throughput/MFU validation. vocab_size overridden by data meta.json. Micro-batch kept small: 64K-vocab logits [B*T,V] OOM the 24GB card above ~8x1024; chunked cross-entropy is the real fix (stack TODO).",
+  "vocab_size": 65536,
+  "dim": 768,
+  "n_layers": 16,
+  "n_heads": 12,
+  "n_kv_heads": 4,
+  "max_seq_len": 2048,
+  "data_dir": "data/real_v0",
+  "out_dir": "out/bachattlm1-150m",
+  "batch_size": 4,
+  "grad_accum": 64,
+  "max_steps": 4000,
+  "lr": 0.0004,
+  "warmup_steps": 200,
+  "weight_decay": 0.1,
+  "log_interval": 20,
+  "eval_interval": 500,
+  "eval_iters": 50,
+  "ckpt_interval": 250,
+  "peak_flops": 125000000000000.0
+}

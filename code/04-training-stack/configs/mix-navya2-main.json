@@ -1,0 +1,23 @@
+{
+  "_comment": "navya-2 MAIN-phase mix (steps 0-24,309 of 28,600; 120B tokens). India-centred share 43%: Indic native-script FLOOR 18% + Indian English/Hinglish 17% + India finance/tax/law 8%. Global English draws only FineWeb-Edu default int_score>=4 bins (--bin-include '\\.s[45]\\.bin$'); sample-100BT shards excluded (subset). Domain keys fold shard domains by suffix (indic_hin_web/_wiki/_books -> indic_hin; global_english_textbook/_science/_medical/_wiki/_books -> global_english; code_<lang>/code_reasoning -> code). Tight languages (tel, mar, and the seven small ones) may run <=2 epochs (loader MAX_EPOCHS 4). Decided 2026-08-21 07:00 IST.",
+  "global_english": 0.42,
+  "indian_english": 0.17,
+  "indic_hin": 0.08,
+  "indic_ben": 0.02,
+  "indic_tam": 0.02,
+  "indic_tel": 0.02,
+  "indic_mar": 0.02,
+  "indic_guj": 0.004,
+  "indic_kan": 0.004,
+  "indic_mal": 0.004,
+  "indic_pan": 0.003,
+  "indic_urd": 0.003,
+  "indic_ory": 0.001,
+  "indic_asm": 0.001,
+  "code": 0.05,
+  "finance_econ_law": 0.03,
+  "india_tax_authoritative": 0.03,
+  "india_case_law": 0.015,
+  "india_corporate_law": 0.005,
+  "math_reasoning": 0.1
+}

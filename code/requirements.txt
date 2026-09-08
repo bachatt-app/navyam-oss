@@ -1,0 +1,4 @@
+# Phase 0 research environment. Pin versions when the stack stabilizes.
+numpy
+torch
+tokenizers

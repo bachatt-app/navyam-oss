@@ -1,0 +1,15 @@
+{
+  "_comment": "navya-1a-sft3: sft_v5 corpus — adds S062 loans bank (606 paraphrase pairs onto 51 canonical intents, 55-question generative holdout) on top of S061 MF/SIP + v4 corpus. 2,012 convs / 336,399 supervised tokens (1.9x v4). Steps 400->500 for the larger set; batch 2x8 is the seq-2048 A10 OOM-safe shape.",
+  "data_dir": "../04-training-stack/data/sft_v5",
+  "out_dir": "../04-training-stack/out/navya-1a-sft3",
+  "batch_size": 2,
+  "grad_accum": 8,
+  "max_steps": 500,
+  "lr": 1e-4,
+  "warmup_steps": 20,
+  "weight_decay": 0.1,
+  "log_interval": 25,
+  "eval_interval": 100,
+  "eval_iters": 8,
+  "ckpt_interval": 100
+}

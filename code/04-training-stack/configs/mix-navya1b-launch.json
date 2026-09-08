@@ -1,0 +1,14 @@
+{
+  "_comment_": "LAUNCH mix (2026-08-20): deviates from mix-navya1b-main because india_tax (0.4M tokens, India Code 502-blocked) and india_corporate_law (0) cannot fund their slices; finance_econ_law capped by its 77M pool at 4 epochs. Freed weight -> math (we bank 7B) + global. Statute slice re-enters next snapshot.",
+  "global_english": 0.45,
+  "indian_english": 0.15,
+  "indic_hin": 0.04,
+  "indic_ben": 0.015,
+  "indic_tam": 0.015,
+  "indic_mar": 0.015,
+  "indic_tel": 0.015,
+  "code": 0.05,
+  "finance_econ_law": 0.02,
+  "india_case_law": 0.04,
+  "math_reasoning": 0.19
+}

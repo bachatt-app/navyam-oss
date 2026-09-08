@@ -1,0 +1,75 @@
+# Indian financial system
+Reserve Bank of India
+Securities and Exchange Board of India
+Insurance Regulatory and Development Authority
+Pension Fund Regulatory and Development Authority
+National Stock Exchange of India
+Bombay Stock Exchange
+NIFTY 50
+BSE SENSEX
+Unified Payments Interface
+National Payments Corporation of India
+Indian rupee
+Banking in India
+Income tax in India
+Goods and Services Tax (India)
+Union budget of India
+Employees' Provident Fund Organisation
+Public Provident Fund (India)
+National Pension System
+Mutual funds in India
+TransUnion CIBIL
+Non-performing asset
+Repo rate
+Statutory liquidity ratio
+Cash reserve ratio
+Priority sector lending
+Kisan Vikas Patra
+Sukanya Samriddhi Account
+National Savings Certificate (India)
+Fixed deposit
+Recurring deposit
+# Core finance concepts
+Compound interest
+Time value of money
+Net present value
+Internal rate of return
+Rate of return
+Bond (finance)
+Bond duration
+Yield curve
+Equity (finance)
+Stock market
+Dividend
+Capital gain
+Mutual fund
+Exchange-traded fund
+Index fund
+Systematic investment plan
+Portfolio (finance)
+Modern portfolio theory
+Diversification (finance)
+Asset allocation
+Risk management
+Value at risk
+Derivative (finance)
+Option (finance)
+Futures contract
+Hedge (finance)
+Inflation
+Monetary policy
+Fiscal policy
+Credit score
+Credit history
+Loan
+Mortgage loan
+Amortization schedule
+Life insurance
+Health insurance
+Term life insurance
+Reinsurance
+Actuarial science
+Real estate investment trust
+Financial literacy
+Behavioral economics
+Efficient-market hypothesis

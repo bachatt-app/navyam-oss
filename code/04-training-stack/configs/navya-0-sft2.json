@@ -1,0 +1,22 @@
+{
+  "_comment": "navya-0-sft2: instruction-tune navya-0 on the 100% first-party authored corpus (S046, 275 pairs, 35.6K tokens). Replaces v1's dolly+oasst2 mix that taught URL-hallucination and English-only replies. 300 steps x 16.4K tok ~ 70 epochs (intentional near-memorization of the small first-party corpus) (LIMA-style: small consistent corpus, repetition via epochs). Plain LM loss (no prompt masking) - still the documented v0 tradeoff.",
+  "vocab_size": 65536,
+  "dim": 512,
+  "n_layers": 8,
+  "n_heads": 8,
+  "n_kv_heads": 2,
+  "max_seq_len": 1024,
+  "data_dir": "data/sft_v2",
+  "out_dir": "out/navya-0-sft2",
+  "batch_size": 8,
+  "grad_accum": 2,
+  "max_steps": 300,
+  "lr": 0.0001,
+  "warmup_steps": 10,
+  "weight_decay": 0.1,
+  "log_interval": 10,
+  "eval_interval": 25,
+  "eval_iters": 10,
+  "ckpt_interval": 50,
+  "peak_flops": 125000000000000.0
+}

@@ -1,0 +1,44 @@
+{
+  "global_english": {
+    "paths": [
+      "pools/global_english/clean.jsonl"
+    ],
+    "tokens": 2327102,
+    "weight": 0.5
+  },
+  "indian_english": {
+    "paths": [
+      "pools/indian_english/clean.jsonl"
+    ],
+    "tokens": 314023,
+    "weight": 0.175
+  },
+  "indian_languages": {
+    "paths": [
+      "pools/indian_languages/clean.jsonl"
+    ],
+    "tokens": 1051816,
+    "weight": 0.125
+  },
+  "code": {
+    "paths": [
+      "pools/code/clean.jsonl"
+    ],
+    "tokens": 220900,
+    "weight": 0.1
+  },
+  "finance_econ_law": {
+    "paths": [
+      "pools/finance_econ_law/clean.jsonl"
+    ],
+    "tokens": 310594,
+    "weight": 0.075
+  },
+  "math_reasoning": {
+    "paths": [
+      "pools/math_reasoning/clean.jsonl"
+    ],
+    "tokens": 248165,
+    "weight": 0.025
+  }
+}
