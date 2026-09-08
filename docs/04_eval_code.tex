@@ -1,0 +1,361 @@
+% !TEX root = main.tex
+\clearpage
+\section{Code guide: Evaluation and Training Stack}
+
+After cleaning there are now three distinct layers:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item tokenize each domain pool;
+  \item build the weighted training stream; and
+  \item train/evaluate the model.
+\end{itemize}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+CLEANED DATA POOLS
+pools/<domain>/clean.jsonl
+        |
+        v
+tokenize_pool.py
+        |
+        | uses tokenizer.json
+        v
+data/domains/<domain>.bin
+        +
+<domain>.bin.meta.json
+        |
+        v
+build_stream.py
+        |
+        | applies domain weights
+        | holds out validation
+        | repeats small pools up to 4x
+        v
+data/navya0_v1/
+|-- train.bin
+|-- val.bin
+|-- meta.json
+        |
+        v
+train.py
+        |
+        | reads token batches
+        | trains GPT model
+        v
+checkpoint.pt
+        |
+        v
+run_eval.py
+        |
+        v
+BachattBench scores
+\end{lstlisting}
+
+\texttt{build\_stream.py} is the real token-level realization of the mixing
+plan. \texttt{mix.py} is more of a planning/manifest stage.
+
+\subsection{\texttt{tokenize\_pool.py}}
+
+Its responsibility is to convert one cleaned domain pool from JSONL text into
+a flat stream of BPE token IDs.
+
+Example command:
+\begin{lstlisting}[style=shadedpython]
+python tokenize_pool.py \
+    --pool ../02-data-pipeline/pools/global_english/clean.jsonl \
+    --tokenizer ../01-tokenizer/tokenizer-v0.3-64k.json \
+    --out data/domains/global_english.bin
+\end{lstlisting}
+
+Flow:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+global_english/clean.jsonl
+        |
+        v
+read one document
+        |
+        v
+extract ["text"]
+        |
+        v
+tokenizer.encode(text)
+        |
+        v
+token IDs
+        |
+        v
+append <|eos|>
+        |
+        v
+write binary tokens
+        |
+        v
+global_english.bin
+\end{lstlisting}
+
+\subsubsection{Why \spectok{<|eos|>} is appended}
+
+This code:
+\begin{lstlisting}[style=shadedpython]
+buf.extend(tok.encode(text).ids)
+buf.append(eos)
+\end{lstlisting}
+means the model can learn: ``This document ended here.'' Without it, two
+unrelated documents could get glued together as though they were continuous
+text.
+
+\subsubsection{Why \texttt{tokenize\_pool.py} streams}
+
+This is an important difference from \texttt{prepare\_data.py}.
+
+\texttt{prepare\_data.py} does:
+\begin{lstlisting}[style=shadedpython]
+ids = []
+\end{lstlisting}
+and keeps accumulating token IDs in RAM. That is fine for small datasets. But
+for 1 billion tokens, keeping everything in a Python list is impractical.
+
+So \texttt{tokenize\_pool.py} buffers only about 1{,}000{,}000 token IDs, then
+writes them to disk:
+\begin{lstlisting}[style=shadedpython]
+if len(buf) >= 1_000_000:
+    np.array(buf, dtype=dtype).tofile(out)
+\end{lstlisting}
+
+\subsubsection{\texttt{.bin.meta.json}}
+
+For each binary file it also creates metadata:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+global_english.bin
+global_english.bin.meta.json
+\end{lstlisting}
+The metadata contains:
+\begin{lstlisting}[style=shadedpython]
+{
+  "pool": "...clean.jsonl",
+  "tokenizer": "...tokenizer.json",
+  "vocab_size": 64000,
+  "dtype": "uint16",
+  "docs": 12345,
+  "tokens": 123456789
+}
+\end{lstlisting}
+This tells later stages which tokenizer was used, how large the vocabulary
+was, what integer dtype was written, how many docs were ingested, and how
+many tokens were produced.
+
+\subsection{\texttt{prepare\_data.py}}
+
+This is similar, but simpler and intended for smaller runs.
+
+Example:
+\begin{lstlisting}[style=shadedpython]
+python prepare_data.py \
+    --input "texts/*.txt" \
+    --tokenizer tok.json \
+    --out data/run1
+\end{lstlisting}
+
+It does:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+*.txt files
+     |
+     v
+read everything
+     |
+     v
+tokenize
+     |
+     v
+put ALL token IDs in RAM
+     |
+     v
+split last 10% as validation
+     |
+     v
+train.bin
+val.bin
+meta.json
+\end{lstlisting}
+
+The important difference:
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}p{0.42\textwidth}p{0.48\textwidth}@{}}
+    \textbf{\texttt{prepare\_data.py}} &
+    \textbf{\texttt{tokenize\_pool.py}} \\
+    \hline
+    Reads \texttt{.txt} files &
+    Reads cleaned \texttt{.jsonl} pools \\
+    Accumulates IDs in RAM &
+    Streams IDs to disk \\
+    Small/research datasets &
+    Billion-token-scale pools \\
+    Creates final train/val directly &
+    Creates one \texttt{.bin} per domain \\
+    Simple path &
+    Scalable domain-mixing path
+  \end{tabular}
+\end{center}
+
+So for smoke tests, \texttt{prepare\_data.py} is enough. For real domain
+mixing:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+tokenize_pool.py
+  -> build_stream.py
+\end{lstlisting}
+
+\subsection{\texttt{build\_stream.py}}
+
+This is a very important script. Its responsibility is to take the individually
+tokenized domain pools and physically construct the final weighted
+\texttt{train.bin} and \texttt{val.bin}.
+
+Input:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+data/domains/
+|-- global_english.bin
+|-- global_english.bin.meta.json
+|-- indian_english.bin
+|-- indian_english.bin.meta.json
+|-- indian_languages.bin
+|-- ...
+\end{lstlisting}
+
+Then:
+\begin{lstlisting}[style=shadedpython]
+python build_stream.py \
+    --domains data/domains \
+    --out data/navya0_v1 \
+    --total-tokens 1.3e9
+\end{lstlisting}
+
+\subsubsection{Tokenizer compatibility}
+
+It first checks tokenizer compatibility. It reads every domain metadata file:
+\begin{lstlisting}[style=shadedpython]
+vocab = {m["vocab_size"] for m in metas.values()}
+dtype = {m["dtype"] for m in metas.values()}
+\end{lstlisting}
+Then:
+\begin{lstlisting}[style=shadedpython]
+assert len(vocab) == 1 and len(dtype) == 1, "mixed tokenizers!"
+\end{lstlisting}
+This is extremely important. Imagine an English bin where token ID 523 means
+\texttt{"India"}, and a Hindi bin where token ID 523 means \dev{का}, because
+they were generated with different tokenizers. Combining those streams would
+be meaningless. All domain bins must use the exact same vocabulary layout and
+dtype.
+
+\subsubsection{Validation before mixing}
+
+Validation is separated before mixing. For every domain:
+\begin{lstlisting}[style=shadedpython]
+n_val = max(1, int(len(arr) * VAL_FRAC))
+\end{lstlisting}
+where \texttt{VAL\_FRAC = 0.005}, so 0.5\% of each domain is reserved for
+validation. Then:
+\begin{lstlisting}[style=shadedpython]
+train_pool = arr[:-n_val]
+val_pool   = arr[-n_val:]
+\end{lstlisting}
+Example: if global English has 100M tokens, the first 99.5M become the
+training pool and the last 0.5M the validation pool. Importantly, validation is
+removed before repetition, so validation tokens are not accidentally copied
+into training.
+
+\subsubsection{Domain weights}
+
+Weights:
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}l r@{}}
+    \textbf{Domain} & \textbf{Weight} \\
+    \hline
+    global English & 50\% \\
+    Indian English & 17.5\% \\
+    Indian languages & 12.5\% \\
+    code & 10\% \\
+    finance/econ/law & 7.5\% \\
+    math/reasoning & 2.5\%
+  \end{tabular}
+\end{center}
+Suppose the total requested is 1.3B tokens. For global English,
+$0.50\times 1.3\text{B}=650\text{M}$. For Indian languages,
+$0.125\times 1.3\text{B}=162.5\text{M}$. In code:
+\begin{lstlisting}[style=shadedpython]
+target = w * args.total_tokens
+\end{lstlisting}
+
+\subsubsection{Repetition}
+
+Then:
+\begin{lstlisting}[style=shadedpython]
+epochs = min(
+    target / len(train_pool),
+    MAX_EPOCHS
+)
+\end{lstlisting}
+This is the same idea as \texttt{mix.py}, but now using real BPE token counts.
+Example: an Indian-language train pool of 80M tokens with a desired target of
+162.5M gives
+\[
+  \text{epochs}=162.5/80\approx 2.03,
+\]
+meaning use the entire pool twice, plus about 3\% of it again.
+
+\subsubsection{Constructing the stream}
+
+This is where \texttt{build\_stream.py} differs fundamentally from
+\texttt{mix.py}.
+\texttt{mix.py} says ``use 2.03 epochs''; \texttt{build\_stream.py} actually
+performs it:
+\begin{lstlisting}[style=shadedpython]
+full, rem = divmod(got, len(train_pool))
+\end{lstlisting}
+For example, with \texttt{got = 162.5M} and \texttt{pool = 80M},
+\texttt{full = 2} and \texttt{rem = 2.5M}. Then:
+\begin{lstlisting}[style=shadedpython]
+for _ in range(full):
+    train_pool.tofile(train_f)
+\end{lstlisting}
+writes $80\text{M}+80\text{M}$, and
+\begin{lstlisting}[style=shadedpython]
+train_pool[:rem].tofile(train_f)
+\end{lstlisting}
+adds 2.5M. Result: 162.5M tokens actually written into final
+\texttt{train.bin}.
+
+\subsubsection{\texttt{mix.py} vs \texttt{build\_stream.py}}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}p{0.42\textwidth}p{0.48\textwidth}@{}}
+    \textbf{\texttt{mix.py}} &
+    \textbf{\texttt{build\_stream.py}} \\
+    \hline
+    Planning layer &
+    Execution layer \\
+    Uses supplied pool token counts &
+    Reads actual \texttt{.bin} token streams \\
+    Calculates epochs &
+    Calculates + physically repeats data \\
+    Produces snapshot manifest &
+    Produces \texttt{train.bin} / \texttt{val.bin} \\
+    Does not tokenize &
+    Input is already tokenized \\
+    Does not physically concatenate &
+    Actually writes final streams
+  \end{tabular}
+\end{center}
+
+Mental model:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item \texttt{mix.py} $\rightarrow$ ``This is what we WANT.''
+  \item \texttt{build\_stream.py} $\rightarrow$ ``Actually BUILD it.''
+\end{itemize}
+
+

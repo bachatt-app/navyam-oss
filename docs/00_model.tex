@@ -1,0 +1,2016 @@
+% !TEX root = main.tex
+\section{From raw text to a trained language model}
+
+\subsection*{Notation}
+
+\begin{tabular}{c l}
+  \(B\) & batch size \\
+  \(T\) & sequence length \\
+  \(C\) & embedding/model dimension \\
+  \(H\) & number of attention heads \\
+  \(D\) & head size, \(D=C/H\) \\
+  \(V\) & vocabulary size
+\end{tabular}
+
+\subsection*{Training and generation pipeline}
+
+\begingroup
+\setlength{\parskip}{0pt}
+\small\ttfamily
+\begin{longtable}{@{}p{0.67\textwidth}@{}l@{}}
+RAW TEXT & \\
+\hspace*{2em}\(\downarrow\) & \\
+Build vocabulary & \([V]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Encode characters/tokens into IDs & \([T]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Create training batches & \([B,T]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Token embeddings & \([B,T,C]\) \\
+\hspace*{2em}+ & \\
+Position embeddings & \([T,C]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Representations & \([B,T,C]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Transformer Block & \([B,T,C]\) \\
+\hspace*{2em}|-- LayerNorm & \([B,T,C]\) \\
+\hspace*{2em}|-- Multi-Head Self-Attention & \\
+\hspace*{2em}|\hspace*{3em}|-- Query & \([B,H,T,D]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Key & \([B,H,T,D]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Value & \([B,H,T,D]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Attention scores & \([B,H,T,T]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Scaling & \([B,H,T,T]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Causal masking & \([B,H,T,T]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Softmax / attention weights & \([B,H,T,T]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Dropout & \([B,H,T,T]\) \\
+\hspace*{2em}|\hspace*{3em}|-- Weighted values & \([B,H,T,D]\) \\
+\hspace*{2em}|\hspace*{3em}`-- Combine heads & \([B,T,C]\) \\
+\hspace*{2em}|-- Residual connection & \([B,T,C]\) \\
+\hspace*{2em}|-- LayerNorm & \([B,T,C]\) \\
+\hspace*{2em}|-- Feed-Forward Network & \\
+\hspace*{2em}|\hspace*{3em}|-- Expand & \([B,T,4C]\) \\
+\hspace*{2em}|\hspace*{3em}`-- Project back & \([B,T,C]\) \\
+\hspace*{2em}`-- Residual connection & \([B,T,C]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Repeat Transformer blocks & \([B,T,C]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Final LayerNorm & \([B,T,C]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Language-model head & \([B,T,V]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Logits & \([B,T,V]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Flatten for loss & \\
+\hspace*{2em}|-- Logits & \([B\mathbin{\times}T,V]\) \\
+\hspace*{2em}`-- Targets & \([B\mathbin{\times}T]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Cross-entropy loss & \([\text{scalar}]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Backpropagation & \\
+\hspace*{2em}\(\downarrow\) & \\
+AdamW updates parameters & \\
+\hspace*{2em}\(\downarrow\) & \\
+Repeat training & \\
+\hspace*{2em}\(\downarrow\) & \\
+Generation & \\
+\hspace*{2em}|-- Context tokens & \([B,T]\) \\
+\hspace*{2em}|-- Model logits & \([B,T,V]\) \\
+\hspace*{2em}|-- Latest logits & \([B,V]\) \\
+\hspace*{2em}|-- Softmax probabilities & \([B,V]\) \\
+\hspace*{2em}|-- Sample next token & \([B,1]\) \\
+\hspace*{2em}`-- Append token & \([B,T+1]\) \\
+\hspace*{2em}\(\downarrow\) & \\
+Repeat &
+\end{longtable}
+\endgroup
+
+\clearpage
+\section{Formula, purpose, and tiny examples}
+
+\subsection{Build vocabulary \( [V] \)}
+
+\textbf{What it does:} Finds every unique token the model can understand and
+predict.
+
+\[
+  V = \lvert\text{unique tokens}\rvert
+\]
+
+\textbf{Example:}
+\begin{verbatim}
+text = "hello"
+tokens = {h,e,l,o}
+V = 4
+\end{verbatim}
+
+\subsection{Encode text into token IDs}
+
+\textbf{What it does:} Converts text into integers.
+
+\[
+  \text{token} \longrightarrow \text{token ID}
+\]
+
+\textbf{Example:}
+\begin{verbatim}
+h -> 0
+e -> 1
+l -> 2
+o -> 3
+
+"hello" -> [0,1,2,2,3]
+\end{verbatim}
+
+\subsection{Create training batches \( [B,T] \)}
+
+\textbf{What it does:} Creates several sequences for training at once.
+
+\[
+  X \in \mathbb{Z}^{B\times T},
+  \qquad
+  Y_{b,t} = X_{b,t+1}
+\]
+
+The targets are shifted by one token. \\
+
+\break
+
+\textbf{Example:}
+\begin{verbatim}
+Input:   h e l l
+Target:  e l l o
+
+32 = B = batch size
+8  = T = sequence length
+
+inputs.shape  = [32,8]
+targets.shape = [32,8]
+\end{verbatim}
+
+Conceptually, the input batch could look like this:
+\begin{verbatim}
+inputs = [
+  [h, e, l, l, o, <space>, w, o],  <- sequence 1
+  [e, l, l, o, <space>, w, o, r],  <- sequence 2
+  [l, l, o, <space>, w, o, r, l],  <- sequence 3
+  ...
+  32 sequences total
+]
+\end{verbatim}
+
+Each row contains eight tokens. Therefore, the batch shape is
+\[
+  \underbrace{32}_{\substack{\text{sequences}\\\text{in the batch}}}
+  \;\times\;
+  \underbrace{8}_{\substack{\text{tokens in}\\\text{each sequence}}}
+  \;=\;[32,8].
+\]
+
+\subsection{Token embeddings \( [B,T,C] \)}
+
+\textbf{What it does:} Converts each token ID into a learned vector.
+
+\[
+  E_{\text{token}}(x_t) \in \mathbb{R}^{C},
+  \qquad
+  [B,T] \longrightarrow [B,T,C]
+\]
+
+\textbf{Example:} Token \texttt{h}, with ID 3, might become
+\[
+  [0.2,-0.7,0.4,\ldots].
+\]
+If \(C=32\), each token gets 32 numbers.
+
+\begin{quote}
+  ``What token is this?''
+\end{quote}
+
+\subsection{Position embeddings \( [T,C] \)}
+
+\textbf{What it does:} Gives the model information about where each token
+appears.
+
+\[
+  E_{\text{position}}(t) \in \mathbb{R}^{C}
+\]
+
+The initial representation is
+\[
+  x_t = E_{\text{token}}(\text{token}_t)
+        + E_{\text{position}}(t).
+\]
+
+\textbf{Example:}
+\begin{verbatim}
+first "l":
+token_embedding(l) + position_embedding(2)
+
+second "l":
+token_embedding(l) + position_embedding(3)
+\end{verbatim}
+
+The same token at a different position has a different representation.
+
+\begin{quote}
+  ``Where is this token?''
+\end{quote}
+
+\subsection{Initial representation \( [B,T,C] \)}
+
+After adding both embeddings,
+\[
+  X = E_{\text{token}} + E_{\text{position}}.
+\]
+
+\textbf{Example:} Shape \([32,8,32]\) means 32 sequences, 8 tokens per
+sequence, and 32 features per token.
+
+\subsection{Layer Normalization}
+
+\textbf{What it does:} Keeps each token's feature values numerically stable.
+For one token vector,
+\[
+  \mu = \frac{1}{C}\sum_{i=1}^{C}x_i,
+  \qquad
+  \sigma^2 = \frac{1}{C}\sum_{i=1}^{C}(x_i-\mu)^2,
+\]
+\[
+  \widehat{x}_i = \frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}},
+  \qquad
+  y_i = \gamma_i\widehat{x}_i+\beta_i.
+\]
+
+\textbf{Example:}
+\begin{verbatim}
+before: [2,4,6,8]
+after:  approximately [-1.34,-0.45,0.45,1.34]
+\end{verbatim}
+
+\begin{quote}
+  ``Keep the numerical scale stable.''
+\end{quote}
+
+\subsection{Query, Key, and Value}
+
+For an input \(X\in\mathbb{R}^{B\times T\times C}\), the model creates
+\[
+  Q=XW_Q, \qquad K=XW_K, \qquad V=XW_V.
+\]
+
+Initially, \(Q\), \(K\), and \(V\) each have shape \([B,T,C]\).
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+Query & ``What am I looking for?'' \\
+Key   & ``What information do I contain?'' \\
+Value & ``What information should I send?''
+\end{tabular}
+\end{center}
+
+Suppose the input is:
+\begin{verbatim}
+the cat sat
+\end{verbatim}
+
+Its tensor shape is
+\[
+  X:[B,T,C]=[1,3,4].
+\]
+This means there are:
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parsep}{0pt}
+  \item 1 sequence,
+  \item 3 tokens, and
+  \item each token represented by 4 numbers
+\end{itemize}
+
+For example,
+\begin{align*}
+  x_{\text{the}} &= [1.0,0.2,0.1,0.7],\\
+  x_{\text{cat}} &= [0.3,1.1,0.8,0.2],\\
+  x_{\text{sat}} &= [0.5,0.4,1.2,0.9].
+\end{align*}
+Thus, omitting the outer batch dimension for readability,
+\[
+  X=
+  \begin{bmatrix}
+    1.0 & 0.2 & 0.1 & 0.7\\
+    0.3 & 1.1 & 0.8 & 0.2\\
+    0.5 & 0.4 & 1.2 & 0.9
+  \end{bmatrix}
+  \begin{matrix}
+    \leftarrow \text{the}\\
+    \leftarrow \text{cat}\\
+    \leftarrow \text{sat}
+  \end{matrix}.
+\]
+
+The model starts with the same representation \(X\), but learns three
+different projection matrices, \(W_Q\), \(W_K\), and \(W_V\), and computes
+\[
+  Q=XW_Q, \qquad K=XW_K, \qquad V=XW_V.
+\]
+The original token vectors are therefore transformed in three different ways. \\
+
+With the linear layers
+\begin{lstlisting}[language=Python]
+self.query = nn.Linear(C, C, bias=False)
+self.key   = nn.Linear(C, C, bias=False)
+self.value = nn.Linear(C, C, bias=False)
+\end{lstlisting}
+the shapes remain
+\[
+  Q:[B,T,C], \qquad K:[B,T,C], \qquad V:[B,T,C].
+\]
+
+For example, the token \texttt{sat} might begin as
+\[
+  x_{\text{sat}}=[0.5,0.4,1.2,0.9]
+\]
+and become
+\begin{align*}
+  q_{\text{sat}} &= [0.8,0.1,0.7,0.2],\\
+  k_{\text{sat}} &= [0.2,0.9,0.4,0.6],\\
+  v_{\text{sat}} &= [1.1,0.3,0.8,0.5].
+\end{align*}
+
+\subsubsection*{Query: ``What am I looking for?''}
+
+When processing \texttt{sat}, its query might represent the question:
+\begin{quote}
+  \emph{``I am a verb. Which previous token is likely the subject performing
+  this action?''}
+\end{quote}
+The model uses this query to search the other tokens for relevant information.
+
+\subsubsection*{Key: ``What information do I contain?''}
+
+Each token has a key that advertises the kind of information it contains. For
+example,
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\(k_{\text{the}}\) & ``I am mostly a determiner.'' \\
+\(k_{\text{cat}}\) & ``I am a noun and a possible subject.'' \\
+\(k_{\text{sat}}\) & ``I am a verb.''
+\end{tabular}
+\end{center}
+
+The query for \texttt{sat} is compared with every key. Example dot products
+might be
+\begin{align*}
+  q_{\text{sat}}\mathbin{\cdot}k_{\text{the}} &= 0.3,\\
+  q_{\text{sat}}\mathbin{\cdot}k_{\text{cat}} &= 2.4,\\
+  q_{\text{sat}}\mathbin{\cdot}k_{\text{sat}} &= 0.4.
+\end{align*}
+The strongest match is \texttt{cat}, so attention treats \texttt{cat} as
+especially relevant when updating the representation of \texttt{sat}.
+
+\subsubsection*{Value: ``What information should I send?''}
+
+The key helps determine whether a token is relevant. Once the attention
+weights have been calculated, the value supplies the actual information to
+transfer. Suppose the attention weights for \texttt{sat} are
+\[
+  \text{the}:10\%, \qquad
+  \text{cat}:70\%, \qquad
+  \text{sat}:20\%.
+\]
+Then the output for \texttt{sat} is approximately
+\[
+  o_{\text{sat}}
+  =0.1v_{\text{the}}+0.7v_{\text{cat}}+0.2v_{\text{sat}}.
+\]
+Consequently, the updated representation of \texttt{sat} receives most of its
+contextual information from \texttt{cat}.
+
+\subsection{Split into attention heads}
+
+In the above example, \(Q\), \(K\), and \(V\) searched for \texttt{cat} using a
+verb--subject relationship.
+
+However, in reality multiple attention heads work on multiple such relationships in parallel.
+
+Imagine the sequence:
+\begin{quote}
+  \texttt{The cat drank milk because it was thirsty.}
+\end{quote}
+Different relationships may matter at the same time. For example, separate
+attention heads might learn to focus on:
+\begin{itemize}
+  \setlength{\itemsep}{0.25em}
+  \item a \textbf{pronoun--noun reference}: \texttt{it} \(\longrightarrow\) \texttt{cat},
+  \item a \textbf{verb--subject relationship}: \texttt{drank} \(\longrightarrow\)
+        \texttt{cat},
+  \item a \textbf{nearby grammatical relationship}: \texttt{the}
+        \(\longrightarrow\) \texttt{cat}, and
+  \item \textbf{long-range context}: \texttt{thirsty} \(\longrightarrow\) \texttt{cat}.
+\end{itemize}
+
+With only one head, a single attention mechanism must represent all these
+relationships in the same space. With multiple heads, different heads can
+represent different kinds of relationships in parallel:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+Head 1 & relationship type A \\
+Head 2 & relationship type B \\
+Head 3 & relationship type C \\
+Head 4 & relationship type D
+\end{tabular}
+\end{center}
+
+The model is not explicitly told what each head should learn. During training,
+it discovers useful specializations automatically.
+
+Let
+\[
+  H=\text{number of heads},
+  \qquad
+  D=\frac{C}{H}.
+\]
+
+For example, if \(C=32\) and \(H=4\), then \(D=8\). \\
+
+So instead of one 32-dimensional attention head, we create four heads, each working with 8 features.
+
+
+\textbf{Conceptually,} a 32-dimensional query vector
+\[
+\left[
+\begin{array}{cccccccc}
+q_1 & q_2 & q_3 & q_4 & q_5 & q_6 & q_7 & q_8 \\
+q_9 & q_{10} & q_{11} & q_{12} & q_{13} & q_{14} & q_{15} & q_{16} \\
+q_{17} & q_{18} & q_{19} & q_{20} & q_{21} & q_{22} & q_{23} & q_{24} \\
+q_{25} & q_{26} & q_{27} & q_{28} & q_{29} & q_{30} & q_{31} & q_{32}
+\end{array}
+\right]
+\]
+can be viewed as four smaller query vectors:
+\begin{align*}
+  \text{Head 1:}&\quad [q_1,\ldots,q_8],\\
+  \text{Head 2:}&\quad [q_9,\ldots,q_{16}],\\
+  \text{Head 3:}&\quad [q_{17},\ldots,q_{24}],\\
+  \text{Head 4:}&\quad [q_{25},\ldots,q_{32}].
+\end{align*}
+Thus,
+\[
+  \underbrace{32}_{\text{features}}
+  \quad\longrightarrow\quad
+  \underbrace{4}_{\text{heads}}
+  \times
+  \underbrace{8}_{\text{features per head}}.
+\]
+
+The shape changes as
+\[
+  [B,T,C] \longrightarrow [B,H,T,D],
+\]
+for example,
+\[
+  [32,8,32] \longrightarrow [32,4,8,8].
+\]
+
+
+\textbf{Meaning:}
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item 32 sequences in the batch,
+  \item 4 attention heads,
+  \item 8 token positions, and
+  \item 8 features per head.
+\end{itemize}
+Each head gets its own 8-dimensional slice.
+
+\subsection{Attention scores \( [B,H,T,T] \)}
+
+\textbf{What it does:} Measures how relevant each token is to every other
+token.
+
+\[
+  S=QK^{\mathsf T},
+  \qquad
+  S_{\text{scaled}}=\frac{QK^{\mathsf T}}{\sqrt{D}}.
+\]
+
+where:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(Q\) & queries \\
+  \(K\) & keys \\
+  \(D\) & head size \\
+  \(S\) & attention scores
+\end{tabular}
+\end{center}
+
+For each token's query, we compare it with every token's key using a dot product.
+
+For one attention head in one batch element, the shapes initially are
+\[
+  Q:[T,D],
+  \qquad
+  K:[T,D].
+\]
+Transpose \(K\):
+\[
+  K^{\mathsf T}:[D,T].
+\]
+Then matrix multiplication gives
+\[
+  \underbrace{[T,D]}_{Q}
+  \;@\;
+  \underbrace{[D,T]}_{K^{\mathsf T}}
+  \quad\longrightarrow\quad
+  \underbrace{[T,T]}_{\text{attention scores}}.
+\]
+
+The dot product measures how aligned two vectors are.
+
+In a real model, the shapes are:
+\[
+  Q:[B,H,T,D],\qquad
+  K^{\mathsf T}:[B,H,D,T]
+  \longrightarrow S:[B,H,T,T].
+\]
+
+In \(S:[B,H,T,T]\), the dimensions represent:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(B\) & different sequences in the batch \\
+  \(H\) & different attention heads \\
+  first \(T\) & query-token positions \\
+  second \(T\) & key-token positions
+\end{tabular}
+\end{center}
+
+\textbf{Example:}
+
+\begin{verbatim}
+the cat drank milk because it
+\end{verbatim}
+
+When processing \texttt{it}, one attention head might create a query
+representing something like:
+\begin{quote}
+  \emph{``I am looking for the noun this pronoun may refer to.''}
+\end{quote}
+
+The keys might produce scores like:
+\begin{verbatim}
+the      -> 0.2
+cat      -> 2.4
+drank    -> 0.1
+milk     -> 0.5
+because  -> 0.0
+it       -> 0.7
+\end{verbatim}
+
+The model therefore sees:
+\[
+  \texttt{cat}\longrightarrow\text{strongest match}.
+\]
+
+Higher scores indicate stronger relevance.
+
+\begin{quote}
+  ``Which tokens matter to me?''
+\end{quote}
+
+\subsection{Scaling}
+
+\textbf{What it does:} Stops dot products from becoming too large.
+
+As \(D\) gets larger, dot products tend to grow in magnitude. Large scores can
+make softmax too extreme.
+
+\[
+  \text{scaled score}=\frac{\text{score}}{\sqrt{D}}.
+\]
+
+If \(D=16\), then \(\sqrt{D}=4\), so a score of 12 becomes 3. This helps
+softmax behave more smoothly.
+
+\subsection{Causal masking}
+
+\textbf{What it does:} Prevents GPT from seeing future tokens.
+
+\[
+  M_{ij}=
+  \begin{cases}
+    0,       & j\leq i,\\
+    -\infty, & j>i,
+  \end{cases}
+  \qquad
+  S'=S+M.
+\]
+
+Here,
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(i\) & current query-token position \\
+  \(j\) & key-token position being examined
+\end{tabular}
+\end{center}
+
+If \(j\leq i\), the key token is at the current or a previous position, so attention is allowed. \\
+If \(j>i\), the key token is in the future, so attention
+is blocked.
+
+For four tokens, with query positions as rows and key positions as columns,
+the mask is
+\[
+  M=
+  \begin{bmatrix}
+    0 & -\infty & -\infty & -\infty \\
+    0 & 0       & -\infty & -\infty \\
+    0 & 0       & 0       & -\infty \\
+    0 & 0       & 0       & 0
+  \end{bmatrix}.
+\]
+
+\textbf{Example:}
+
+Suppose the unmasked attention-score matrix is:
+\begin{center}
+\begin{tabular}{@{}c cccc@{}}
+  & \multicolumn{4}{c}{key token} \\
+  & \texttt{h} & \texttt{e} & \texttt{l} & \texttt{o} \\
+  query \texttt{h} & 1.2 & 0.4 & 0.9 & 0.7 \\
+  query \texttt{e} & 1.2 & 0.8 & 1.5 & 0.3 \\
+  query \texttt{l} & 0.5 & 1.6 & 1.1 & 0.9 \\
+  query \texttt{o} & 0.4 & 0.7 & 1.8 & 1.2
+\end{tabular}
+\end{center}
+
+Now focus on the row for \texttt{e}:
+\[
+  [1.2,0.8,1.5,0.3].
+\]
+Without masking, \texttt{e} could attend to:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+  \texttt{h} & \\
+  \texttt{e} & \\
+  \texttt{l} & \(\leftarrow\) future token \\
+  \texttt{o} & \(\leftarrow\) future token
+\end{tabular}
+\end{center}
+
+That is a problem. When GPT is at \texttt{e}, it should not already know that
+\texttt{l} and \texttt{o} come later. Therefore, we apply a causal mask. The
+masked row becomes
+\[
+  [1.2,0.8,-\infty,-\infty].
+\]
+
+In code, we can first create a lower-triangular mask:
+\begin{lstlisting}[style=shadedpython]
+mask = torch.tril(
+    torch.ones(T, T)
+)
+\end{lstlisting}
+For four tokens, this gives
+\[
+  \begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    1 & 1 & 0 & 0 \\
+    1 & 1 & 1 & 0 \\
+    1 & 1 & 1 & 1
+  \end{bmatrix}.
+\]
+
+We then replace every forbidden position with \(-\infty\): \\
+
+\begin{lstlisting}[style=shadedpython]
+scores = scores.masked_fill(
+    mask == 0,
+    float("-inf"),
+)
+\end{lstlisting}
+
+\subsubsection*{Why use \(-\infty\)?}
+
+The next step is softmax:
+\[
+  \operatorname{softmax}(s)_i
+  =\frac{e^{s_i}}{\sum_j e^{s_j}}.
+\]
+Since
+\[
+  e^{-\infty}=0,
+\]
+masked positions receive zero probability. For example,
+\[
+  [1.2,0.8,-\infty,-\infty]
+  \xrightarrow{\operatorname{softmax}}
+  [0.60,0.40,0.00,0.00].
+\]
+Thus, the query token \texttt{e} gives approximately:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  60\% & attention to \texttt{h} \\
+  40\% & attention to \texttt{e} \\
+  0\%  & attention to \texttt{l} \\
+  0\%  & attention to \texttt{o}
+\end{tabular}
+\end{center}
+The future tokens therefore have exactly zero attention probability.
+
+\subsection{Softmax / attention weights}
+
+\textbf{What it does:} Converts scores into probabilities.
+
+\[
+  A_{ij}=\frac{e^{S'_{ij}}}{\sum_k e^{S'_{ik}}}.
+\]
+
+For example,
+\[
+  [1.0,2.0,-\infty]
+  \xrightarrow{\operatorname{softmax}}
+  [0.27,0.73,0.00].
+\]
+The second token receives approximately 73\% of the attention.
+
+\subsection{Dropout}
+
+\textbf{What it does:} Randomly removes some values during training so the
+model does not rely too heavily on particular neurons or attention
+connections.
+
+If the dropout probability is \(p\), PyTorch uses \emph{inverted dropout}:
+\[
+  \operatorname{Dropout}(x)=\frac{m\odot x}{1-p},
+\]
+where each mask value is sampled independently as
+\[
+  m_i\sim\operatorname{Bernoulli}(1-p).
+\]
+Here,
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(x\) & input values \\
+  \(p\) & dropout probability \\
+  \(m\) & random binary mask containing 0 or 1 \\
+  \(\odot\) & element-wise multiplication \\
+  \(1-p\) & probability that a value is kept
+\end{tabular}
+\end{center}
+
+For example, suppose
+\[
+  p=0.1,
+  \qquad
+  1-p=0.9,
+  \qquad
+  x=[0.2,0.6,0.2].
+\]
+A randomly generated mask might be
+\[
+  m=[1,0,1].
+\]
+First apply the mask:
+\begin{align*}
+  m\odot x
+  &=[1,0,1]\odot[0.2,0.6,0.2]\\
+  &=[0.2,0,0.2].
+\end{align*}
+Then divide the surviving values by \(1-p=0.9\):
+\[
+  \operatorname{Dropout}(x)
+  =\frac{[0.2,0,0.2]}{0.9}
+  \approx[0.222,0,0.222].
+\]
+Thus,
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+  Before dropout: & \([0.2,0.6,0.2]\) \\
+  Random mask:    & \([1,0,1]\) \\
+  After dropout:  & \([0.22,0,0.22]\)
+\end{tabular}
+\end{center}
+
+Dividing by \(1-p\) keeps the expected magnitude of the values roughly
+unchanged during training. With 10\% dropout, each surviving value is scaled
+by
+\[
+  \frac{1}{0.9}\approx1.111,
+  \qquad
+  0.2\times1.111\approx0.222.
+\]
+
+In attention, dropout is often applied after softmax:
+\begin{lstlisting}[style=shadedpython]
+attention = F.softmax(scores, dim=-1)
+attention = self.dropout(attention)
+\end{lstlisting}
+
+\subsection{Weighted values \( [B,H,T,D] \)}
+
+\textbf{What it does:} This is the step where attention stops asking
+``Who matters?'' and actually collects information from those tokens.
+
+The formula is
+\[
+  O=AV,
+\]
+where:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(A\) & attention weights \\
+  \(V\) & value vectors \\
+  \(O\) & attention output
+\end{tabular}
+\end{center}
+
+
+
+The full attention formula is
+\[
+  \boxed{
+    \operatorname{Attention}(Q,K,V)
+    =\operatorname{softmax}\!\left(
+      \frac{QK^{\mathsf T}}{\sqrt{D}}+M
+    \right)V
+  }.
+\]
+
+For attention weights 20\%, 70\%, and 10\%, the output is
+\[
+  0.2V_A+0.7V_B+0.1V_C.
+\]
+This is the context-aware representation.
+
+\subsubsection*{Why is it context-aware?}
+
+Before attention, \texttt{sat} had only its own representation. After
+attention, its new representation contains information mixed from:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  20\% & from \texttt{the} \\
+  70\% & from \texttt{cat} \\
+  10\% & from \texttt{sat}
+\end{tabular}
+\end{center}
+Thus, \texttt{sat} now carries mostly information from \texttt{cat}.
+
+Therefore, the batched matrix multiplication has shape
+\[
+  \underbrace{[B,H,T,T]}_{\text{Attention}}
+  \;@\;
+  \underbrace{[B,H,T,D]}_{\text{Values}}
+  \quad\longrightarrow\quad
+  \underbrace{[B,H,T,D]}_{\text{Output}}.
+\]
+
+\subsection{Combine heads \( [B,T,C] \)}
+
+After each attention head finishes, the output has shape
+\[
+  [B,H,T,D],
+\]
+where:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(B\) & batch size \\
+  \(H\) & number of attention heads \\
+  \(T\) & sequence length \\
+  \(D\) & features per head
+\end{tabular}
+\end{center}
+
+Since \(H\times D=C\), the heads are concatenated:
+\[
+  [B,H,T,D] \longrightarrow [B,T,C].
+\]
+
+For example, four heads with eight features each give 32 features:
+\[
+  [B,4,T,8] \longrightarrow [B,T,32].
+\]
+
+\subsubsection*{How to combine heads}
+
+First transpose the head and token-position dimensions:
+\[
+  [B,H,T,D]\longrightarrow[B,T,H,D].
+\]
+Then flatten the head and per-head feature dimensions:
+\[
+  [B,T,H,D]\longrightarrow[B,T,H\times D]=[B,T,C].
+\]
+In code:
+\begin{lstlisting}[style=shadedpython]
+output = output.transpose(1, 2)
+output = output.reshape(B, T, C)
+\end{lstlisting}
+
+\subsection{Output projection}
+
+\textbf{What it does:} Concatenation collects the heads. Output projection blends the information from heads.
+
+\subsubsection*{Why do we need this if the heads are already combined?}
+
+Concatenation only places the head outputs next to each other. For example,
+suppose
+\begin{align*}
+  \text{Head 1 output:}&\quad [1,2],\\
+  \text{Head 2 output:}&\quad [5,7].
+\end{align*}
+After concatenation,
+\[
+  [1,2]\mathbin{\Vert}[5,7]=[1,2,5,7],
+\]
+where \(\Vert\) denotes concatenation. The information is now together, but
+it has not yet been mixed. 
+
+To combine these heads, You apply a learned linear layer:
+
+\[
+  Y=OW_O+b.
+\]
+
+\begin{lstlisting}[style=shadedpython]
+Output projection
+
+[B, T, C]
+    |
+    v
+Linear(C, C)
+    |
+    v
+[B, T, C]
+\end{lstlisting}
+
+\begin{quote}
+  ``Combine what all the heads learned.''
+\end{quote}
+
+\subsection{Residual connection}
+
+\textbf{What it does:} A residual connection means: do not replace the
+token's old representation with the new attention result. Instead, add the
+attention result to what the token already had.
+
+The formula is:
+\[
+  x_{\text{new}}=x+\operatorname{Attention}(x).
+\]
+
+\textbf{Example:} Suppose a token currently has
+\[
+  x=[1,2,3],
+\]
+and attention produces
+\[
+  \operatorname{Attention}(x)=[0.2,-0.5,0.7].
+\]
+Then
+\begin{align*}
+  x_{\text{new}}
+  &=[1,2,3]+[0.2,-0.5,0.7]\\
+  &=[1.2,1.5,3.7].
+\end{align*}
+Thus, the old information is still present, but it has been updated.
+
+\begin{quote}
+  ``Keep what I already knew and add the update.''
+\end{quote}
+
+\subsubsection*{A language example}
+
+Suppose the token is \texttt{sat}. Before attention, its vector might already
+encode:
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item verb-like information,
+  \item token identity, and
+  \item position information.
+\end{itemize}
+
+Attention then looks at the earlier tokens, and discovers that \texttt{cat} is highly relevant, so attention produces an
+update containing information about \texttt{cat}. Conceptually, residual
+addition performs
+\[
+  \underbrace{\text{original \texttt{sat} information}}_{x}
+  +
+  \underbrace{\text{context gathered from \texttt{cat}}}_{\operatorname{Attention}(x)}
+  =
+  \underbrace{\text{\texttt{sat} understood in this sentence}}_{x_{\text{new}}}.
+\]
+The result becomes more context-aware without discarding the original token representation. \\
+
+The shapes also remain the same:
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+  \(x\) & \([B,T,C]\) \\
+  \(\operatorname{Attention}(x)\) & \([B,T,C]\) \\
+  \hline
+  \(x_{\text{new}}\) & \([B,T,C]\)
+\end{tabular}
+\end{center}
+
+\subsection{Feed-forward network}
+
+\begin{lstlisting}[
+  style=shadedpython,
+  language={},
+  basicstyle=\small\sffamily,
+  keywordstyle=\bfseries\sffamily,
+  morekeywords={ATTENTION,FFN,RESIDUAL,Flow,Details},
+  columns=fullflexible,
+  keepspaces=true
+]
+ATTENTION
+"Look around."
+
+Which other tokens matter?
+Gather their information.
+
+          |
+          v
+
+FFN
+"Think about what you found."
+
+Take this token's gathered information
+and transform or refine it.
+
+Flow:    C -> 4C -> ReLU -> C
+Details: input -> more temp features -> switch -ve off -> combine back
+
+          |
+          v
+
+RESIDUAL
+"Keep what I knew too."
+
+Old representation
++
+FFN update
+\end{lstlisting}
+
+
+\subsubsection*{Let us walk through one token}
+
+Suppose that, after attention, the token \texttt{sat} has the representation
+\[
+  x=[2,1].
+\]
+
+\textbf{Step 1---Expand.} The first linear layer transforms the two features
+into a larger temporary representation. For example,
+\[
+  [2,1]\longrightarrow[3,-2,5,-1].
+\]
+This gives the model more temporary features with which to work.
+
+\textbf{Step 2---Apply ReLU.} ReLU is defined elementwise as
+\[
+  \operatorname{ReLU}(z)=\max(0,z).
+\]
+Therefore,
+\[
+  [3,-2,5,-1]\longrightarrow[3,0,5,0].
+\]
+The negative values are switched off.
+
+\textbf{Step 3---Shrink back.} The second linear layer combines the four
+temporary features back into two:
+\[
+  [3,0,5,0]\longrightarrow[1.4,2.8].
+\]
+
+The entire FFN can therefore be pictured as
+\begin{lstlisting}[style=shadedpython,language={}]
+Original token representation
+[2, 1]
+    |
+    v  Linear
+[3, -2, 5, -1]
+    |
+    v  ReLU
+[3, 0, 5, 0]
+    |
+    v  Linear
+[1.4, 2.8]
+\end{lstlisting}
+
+The final vector \([1.4,2.8]\) is the FFN update.
+
+\subsubsection*{Then apply the residual connection}
+
+The old representation is not discarded. The FFN update is added back to it:
+\[
+  \underbrace{[2,1]}_{\text{old }x}
+  +
+  \underbrace{[1.4,2.8]}_{\text{FFN update}}
+  =
+  \underbrace{[3.4,3.8]}_{\text{new }x}.
+\]
+
+The sequence
+
+\textbf{Your FFN:}
+\[
+  x
+  \longrightarrow \operatorname{Linear}(C,4C)
+  \longrightarrow \operatorname{ReLU}
+  \longrightarrow \operatorname{Linear}(4C,C).
+\]
+
+\textbf{For this model:}
+\[
+  32\longrightarrow128
+  \longrightarrow\operatorname{ReLU}
+  \longrightarrow32.
+\]
+
+contains a non-linear ReLU activation. This non-linearity allows the model to learn more complicated patterns than linear transformations alone.
+
+\textbf{FFN Model:}
+
+\[
+  x\longrightarrow h\longrightarrow y.
+\]
+
+\[
+  h=\operatorname{ReLU}(xW_1+b_1),
+  \qquad
+  y=hW_2+b_2.
+\]
+
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(x\) & what came \emph{into} the FFN \\
+  \(h\) & temporary hidden representation (the ``thinking workspace'') \\
+  \(y\) & what came \emph{out of} the FFN
+\end{tabular}
+\end{center}
+
+
+
+
+
+
+
+\(W_1\) : Matrix of the learned weights of the first linear layer,
+\(b_1\) : its learned bias. 
+
+In this model,
+\[
+  W_1:32\longrightarrow128,
+  \qquad
+  W_1\in\mathbb{R}^{32\times128}.
+\]
+Thus,
+\[
+  xW_1+b_1
+\]
+performs the transformation
+\[
+  32\text{ numbers}\longrightarrow128\text{ numbers}.
+\]
+
+ReLU is then applied to every number:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+  negative value & \(\longrightarrow 0\) \\
+  positive value & \(\longrightarrow\) keep the value
+\end{tabular}
+\end{center}
+
+The matrix \(W_2\) is another learned weight matrix. It projects the hidden
+representation back from \(4C\) features to \(C\) features:
+\[
+  W_2:4C\longrightarrow C.
+\]
+For this model, \(W_2\in\mathbb{R}^{128\times32}\), while \(b_2\) is the
+bias vector of the second linear layer. The result
+\[
+  y=hW_2+b_2
+\]
+is the final FFN output.
+
+\subsubsection*{What are \(W_1\), \(b_1\), \(W_2\), and \(b_2\)?}
+
+They are the trainable parameters of the FFN. In PyTorch,
+\begin{lstlisting}[style=shadedpython]
+nn.Linear(32, 128)  # W1: weights, b1: bias
+nn.Linear(128, 32)  # W2: weights, b2: bias
+\end{lstlisting}
+
+During training, gradients flow back to all four parameters:
+\begin{lstlisting}[style=shadedpython,language={}]
+loss
+  |
+  v
+backpropagation
+  |
+  v
+AdamW
+  |
+  v
+updates W1, b1, W2, and b2
+\end{lstlisting}
+The model therefore learns how these layers should transform each token's
+information.
+
+
+
+\subsection{Transformer block}
+
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}p{0.28\textwidth}p{0.66\textwidth}@{}}
+  \textbf{Flow} & \textbf{Description} \\
+  \hline
+  \endfirsthead
+  \textbf{Flow} & \textbf{Description} \\
+  \hline
+  \endhead
+
+  {\centering\sffamily\bfseries
+    \(x\)\par
+    \([B,T,C]\)\par}
+  &
+  \textbf{Step 1: Start with \(x\).}
+  At the beginning, each token's knowledge mostly comes from its token
+  identity and position:
+  \[
+    \text{token identity}+\text{position information}.
+  \]
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{LayerNorm}\par}
+  &
+  \textbf{Step 2: LayerNorm before attention.}
+  Compute
+  \[
+    \operatorname{LN}(x).
+  \]
+  LayerNorm stabilizes each token's features: ``Put the values into a stable
+  range before attention works on them.''
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{Attention}\par
+    ``Look around''\par}
+  &
+  \textbf{Step 3: Attention.}
+  Compute
+  \[
+    \operatorname{Attention}\!\left(\operatorname{LN}(x)\right).
+  \]
+  Attention lets each token examine the allowed previous tokens and itself.
+  For example, \texttt{sat} might assign
+  \[
+    \texttt{the}:10\%,\qquad
+    \texttt{cat}:70\%,\qquad
+    \texttt{sat}:20\%.
+  \]
+  Its attention output is a weighted mixture of those value vectors.
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{Attention update}\par
+    \([B,T,C]\)\par}
+  &
+  The attention update has the same shape as \(x\), so the two tensors can be
+  added element by element.
+  \\
+
+  {\centering\sffamily
+    attention update\par
+    \(+\) old \(x\)\par
+    \(\downarrow\)\par
+    \textbf{Residual add}\par
+    \([B,T,C]\)\par}
+  &
+  \textbf{Step 4: First residual connection.}
+  The update is
+  \[
+    x\leftarrow x+
+    \operatorname{Attention}\!\left(\operatorname{LN}(x)\right).
+  \]
+  In words,
+  \[
+    \text{old }x+\text{attention update}=\text{new }x.
+  \]
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{LayerNorm}\par}
+  &
+  \textbf{Step 5: LayerNorm again.}
+  The updated \(x\) passes through
+  \[
+    \operatorname{LN}(x),
+  \]
+  which prepares the representation for the FFN.
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{FFN}\par
+    ``Think about what you found''\par
+    \(C\rightarrow4C\rightarrow\operatorname{ReLU}\rightarrow C\)\par}
+  &
+  \textbf{Step 6: FFN.}
+  Compute
+  \[
+    \operatorname{FFN}\!\left(\operatorname{LN}(x)\right).
+  \]
+  The FFN works on each token independently. If \(C=32\), it typically
+  performs
+  \[
+    32\longrightarrow128
+    \longrightarrow\operatorname{ReLU}
+    \longrightarrow32.
+  \]
+  For \texttt{sat},
+  \[
+    \text{context-aware \texttt{sat} vector}
+    \longrightarrow\operatorname{FFN}
+    \longrightarrow\text{refined \texttt{sat} vector}.
+  \]
+  Attention has already gathered information from \texttt{cat}; the FFN now
+  transforms the information stored inside \texttt{sat}.
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{FFN update}\par
+    \([B,T,C]\)\par}
+  &
+  The FFN projects back to \(C\) features, so its update again has shape
+  \([B,T,C]\).
+  \\
+
+  {\centering\sffamily
+    FFN update\par
+    \(+\) old \(x\)\par
+    \(\downarrow\)\par
+    \textbf{Residual add}\par
+    \([B,T,C]\)\par}
+  &
+  \textbf{Step 7: Second residual connection.}
+  The second update is
+  \[
+    x\leftarrow x+
+    \operatorname{FFN}\!\left(\operatorname{LN}(x)\right).
+  \]
+  Again,
+  \[
+    \text{old }x+\text{FFN update}=\text{new }x.
+  \]
+  This keeps the contextual representation and adds the FFN's refinement.
+  \\
+
+  {\centering\sffamily
+    \(\downarrow\)\par
+    \textbf{Block output}\par
+    \([B,T,C]\)\par}
+  &
+  The block produces a more context-aware and refined representation while
+  preserving the original tensor shape.
+  \\
+\end{longtable}
+\endgroup
+
+
+
+\subsection{Repeat Transformer blocks}
+
+Now we take one Transformer block and stack many of them.
+
+If there are \(N\) layers,
+\[
+  X_N=\operatorname{Block}_N\!\left(
+    \cdots\operatorname{Block}_2\!\left(
+      \operatorname{Block}_1(X)
+    \right)
+  \right).
+\]
+
+Each layer refines the representation, while its shape remains \([B,T,C]\).
+
+Each block receives
+\[
+  [B,T,C]
+\]
+and returns
+\[
+  [B,T,C].
+\]
+The shape stays the same, but the meaning encoded by the numbers becomes
+richer.
+
+
+
+\begin{lstlisting}[
+  style=shadedpython,
+  language={},
+  basicstyle=\small\sffamily,
+  keywordstyle=\bfseries\sffamily,
+  morekeywords={Initial,Block},
+  columns=fullflexible,
+  keepspaces=true
+]
+Initial representation
+        |
+        v
+rough understanding
+
+Block 1
+        |
+        v
+better understanding
+
+Block 2
+        |
+        v
+more contextual understanding
+
+Block 3
+        |
+        v
+even richer understanding
+\end{lstlisting}
+
+In code, the stack can look like this:
+\begin{lstlisting}[style=shadedpython]
+self.blocks = nn.Sequential(
+    *[
+        TransformerBlock()
+        for _ in range(number_of_layers)
+    ]
+)
+\end{lstlisting}
+Then the representation is passed through every block in sequence:
+\begin{lstlisting}[style=shadedpython]
+x = self.blocks(x)
+\end{lstlisting}
+
+
+
+\subsection{Final LayerNorm}
+
+\[
+  X_{\text{final}}=\operatorname{LN}(X_N),
+  \qquad
+  X_{\text{final}}:[B,T,C].
+\]
+
+It prepares the final features for prediction.
+
+\subsection{Language-model head \( [B,T,V] \)}
+
+\textbf{What it does:} The Language Model Head is the final layer that converts the Transformer's internal token representation into:
+
+one score for every possible token in the vocabulary.
+
+\[
+  Z=XW_{\text{vocab}}+b,
+  \qquad
+  [B,T,C]\longrightarrow[B,T,V].
+\]
+
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  \(X\) & current token representations \\
+  \(W_{\text{vocab}}\) & learned matrix mapping \(C\) features to \(V\) vocabulary scores \\
+  \(b\) & learned bias \\
+  \(Z\) & final logits
+\end{tabular}
+\end{center}
+
+
+
+This means:
+\begin{lstlisting}[
+  style=shadedpython,
+  language={},
+  basicstyle=\small\sffamily,
+  keywordstyle=\bfseries\sffamily,
+  morekeywords={Transformer,Linear,Vocabulary},
+  columns=fullflexible,
+  keepspaces=true
+]
+Transformer representation
+[B, T, C]
+       |
+       v
+Linear layer
+C -> V
+       |
+       v
+Vocabulary scores
+[B, T, V]
+\end{lstlisting}
+
+
+
+For one token, imagine that the Transformer produced
+\[
+  x=[0.2,-0.7,1.1,\ldots,0.4],
+  \qquad x\in\mathbb{R}^{32}.
+\]
+These 32 numbers are useful internal features, but they are not token
+probabilities yet.
+
+Suppose the vocabulary has \(V=10\) tokens:
+\begin{center}
+\begin{tabular}{@{}cl@{}}
+  0 & \texttt{space} \\
+  1 & \texttt{d} \\
+  2 & \texttt{e} \\
+  3 & \texttt{h} \\
+  4 & \texttt{l} \\
+  5 & \texttt{o} \\
+  6 & \texttt{p} \\
+  7 & \texttt{r} \\
+  8 & \texttt{t} \\
+  9 & \texttt{w}
+\end{tabular}
+\end{center}
+The language-model head converts the 32 features into 10 vocabulary scores:
+\begin{lstlisting}[
+  style=shadedpython,
+  language={},
+  basicstyle=\small\sffamily,
+  keywordstyle=\bfseries\sffamily,
+  morekeywords={Transformer,Language,Model,Head},
+  columns=fullflexible,
+  keepspaces=true
+]
+Transformer output for one position
+[0.2, -0.7, 1.1, ..., 0.4]
+            32 features
+                 |
+                 v
+        Language Model Head
+                 |
+                 v
+space -> -0.5
+d     -> -1.2
+e     ->  0.8
+h     -> -0.9
+l     ->  1.2
+o     ->  3.1
+p     -> -0.4
+r     ->  0.6
+t     ->  0.1
+w     ->  1.0
+\end{lstlisting}
+
+These scores are called \emph{logits}. The highest logit here is
+\[
+  \texttt{o}\longrightarrow3.1,
+\]
+so the model currently considers \texttt{o} the strongest candidate for the
+next token.
+
+During generation, softmax converts all vocabulary logits into
+probabilities. \\
+
+An illustrative partial distribution might be:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+logits                    probabilities
+space -> -0.5             space ->  2%
+e     ->  0.8             e     ->  8%
+l     ->  1.2             l     -> 12%
+o     ->  3.1             o     -> 55%
+...                        ...
+\end{lstlisting}
+The probabilities across the complete vocabulary sum to 100\%. \\
+
+The model can then sample the next token from this distribution. \\
+
+\begin{quote}
+  ``What token should come next?''
+\end{quote} 
+
+
+\subsection{Cross-entropy loss}
+
+These three steps form one continuous training loop:
+\begin{lstlisting}[
+  style=shadedpython,
+  language={},
+  basicstyle=\small\sffamily,
+  keywordstyle=\bfseries\sffamily,
+  morekeywords={Prediction,Cross,Backpropagation,AdamW},
+  columns=fullflexible,
+  keepspaces=true
+]
+Prediction
+     |
+     v
+Cross-entropy loss
+"How wrong was I?"
+     |
+     v
+Backpropagation
+"Which weights caused that error,
+ and in what direction?"
+     |
+     v
+AdamW
+"Update those weights to reduce
+ the error next time."
+\end{lstlisting}
+
+After the language-model head, the tensor shapes are
+\begin{lstlisting}[style=shadedpython]
+logits.shape  = [B, T, V]
+targets.shape = [B, T]
+\end{lstlisting}
+
+Suppose
+\[
+  B=32,\qquad T=8,\qquad V=10.
+\]
+Then
+\begin{lstlisting}[style=shadedpython]
+logits.shape  = [32, 8, 10]
+targets.shape = [32, 8]
+\end{lstlisting}
+
+For every token position, the model produces 10 scores because there are 10
+possible vocabulary tokens. At one position, those scores correspond to
+\begin{lstlisting}[style=shadedpython,language={}]
+Possible next tokens:
+
+space -> score
+d     -> score
+e     -> score
+h     -> score
+l     -> score
+o     -> score
+p     -> score
+r     -> score
+t     -> score
+w     -> score
+\end{lstlisting}
+The target for that position contains only one value:
+the ID of the single correct next token.
+
+\subsubsection*{Why flatten?}
+
+There are
+\[
+  \underbrace{32}_{\text{sequences}}
+  \times
+  \underbrace{8}_{\text{positions per sequence}}
+  =256
+\]
+separate next-token predictions.
+
+Cross-entropy expects one row of vocabulary scores for each prediction.
+Because \(V=10\), this means 256 rows, each containing 10 scores:
+\[
+  [B,T,V]\longrightarrow[B\times T,V].
+\]
+Numerically,
+\[
+  [32,8,10]\longrightarrow[256,10].
+\]
+
+The targets are flattened in the same way:
+\[
+  [B,T]\longrightarrow[B\times T],
+  \qquad
+  [32,8]\longrightarrow[256].
+\]
+
+Thus, after flattening,
+\begin{lstlisting}[style=shadedpython]
+logits.shape  = [256, 10]
+targets.shape = [256]
+\end{lstlisting}
+There are 256 prediction problems, and each problem chooses among 10
+vocabulary tokens.
+
+For one prediction,
+\[
+  L=-\log p(y),
+\]
+where \(y\) is the correct token. 
+
+If the correct token receives 90\% probability,
+\[
+  -\log(0.9)\approx0.105.
+\]
+If it receives 1\% probability,
+\[
+  -\log(0.01)\approx4.605.
+\]
+
+\begin{quote}
+  ``How wrong was my prediction?''
+\end{quote}
+
+\subsubsection*{Many predictions at once}
+
+In our example, there are 256 predictions. Suppose their individual losses
+were
+\begin{lstlisting}[style=shadedpython,language={}]
+prediction 1   -> 0.2
+prediction 2   -> 0.6
+prediction 3   -> 1.1
+...
+prediction 256 -> 0.3
+\end{lstlisting}
+
+PyTorch usually averages these individual losses:
+\[
+  L=-\frac{1}{N}\sum_{i=1}^{N}\log p(y_i),
+\]
+where
+\[
+  N=B\times T.
+\]
+Here,
+\[
+  N=32\times8=256.
+\]
+
+The result is one final scalar, for example,
+\[
+  \text{loss}=0.82.
+\]
+This single number summarizes the model's average prediction error across all
+256 token positions.
+
+\subsection{Backpropagation}
+
+Suppose the final loss is
+\[
+  \text{loss}=0.82.
+\]
+We know that the model made errors, but it may contain thousands or millions
+of parameters, including
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parsep}{0pt}
+  \item token-embedding weights,
+  \item position-embedding weights,
+  \item query, key, and value weights,
+  \item FFN weights, and
+  \item language-model-head weights.
+\end{itemize}
+
+Which parameters should change, and by how much? That is what
+backpropagation calculates.
+
+For every parameter \(\theta\), it computes
+\[
+  \frac{\partial L}{\partial\theta}.
+\]
+This quantity is called the \emph{gradient}. \\ 
+
+It measures how the loss changes when that parameter changes.
+
+For example, if a weight is 0.5 and its gradient is \(+0.2\), the positive
+gradient indicates the direction that increases the loss, so the optimizer
+moves in the opposite direction.
+
+\begin{quote}
+  ``Which parameters caused the error?''
+\end{quote}
+
+\subsubsection*{Backpropagation does not update the weights}
+
+This is an important distinction: calling
+\begin{lstlisting}[style=shadedpython]
+loss.backward()
+\end{lstlisting}
+does not change the model parameters. It only calculates their gradients.
+
+Conceptually, \texttt{loss.backward()} means:
+\begin{quote}
+  ``Calculate how every trainable parameter affected this loss.''
+\end{quote}
+
+For example, backpropagation might calculate
+\begin{lstlisting}[style=shadedpython,language={}]
+weight A gradient = +0.20
+weight B gradient = -0.07
+weight C gradient = +0.91
+weight D gradient = -0.13
+...
+\end{lstlisting}
+These gradients are stored in each parameter's \texttt{.grad} attribute. \\
+
+The optimizer uses them in the next step to update the weights.
+
+
+
+\subsection{AdamW update}
+
+A simplified gradient-descent view is
+\[
+  \theta_{\text{new}}
+  =\theta_{\text{old}}
+  -\eta\frac{\partial L}{\partial\theta},
+\]
+
+The derivative
+\[
+  \frac{\partial L}{\partial\theta}
+\]
+describes how the loss changes when \(\theta\) changes.
+
+If the gradient is negative, increasing \(\theta\) decreases the loss. The
+update therefore subtracts a negative number:
+\[
+  \frac{\partial L}{\partial\theta}<0
+  \quad\Longrightarrow\quad
+  \theta_{\text{new}}
+  =\theta_{\text{old}}
+  +\eta\left\lvert\frac{\partial L}{\partial\theta}\right\rvert.
+\]
+Thus, \(\theta\) increases in the direction that reduces the loss. \\ 
+If the gradient is positive, the subtraction makes \(\theta\) smaller. 
+In both cases, gradient descent moves opposite to the gradient.
+
+where \(\eta\) is the learning rate. \\
+
+
+\subsubsection*{Why AdamW instead of basic gradient descent?}
+
+The formula above is a simplified explanation. AdamW is more sophisticated
+than the basic update
+\begin{lstlisting}[style=shadedpython,language={}]
+weight = weight - learning_rate * gradient
+\end{lstlisting}
+because it also tracks recent gradient behavior, adjusts the effective step
+size, and applies weight decay.
+
+\textbf{Momentum.} If gradients repeatedly point in the same direction,
+\begin{lstlisting}[style=shadedpython,language={}]
+step 1 -> right
+step 2 -> right
+step 3 -> right
+\end{lstlisting}
+Adam builds momentum in that direction. This can make optimization faster and
+less sensitive to noisy changes in individual gradients.
+
+\textbf{Adaptive scaling.} Some parameters may have large gradients, such as
+\[
+  \text{gradient}=10,
+\]
+while others may have tiny gradients, such as
+\[
+  \text{gradient}=0.001.
+\]
+Adam adjusts the effective step size for each parameter using its history of
+gradient magnitudes.
+
+\textbf{Weight decay.} AdamW also gently discourages weights from becoming
+unnecessarily large. Its decoupled weight decay is applied separately from
+the gradient-based update.
+
+Mathematically, the learning process can be summarized as
+\[
+  \text{prediction}
+  \longrightarrow
+  L=-\log p(y)
+  \longrightarrow
+  \frac{\partial L}{\partial\theta}
+  \longrightarrow
+  \theta_{\text{new}}
+  =\theta_{\text{old}}
+  -\eta\frac{\partial L}{\partial\theta}.
+\]
+This is essentially the heart of how your MiniGPT learns.
+
+
+
+\subsection{Generation}
+
+Suppose the current text is \texttt{hello}. Run the tokenized context through
+the model:
+\[
+  \text{tokens }[B,T]
+  \longrightarrow
+  \text{logits }[B,T,V].
+\]
+
+Keep only the final position:
+\begin{verbatim}
+latest_logits = logits[:, -1, :]
+\end{verbatim}
+which has shape \([B,V]\). Convert these logits into probabilities:
+\[
+  p_i=\frac{e^{z_i}}{\sum_j e^{z_j}}.
+\]
+
+\textbf{Example:}
+\begin{verbatim}
+" " -> 60%
+"w" -> 20%
+"e" -> 10%
+\end{verbatim}
+
+If a space is sampled, append it to \texttt{hello}, then repeat:
+\begin{verbatim}
+hello
+-> hello 
+-> hello w
+-> hello wo
+-> hello wor
+-> ...
+\end{verbatim}
+
+\begin{quote}
+  \textbf{Predict \(\rightarrow\) sample \(\rightarrow\) append
+  \(\rightarrow\) repeat.}
+\end{quote}
+
+\subsection*{One compact mathematical pipeline}
+
+\[
+  \text{tokens}
+  \longrightarrow
+  X=E_{\text{token}}+E_{\text{position}}
+\]
+\[
+  \downarrow
+\]
+\[
+  X\leftarrow X+
+  \operatorname{Attention}\!\left(\operatorname{LN}(X)\right)
+\]
+\[
+  \downarrow
+\]
+\[
+  X\leftarrow X+
+  \operatorname{FFN}\!\left(\operatorname{LN}(X)\right)
+\]
+\[
+  \downarrow
+\]
+\[
+  Z=XW_{\text{vocab}}+b
+  \longrightarrow
+  P=\operatorname{softmax}(Z).
+\]
+
+During training,
+\[
+  P\longrightarrow\text{cross-entropy}
+  \longrightarrow\text{backpropagation}
+  \longrightarrow\text{AdamW}.
+\]
+
+During generation,
+\[
+  P\longrightarrow\text{sample next token}
+  \longrightarrow\text{append}
+  \longrightarrow\text{repeat}.
+\]
+
+The central Transformer formula is
+\[
+  \boxed{
+    \operatorname{Attention}(Q,K,V)
+    =\operatorname{softmax}\!\left(
+      \frac{QK^{\mathsf T}}{\sqrt{D}}+M
+    \right)V
+  }.
+\]
+
+\section{What you have now built}
+
+This is a real decoder-only Transformer. Its scale and implementation details
+differ from GPT-style models, but the core algorithmic idea is the same.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{0.27\textwidth}p{0.28\textwidth}p{0.33\textwidth}@{}}
+  \textbf{Component} & \textbf{Your model} & \textbf{GPT-style model} \\
+  \hline
+  Tokenizer & Character-level & BPE or another subword tokenizer \\
+  Embeddings & Yes & Yes \\
+  Position encoding & Learned position embeddings & Usually RoPE in modern models \\
+  Attention & Causal multi-head attention & Causal multi-head attention \\
+  Transformer blocks & 4 & Dozens or hundreds \\
+  Parameters & Roughly \(100\text{K}\)--\(1\text{M}\) & Billions in large models \\
+  Training data & A small text dataset & Up to trillions of tokens \\
+  Objective & Next-token prediction & Next-token prediction
+\end{tabular}
+\end{center}
+
+The model sizes are dramatically different, but both learn by predicting the
+next token from the tokens that came before it.

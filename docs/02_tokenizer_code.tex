@@ -1,0 +1,1397 @@
+% !TEX root = main.tex
+\clearpage
+\section{Code guide: BachattTokenizer v0}
+
+The tokenizer workstream contains three programs:
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.35\textwidth}p{0.51\textwidth}@{}}
+  \textbf{File} & \textbf{Responsibility} \\
+  \hline
+  \texttt{train\_tokenizer.py} & Define and train the byte-level
+  BPE tokenizer. \\
+  \texttt{sample\_corpus.py} & Build a balanced text sample from cleaned
+  domain pools for tokenizer training. \\
+  \texttt{eval\_fertility.py} & Evaluate tokenizer efficiency/fertility
+  by language. \\
+\end{tabular}
+
+Also, in parallel:
+\renewcommand{\arraystretch}{1.2}
+
+\subsection{\texttt{train\_tokenizer.py}}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true]
+python train_tokenizer.py
+    --input "data/*.txt"
+    --vocab-size 160000
+    --out tokenizer.json
+
+          |
+          v
+
+ARGPARSE
+Reads command-line settings:
+
+--input       -> which text files to train on
+--vocab-size  -> desired vocabulary size
+--out         -> where to save tokenizer
+
+          |
+          v
+
+GLOB FINDS FILES
+glob.glob(args.input)
+
+Example:
+"data/*.txt"
+
+          |
+          v
+
+[
+  "data/english.txt",
+  "data/hindi.txt",
+  "data/tamil.txt"
+]
+
+These files become the tokenizer's
+training corpus.
+
+          |
+          v
+
+build_tokenizer()
+
+\end{lstlisting}
+
+\subsubsection*{Creates the tokenizer architecture}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true,escapeinside={(*}{*)}]
+BPE TOKENIZER
+
+Tokenizer(
+    models.BPE(...)
+)
+
+BPE will learn frequently occurring
+text pieces and merge them into tokens.
+
+              |
+              v
+
+PRE-TOKENIZATION PIPELINE (IN ORDER):
+
++-------------------------------+
+| 1. DIGITS                     |
+|                               |
+| individual_digits=True        |
+|                               |
+| 2026 -> 2 | 0 | 2 | 6         |
+|                               |
+| Makes number representation   |
+| more consistent.              |
++---------------+---------------+
+                |
+                v
+
++-------------------------------+
+| 2. WORD_PATTERN               |
+|                               |
+| Splits text into sensible     |
+| BPE regions:                  |
+|                               |
+| * words                       |
+| * punctuation                 |
+| * whitespace                  |
+| * letters + matras together   |
+|                               |
+| Example:                      |
+|                               |
+| "Hello, (*\dev{दुनिया}*)!"               |
+|       |                       |
+|       v                       |
+| "Hello" | "," | " (*\dev{दुनिया}*)" | "!" |
+|                               |
+| Important: creates boundaries |
+| that BPE cannot cross.        |
++---------------+---------------+
+                |
+                v
+
++-------------------------------+
+| 3. BYTELEVEL                  |
+|                               |
+| Converts Unicode text into    |
+| byte-level symbols.           |
+|                               |
+| English / Hindi / Tamil /     |
+| emoji / etc. can all be       |
+| represented.                  |
+|                               |
+| Helps avoid unknown chars.    |
++---------------+---------------+
+                |
+                v
+
+BPE TRAINER
+
+trainer = BpeTrainer(...)
+
+Tells BPE HOW to learn vocabulary.
+
+              |
+              +-- vocab_size = 160000
+              |   "Stop around this vocabulary size"
+              |
+              +-- min_frequency = 2
+              |   "Ignore extremely rare merge candidates"
+              |
+              +-- special_tokens
+              |   <|bos|>
+              |   <|eos|>
+              |   <|pad|>
+              |
+              +-- reserved tokens
+              |   <|reserved_0|>
+              |   ...
+              |   <|reserved_63|>
+              |
+              +-- byte alphabet
+                  Include basic byte-level
+                  symbols from the start.
+              |
+              v
+           tok.train(files, trainer)
+
+\end{lstlisting}
+
+\subsubsection*{Actual BPE training happens here}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true]
+Training text
+      |
+      v
+pre-tokenization
+      |
+      v
+count frequently occurring adjacent pieces
+      |
+      v
+merge frequent pairs
+      |
+      v
+repeat many times
+      |
+      v
+learn larger useful tokens
+
+\end{lstlisting}
+
+\subsubsection*{Simplified example: how BPE merges text into tokens}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true]
+h | e | l | l | o
+      |
+      v
+    l + l
+      |
+      v
+
+h | e | ll | o
+      |
+      v
+learn more merges
+      |
+      v
+    "hello"
+      |
+      v
+BUILD VOCABULARY
+
+\end{lstlisting}
+
+\subsubsection*{Vocabulary: learned tokens, special tokens, reserved
+tokens, and byte alphabet}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true,escapeinside={(*}{*)}]
+
+SPECIAL TOKENS
+-> fixed control tokens
+
+<|bos|>
+<|eos|>
+<|pad|>
+
+RESERVED SLOTS
+-> saved for future features
+
+<|reserved_0|>
+...
+<|reserved_63|>
+
+BYTE ALPHABET
+-> guarantees basic byte-level coverage
+
+LEARNED BPE TOKENS
+-> common pieces learned from the data
+
+Examples might include:
+
+"the"
+"ing"
+"hello"
+" (*\dev{भारत}*)"
+etc.
+
+    |
+    v
+
+tok.save(args.out)
+Saves everything needed to reuse the tokenizer:
+
+* vocabulary
+* BPE merge rules
+* pre-tokenizer setup
+* decoder setup
+* special tokens
+
+      |
+      v
+tokenizer.json
+(This is the finished trained tokenizer)
+
+\end{lstlisting}
+
+\subsubsection*{Later Usage: Encoding and Decoding}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true]
+
+TEXT
+  |
+  v
+tokenizer.json
+  |
+  v
+TOKEN IDs
+
+and:
+
+TOKEN IDs
+  |
+  v
+tokenizer.json
+  |
+  v
+TEXT
+\end{lstlisting}
+
+\subsubsection*{What is BPE?}
+
+\textbf{BPE} stands for \textbf{Byte Pair Encoding}. It is a data
+compression technique that has become the foundational
+\textbf{tokenization algorithm} used by modern Large Language Models
+(LLMs) like GPT-4, Llama, and Claude to break down human text into
+numbers the computer can understand.
+
+Instead of splitting text into whole words (which creates a massive
+dictionary) or individual letters (which takes too many steps to
+read), BPE finds the perfect middle ground: \textbf{subwords}.
+
+\subsubsection*{Word vs. Character vs. BPE Tokenization}
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabular}{@{}p{0.18\textwidth}p{0.32\textwidth}p{0.22\textwidth}p{0.18\textwidth}@{}}
+    \textbf{Tokenizer Type} & \textbf{How it splits ``Unbelievable''}
+    & \textbf{Pros} & \textbf{Cons} \\
+    \hline
+    \textbf{Word-Based} & \texttt{["Unbelievable"]} & Easy to
+    understand. & Cannot handle typos or new words (OOV error). \\
+    \textbf{Character-Based} & \texttt{["U", "n", "b", "e", "l",
+    ...]} & Small vocabulary, can spell anything. & Sequences become
+    too long; loses semantic meaning per token. \\
+    \textbf{BPE (Subword)} & \texttt{["Un", "believ", "able"]} &
+    Handles rare words by breaking into familiar roots; highly
+    efficient. & Text is split in ways that don't always align with
+    human grammar. \\
+  \end{tabular}
+\end{center}
+
+\subsubsection*{Why is BPE crucial for LLMs?}
+
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item \textbf{It Solves Unknown Words:} If an AI encounters a brand
+    new word like \texttt{AI-ification}, it won't crash. It will
+    break it down into pieces it \textit{does} know: \texttt{["AI",
+    "-", "ific", "ation"]}.
+  \item \textbf{It is Multilingual:} BPE can ingest bytes or
+    characters from any language, dynamically building tokens for
+    Hindi, Chinese, or English based on frequency.
+  \item \textbf{It Saves Memory:} By grouping common sequences like
+    \texttt{" the"} or \texttt{" ing"} into single tokens, the model
+    can process much longer essays or code files within its limited
+    context window.
+\end{itemize}
+
+\subsubsection*{The training script}
+
+The whole script does this:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\footnotesize\ttfamily]
+TEXT FILES
+    |
+    v
+find files matching --input
+    |
+    v
+build tokenizer
+    |
+    v
+pre-tokenize text
+    |--- split digits individually
+    |--- split words / punctuation / whitespace
+    |--- convert characters to byte-level symbols
+    |
+    v
+train BPE merges
+    |
+    v
+build vocabulary
+    |--- normal learned tokens
+    |--- special tokens
+    |--- reserved tokens
+    |
+    v
+save tokenizer.json
+\end{lstlisting}
+
+To run the script:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+python train_tokenizer.py \
+  --input "path/to/*.txt" \
+  --vocab-size 160000 \
+  --out tokenizer-160k.json
+\end{lstlisting}
+
+\subsubsection*{Training configuration}
+
+\texttt{build\_tokenizer()} assembles three pre-tokenizers in sequence:
+
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+  # each digit is its own token: 2026 -> 2 0 2 6
+  pre_tokenizers.Digits(individual_digits=True),
+
+  # creates linguistically useful word-like segments for BPE training
+  pre_tokenizers.Split(WORD_PATTERN, behavior="isolated"),
+
+  # all remaining characters to byte-level symbols, to avoid unknown-token failure
+  # set add_prefix_space=False to avoid automatically space insert at the beginning
+  # set use_regex=False to avoid ByteLevel perform its own regex splitting
+  pre_tokenizers.ByteLevel(add_prefix_space=False, use_regex=False),
+\end{lstlisting}
+
+\noindent\textbf{Special tokens}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+SPECIAL_TOKENS = ["<|bos|>", "<|eos|>", "<|pad|>"]
+\end{lstlisting}
+These are tokens with special meanings:
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\footnotesize\ttfamily]
+<|bos|> --- beginning of sequence
+<|eos|> --- end of sequence
+<|pad|> --- padding
+\end{lstlisting}
+
+For example: \texttt{< |bos| > Hello world < |eos| >}. They are not normal
+words learned by BPE. They are inserted directly into the vocabulary.
+
+\noindent\textbf{Reserved tokens}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+RESERVED = [f"<|reserved_{i}|>" for i in range(64)]
+\end{lstlisting}
+This creates:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\footnotesize\ttfamily]
+<|reserved_0|>
+<|reserved_1|>
+...
+<|reserved_63|>
+\end{lstlisting}
+
+Why? Suppose today you have:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\footnotesize\ttfamily]
+ID 0 → <|bos|>
+ID 1 → <|eos|>
+ID 2 → <|pad|>
+\end{lstlisting}
+Later you decide to add \texttt{<|tool\_call|>}, \texttt{<|fim\_start|>},
+\texttt{<|vision|>}. If you insert new tokens later, vocabulary IDs might
+shift. That can break compatibility with previously trained models. So
+instead, you reserve slots now.
+
+\subsubsection*{The matra-aware split}
+
+The central tokenizer finding is encoded in \texttt{WORD\_PATTERN}:
+
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+WORD_PATTERN = Regex(
+    r" ?[\p{L}\p{M}]+| ?[^\s\p{L}\p{M}\p{N}]+|\s+"
+)
+\end{lstlisting}
+
+Think of the regex as a \textbf{3-way text splitter}:
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\footnotesize\ttfamily]
+WORD_PATTERN
+    |
+    v
+Input text
+    |
+    +----------------------+----------------------+------------------+
+    |                      |                      |
+    v                      v                      v
+  RULE 1                 RULE 2                 RULE 3
+  WORDS                  SYMBOLS               WHITESPACE
+
+ ?[\p{L}\p{M}]+      ?[^\s\p{L}\p{M}\p{N}]+      \s+
+    |                      |                      |
+    v                      v                      v
+optional space         optional space          one or more
++ letters              + punctuation           whitespace chars
+                       / symbols
+
+Examples:
+" hello"               " !!!"                  "\n\n"
+"world"                 ","                     "\t"
+" GPT"                  "??"                    "   "
+\end{lstlisting}
+
+\noindent\textbf{1.\ }\verb| ?[\p{L}\p{M}]+|
+
+This matches a word made of letters, optionally including one space before
+it. Break it down:
+
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \item \verb| ?| --- one space, optionally. The \texttt{?} means zero or one
+    occurrence.
+    \item \verb|[\p{L}\p{M}]| --- \verb|\p{L}| is a Unicode letter;
+    \verb|\p{M}| is a Unicode combining mark.
+  \item \texttt{+} --- one or more.
+\end{itemize}
+
+So \verb| ?[\p{L}\p{M}]+| means roughly: optional leading space + one or
+more letters/marks. This forces to include the matra (vowel sign) with its
+base letter, which is crucial for Indic scripts.
+
+Example: \texttt{"hello world"} could match
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+  "hello" and " world"
+\end{lstlisting}
+
+Notice that the space before
+\texttt{"world"} becomes part of the token.
+
+The key Unicode categories are:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \item \verb|\p{L}| = Letter
+    \item \verb|\p{M}| = Mark
+\end{itemize}
+A matra is usually stored as a combining mark, so it falls under
+\verb|\p{M}|. For example, conceptually:
+\begin{center}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{}lll@{}}
+    \dev{क} & = base consonant &
+    $\rightarrow$ \verb|\p{L}| \\
+    \dev{ा} & = matra & $\rightarrow$ \verb|\p{M}| \\
+  \end{tabular}
+\end{center}
+Together they visually form: \dev{का}.
+
+This is important because BPE is usually only allowed to merge symbols
+inside the segment it receives. So if preprocessing gives BPE:
+\begin{center}
+  \begin{tabular}{@{}ll@{}}
+    segment 1: & ``\dev{क}'' \\
+    segment 2: & ``\dev{ा}'' \\
+  \end{tabular}
+\end{center}
+BPE cannot later say ``Actually, let me merge
+\dev{क}~+~\dev{ा}
+into \dev{का}'' because the boundary has already
+been imposed.
+
+\noindent\textbf{2.\ }\verb| ?[^\s\p{L}\p{M}\p{N}]+|
+
+This matches punctuation and symbols, again optionally with one leading
+space.
+
+Start with \verb| ?| --- same meaning: optionally include one space
+before the token.
+
+Then \verb|[^ ... ]|: the \texttt{\textasciicircum} inside
+square brackets means \emph{NOT} any of these characters:
+
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \item \verb|\s| --- whitespace
+    \item \verb|\p{L}| --- letters
+    \item \verb|\p{M}| --- combining marks
+    \item \verb|\p{N}| --- numbers
+\end{itemize}
+
+So \verb|[^\s\p{L}\p{M}\p{N}]| means anything that is \emph{not} whitespace, a
+letter, a combining mark, or a number.
+
+In practice, that means things like
+\texttt{! ? . , : ; @ \# \$ ( )}. And \texttt{+} means one or more.
+
+Example: \texttt{"hello!!!"} might become
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+  "hello"
+  "!!!"
+\end{lstlisting}
+Example: \texttt{"hello !!!"} might become
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+  "hello"
+  " !!!"
+\end{lstlisting}
+because the optional space can attach to the punctuation token.
+
+\noindent\textbf{3.\ }\verb|\s+|
+
+This matches one or more whitespace characters: \verb|\s| is whitespace and
+\texttt{+} is one or more. Whitespace includes space, tab, and newline. So
+\texttt{"\textbackslash n\textbackslash n"} can be matched as one whitespace
+chunk.
+
+\subsection{\texttt{sample\_corpus.py}}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true]
+02-data-pipeline/pools/
+|-- global_english/     raw.jsonl + clean.jsonl      <- FineWeb-Edu
+|-- indian_english/     sangraha_eng, wiki_india,    <- Sangraha verified/eng + en-wiki India topics
+|                       raw.jsonl + clean.jsonl
+|-- indian_languages/   sangraha_hin.jsonl,          <- Sangraha verified, 11 languages
+|                       sangraha_ben.jsonl, _tam,       (hin ben tam tel mar guj kan mal pan ori asm)
+|                       ... + raw.jsonl + clean.jsonl
+|-- code/               raw.jsonl + clean.jsonl      <- 4 allowlisted GitHub repos (.py files)
+|-- finance_econ_law/   wiki_en, wiki_hi,            <- curated Wikipedia titles (75 en + 25 hi)
+|                       raw.jsonl + clean.jsonl
+|-- math_reasoning/     raw.jsonl + clean.jsonl      <- curated Wikipedia titles (40 en)
+\end{lstlisting}
+
+How each pool was fetched --- \texttt{ingest/run\_ingest.sh} drives three
+fetchers:
+\begin{enumerate}
+    \setlength{\itemsep}{0pt}
+  \item \texttt{ingest\_hf\_rows.py} --- pages through the HuggingFace
+    datasets-server rows API (100 rows/request, polite pacing, 429
+    backoff). Pulled 3{,}000 FineWeb-Edu docs, $\sim$600 Sangraha
+    English, and $\sim$300 per Indic language.
+  \item \texttt{ingest\_wikipedia.py} --- MediaWiki extracts API against
+    the curated title lists in \texttt{ingest/titles\_*.txt}
+    (finance, math, India topics; one full-text extract per request
+    --- the API silently caps batches at one).
+  \item \texttt{ingest\_github\_code.py} --- codeload tarballs of four
+    permissive repos (requests/flask/click/more-itertools), one doc
+    per \texttt{.py} file, license recorded per doc.
+\end{enumerate}
+Every source has a row in \texttt{legal\_register.md} before ingest
+(S010--S030).
+
+\subsubsection{Data Ingestion}
+
+\begin{paragraphblock}{Create the six data pools}
+  The script creates:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+pools/
+|-- global_english/
+|-- indian_english/
+|-- indian_languages/
+|-- code/
+|-- finance_econ_law/
+|-- math_reasoning/
+\end{lstlisting}
+  Each pool has a different purpose.
+
+  \begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{@{}l r r r@{}}
+      \textbf{Pool} & \textbf{Charter range} & \textbf{Working weight} &
+      \textbf{At 7T (Beta)} \\
+      \hline
+      \texttt{global\_english} & 45--55\% & 50.0\% & 3.5T \\
+      \texttt{indian\_english} & 15--20\% & 17.5\% & 1.23T \\
+      \texttt{indian\_languages} & 10--15\% & 12.5\% & 0.88T \\
+      \texttt{code} & 10--15\% & 10.0\% & 0.70T \\
+      \texttt{finance\_econ\_law} & 5--10\% & 7.5\% & 0.53T \\
+      \texttt{math\_reasoning} & 2--5\% & 2.5\% & 0.18T \\
+      \hline
+      & & 100\% & 7T \\
+    \end{tabular}
+  \end{center}
+
+  Notes:
+  \begin{itemize}
+      \setlength{\itemsep}{0pt}
+    \item Within \texttt{indian\_languages} there's no per-language
+      weighting yet --- currently $\sim$equal pulls ($\sim$300 docs
+      each of the 11 languages). A real policy (e.g., weight by speaker
+      population vs equal-per-language vs temperature sampling) is an
+      open decision; it matters more for the tokenizer than the model
+      right now, which is why \texttt{sample\_corpus.py} balanced
+      per-language for tokenizer training.
+  \end{itemize}
+\end{paragraphblock}
+
+\begin{paragraphblock}{Global English}
+  Source: \texttt{HuggingFaceFW/fineweb-edu}, config \texttt{sample-10BT}.
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+FineWeb-Edu
+    |
+    v
+take ~3000 rows by default
+    |
+    v
+pools/global_english/raw.jsonl
+\end{lstlisting}
+
+  Code:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+ingest_hf_rows.py \
+    --dataset HuggingFaceFW/fineweb-edu \
+    --config sample-10BT \
+    --split train \
+    --rows "$ROWS_FINEWEB"
+\end{lstlisting}
+  Purpose: provide broad, high-quality general English text.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Indian English}
+  This combines two sources: Sangraha verified English + English Wikipedia
+  pages about India.
+
+  Flow:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+ai4bharat/sangraha
+verified / eng
+        |
+        v
+sangraha_eng.jsonl
+
+             +
+
+curated English Wikipedia
+India-related titles
+        |
+        v
+wiki_india.jsonl
+
+             | concatenate
+             v
+
+pools/indian_english/raw.jsonl
+\end{lstlisting}
+  So Indian English gets both general India-focused English from Sangraha
+  and curated India-specific Wikipedia content.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Indian languages}
+  Source: AI4Bharat Sangraha, config \texttt{verified}.
+
+  Languages:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.15}
+    \small
+    \begin{tabular}{@{}ll@{}}
+      \texttt{hin} $\rightarrow$ Hindi &
+      \texttt{ben} $\rightarrow$ Bengali \\
+      \texttt{tam} $\rightarrow$ Tamil &
+      \texttt{tel} $\rightarrow$ Telugu \\
+      \texttt{mar} $\rightarrow$ Marathi &
+      \texttt{guj} $\rightarrow$ Gujarati \\
+      \texttt{kan} $\rightarrow$ Kannada &
+      \texttt{mal} $\rightarrow$ Malayalam \\
+      \texttt{pan} $\rightarrow$ Punjabi &
+      \texttt{ori} $\rightarrow$ Odia \\
+      \texttt{asm} $\rightarrow$ Assamese &
+    \end{tabular}
+  \end{center}
+
+  The script loops through all 11:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+Hindi       -> sangraha_hin.jsonl
+Bengali     -> sangraha_ben.jsonl
+Tamil       -> sangraha_tam.jsonl
+...
+Assamese    -> sangraha_asm.jsonl
+\end{lstlisting}
+  Then concatenates all of them:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+11 language files
+        |
+        v
+pools/indian_languages/raw.jsonl
+\end{lstlisting}
+  By default it takes 300 rows per language unless overridden.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Code}
+  Source: allowlisted permissive GitHub repositories.
+
+  The script calls \texttt{ingest/ingest\_github\_code.py} and writes
+  \texttt{pools/code/raw.jsonl}.
+
+  The important idea: code comes only from an allowlisted set of
+  repositories intended to satisfy the project's licensing rules. The
+  exact repo list is not shown in this script.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Finance / economics / law}
+  This is built from curated Wikipedia titles in English and Hindi.
+
+  Flow:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+titles_finance_en.txt
+        |
+        v
+Wikipedia EN
+        |
+        v
+wiki_en.jsonl
+
+titles_finance_hi.txt
+        |
+        v
+Wikipedia HI
+        |
+        v
+wiki_hi.jsonl
+
+        | concatenate
+        v
+
+pools/finance_econ_law/raw.jsonl
+\end{lstlisting}
+  So the domain content is deliberately selected rather than pulling
+  arbitrary Wikipedia pages.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Math / reasoning}
+  Source: curated English Wikipedia pages. The title list comes from
+  \texttt{ingest/titles\_math\_en.txt}.
+
+  Flow:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+curated math titles
+       |
+       v
+English Wikipedia
+       |
+       v
+pools/math_reasoning/raw.jsonl
+\end{lstlisting}
+\end{paragraphblock}
+
+How \texttt{raw.jsonl} became \texttt{clean.jsonl} --- each pool ran
+through the four-stage pipe:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily,breaklines=true]
+raw.jsonl -> langid.py -> filters.py -> dedup_minhash.py -> decontaminate.py -> clean.jsonl
+            lang/script/  Gopher-style  MinHash+LSH        13-gram overlap
+            code-mix tag  quality rules near-dup removal   vs BachattBench
+\end{lstlisting}
+
+\subsubsection{Langid}
+
+\texttt{langid} adds language, script, and code-mix metadata to every
+document.
+
+Input document:
+\begin{lstlisting}[style=shadedpython,breaklines=true,escapeinside={(*}{*)}]
+{
+  "id": "...",
+  "source": "S011",
+  "text": "(*\dev{भारत}*) ki economy badh rahi hai"
+}
+\end{lstlisting}
+The script adds:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+  "lang": "...",
+  "script": "...",
+  "code_mix": true
+}
+\end{lstlisting}
+So the document becomes richer.
+
+\begin{paragraphblock}{script\_profile(text)}
+  This function goes character by character. For every alphabetic character:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+character
+   |
+   v
+Unicode code point
+   |
+   v
+which script range?
+\end{lstlisting}
+  The script knows ranges for Devanagari, Bengali, Gurmukhi, Gujarati, Odia,
+  Tamil, Telugu, Kannada, Malayalam, and Latin.
+
+  Example: \texttt{"}\dev{भारत}\texttt{ test"} might roughly produce
+  \texttt{Devanagari → 0.60}, \texttt{Latin → 0.40}. The result is a
+  dictionary of fractions:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+    "devanagari": 0.60,
+    "latin": 0.40
+}
+\end{lstlisting}
+\end{paragraphblock}
+
+\begin{paragraphblock}{How native-script language is inferred}
+  The largest script proportion wins: \texttt{top = max(prof, key=prof.get)}.
+  If the top script is not Latin, this mapping is used:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.15}
+    \small
+    \begin{tabular}{@{}ll@{}}
+      Devanagari $\rightarrow$ Hindi &
+      Bengali $\rightarrow$ Bengali \\
+      Gurmukhi $\rightarrow$ Punjabi &
+      Gujarati $\rightarrow$ Gujarati \\
+      Odia $\rightarrow$ Odia &
+      Tamil $\rightarrow$ Tamil \\
+      Telugu $\rightarrow$ Telugu &
+      Kannada $\rightarrow$ Kannada \\
+      Malayalam $\rightarrow$ Malayalam &
+    \end{tabular}
+  \end{center}
+  This is explicitly coarse.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Code-mix detection for native-script text}
+  If a document is mainly native script but contains substantial Latin text
+  (\texttt{prof.get("latin", 0.0) > 0.15}), then more than 15\% Latin letters
+  $\Rightarrow$ \texttt{code\_mix = True}.
+
+  Example: \texttt{"}\dev{भारत}\texttt{ ki economy bahut fast grow kar rahi
+  hai"}. If Devanagari is still dominant but Latin exceeds 15\%, it becomes:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+  "lang": "hindi",
+  "script": "devanagari",
+  "code_mix": true
+}
+\end{lstlisting}
+\end{paragraphblock}
+
+\begin{paragraphblock}{Latin text is harder}
+  Example: \texttt{"What are you doing?"} vs \texttt{"Tum kya kar rahe ho?"}
+  --- both use Latin letters.
+
+  It defines:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+HINGLISH_MARKERS = {
+    "hai", "hain", "nahi", "kya", "kaise",
+    "karna", "chahiye", "mera", "mujhe",
+    "aur", "lekin", ...
+}
+\end{lstlisting}
+  Then:
+  \[
+    \texttt{marker\_frac}
+    =\frac{\text{number of Hinglish marker words}}{\text{total words}}.
+  \]
+  If marker fraction $> 5\%$, it labels the document:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+  "lang": "hinglish",
+  "script": "latin",
+  "code_mix": true
+}
+\end{lstlisting}
+  Otherwise:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+  "lang": "english",
+  "script": "latin",
+  "code_mix": false
+}
+\end{lstlisting}
+\end{paragraphblock}
+
+\subsubsection{Filters}
+
+This is where documents can actually be dropped for quality. \\
+\texttt{filters.py} applies eight independent tests and returns all failure
+reasons rather than stopping at the first one:
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}p{0.30\textwidth}p{0.55\textwidth}@{}}
+    \textbf{Filter} & \textbf{Rejected condition} \\
+    \hline
+    Length & fewer than 50 or more than 200{,}000 words \\
+    Mean word length & outside 2--12 characters \\
+    Symbol ratio & too many hash signs or ellipses per word \\
+    Bullet/ellipsis lines & page dominated by list or fragment patterns \\
+    Duplicate lines & repeated lines exceed 30\% of characters \\
+    Top bigram & one two-word phrase dominates the document \\
+    Alphabetic words & fewer than 60\% of words contain a letter \\
+    Stopwords & fewer than two known stopwords for English, Hindi, or Hinglish
+  \end{tabular}
+\end{center}
+
+\begin{paragraphblock}{Length filter}
+\begin{lstlisting}[style=shadedpython]
+MIN_WORDS = 50
+MAX_WORDS = 200_000
+\end{lstlisting}
+\end{paragraphblock}
+
+\begin{paragraphblock}{Mean word length}
+\begin{lstlisting}[style=shadedpython]
+MIN_MEAN_WORD_LEN = 2.0
+MAX_MEAN_WORD_LEN = 12.0
+\end{lstlisting}
+  It computes
+  \[
+    \frac{\text{sum of word lengths}}{\text{number of words}}.
+  \]
+  Example: \texttt{["this", "is", "good"]} has lengths $4+2+4=10$, so
+  $10/3\approx 3.33$ --- passes. But something like \texttt{x x x x x x x}
+  has suspiciously tiny average word length, while
+  \texttt{asjdklasjdklasjdklasjdkl...} may have an absurdly high average.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Symbol ratio}
+\begin{lstlisting}[style=shadedpython]
+MAX_SYMBOL_WORD_RATIO = 0.10
+\end{lstlisting}
+  It counts occurrences of \texttt{\#} and \texttt{...} and compares them to
+  word count. If symbols are too frequent (\texttt{symbols / words > 10\%}),
+  the document is rejected.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Bullet / ellipsis line filter}
+  It checks non-empty lines. If over 90\% start like \texttt{-}, \texttt{*},
+  or \texttt{•}, then \texttt{bullet\_lines}. If over 30\% end in
+  \texttt{...} or \texttt{…}, then \texttt{ellipsis\_lines}. This catches
+  documents that look like
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+• item
+• item
+• item
+• item
+...
+\end{lstlisting}
+  rather than normal prose.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Duplicate-line filter}
+\begin{lstlisting}[style=shadedpython]
+MAX_DUP_LINE_FRAC = 0.30
+\end{lstlisting}
+  It looks for repeated lines, but weights by character count. Why
+  character-weighted? Because repeating a tiny heading
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+Chapter
+Chapter
+Chapter
+\end{lstlisting}
+  should matter less than repeating a giant paragraph. Conceptually:
+  \[
+    \frac{\text{repeated characters}}{\text{total line characters}}.
+  \]
+  If that exceeds 30\%: reject $\rightarrow$ \texttt{dup\_lines}.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Repeated bigram filter}
+  A bigram here means two consecutive words (e.g.\ \texttt{"the cat"}). The
+  code counts every bigram. If one bigram occurs too often relative to the
+  document:
+\begin{lstlisting}[style=shadedpython]
+max_bigram_count * 2 / total_words > 0.18
+\end{lstlisting}
+  then \texttt{repeated\_bigram}. This catches text like
+  \texttt{buy now buy now buy now buy now buy now...} where one phrase is
+  repeated unnaturally often.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Alphabetic-word fraction}
+\begin{lstlisting}[style=shadedpython]
+MIN_ALPHA_WORD_FRAC = 0.60
+\end{lstlisting}
+  At least 60\% of whitespace-separated words must contain an alphabetic
+  character. Example bad document: \texttt{12345 \$\$\$ --- 9987 \#\#\# 123}
+  --- most ``words'' contain no letters, so it gets rejected.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Stopword sanity check}
+  For English: \texttt{the}, \texttt{and}, \texttt{of}, \texttt{to},
+  \texttt{in}, \texttt{is}, \ldots\
+  For Hindi: \dev{है}, \dev{और}, \dev{के}, \dev{में}, \dev{से}, \ldots\
+  For Hinglish: \texttt{hai}, \texttt{aur}, \texttt{ke}, \texttt{mein},
+  \ldots\
+
+  The document must contain at least
+\begin{lstlisting}[style=shadedpython]
+MIN_STOPWORD_HITS = 2
+\end{lstlisting}
+  distinct stopwords from its claimed language list. This is a sanity check.
+  Example: \texttt{lang = english} but the document contains no common
+  English function words at all --- that may indicate a wrong language
+  label, garbage, or non-prose content, so it gets rejected.
+\end{paragraphblock}
+
+\begin{paragraphblock}{\texttt{judge(doc)}}
+  This line is elegant:
+\begin{lstlisting}[style=shadedpython]
+reasons = [r for f in FILTERS if (r := f(doc))]
+\end{lstlisting}
+  Meaning: run every filter, then collect every rejection reason. Example:
+\begin{lstlisting}[style=shadedpython]
+reasons = [
+    "too_short:31",
+    "few_stopwords"
+]
+\end{lstlisting}
+  Then \texttt{return (not reasons, reasons)} --- so no reasons $\Rightarrow$
+  \texttt{keep = True}; one or more reasons $\Rightarrow$
+  \texttt{keep = False}.
+\end{paragraphblock}
+
+\subsubsection{Dedup\_minhash}
+
+We are no longer asking ``Is this document good?'' We are asking ``Have we
+already seen essentially the same document?''
+
+The method is:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+5-word shingles
+    |
+    v
+MinHash signatures
+    |
+    v
+LSH candidate search
+    |
+    v
+exact Jaccard verification
+    |
+    v
+drop near duplicates
+\end{lstlisting}
+
+\begin{paragraphblock}{Step 1: 5-word shingles}
+\begin{lstlisting}[style=shadedpython]
+SHINGLE = 5
+\end{lstlisting}
+  Suppose: \texttt{"the quick brown fox jumps over the lazy dog"}. 5-word
+  shingles are:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+the quick brown fox jumps
+quick brown fox jumps over
+brown fox jumps over the
+fox jumps over the lazy
+jumps over the lazy dog
+\end{lstlisting}
+  Each one gets hashed into an integer. So a document becomes a set:
+\begin{lstlisting}[style=shadedpython]
+{
+ hash(shingle1),
+ hash(shingle2),
+ hash(shingle3),
+ ...
+}
+\end{lstlisting}
+  Why? Because overlapping 5-word sequences capture document similarity much
+  better than exact whole-document matching.
+\end{paragraphblock}
+
+\begin{paragraphblock}{MinHash signatures}
+  A document may contain thousands of shingles. Comparing every document
+  against every other document would be expensive. So MinHash compresses the
+  set into \texttt{NUM\_HASHES = 128} numbers. Conceptually:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+thousands of shingles
+        |
+        v
+128-value fingerprint
+\end{lstlisting}
+  Documents with similar shingle sets tend to have similar MinHash signatures.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Fixed seed}
+\begin{lstlisting}[style=shadedpython]
+SEED = 20260814
+\end{lstlisting}
+  This makes generated hash-function coefficients reproducible. So the
+  intention is: same data + same code + same seed $=$ same signatures.
+\end{paragraphblock}
+
+\begin{paragraphblock}{LSH banding}
+  The 128-value signature is split into \texttt{BANDS = 16}. So each band
+  contains $128 / 16 = 8$ values. Visually:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+128-value signature
+
+[8][8][8][8][8][8][8][8]
+[8][8][8][8][8][8][8][8]
+
+= 16 bands
+\end{lstlisting}
+  For each band, it creates a bucket key. If two documents share any identical
+  band, they become candidate duplicates. This avoids comparing every pair.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Why LSH?}
+  Without LSH: 100{,}000 docs $\rightarrow$ potentially billions of
+  comparisons. With LSH:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+MinHash
+  |
+  v
+bucket similar-looking docs together
+  |
+  v
+only verify likely matches
+\end{lstlisting}
+  So MinHash approximates similarity; LSH efficiently finds likely similar
+  pairs.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Exact Jaccard verification}
+  Candidate pairs are verified using \texttt{jaccard(a, b)}:
+  \[
+    J(A,B)=\frac{|A \cap B|}{|A \cup B|}.
+  \]
+  Example: $A=\{1,2,3,4,5\}$, $B=\{1,2,3,4,6\}$ gives
+  $|A\cap B|=4$, $|A\cup B|=6$, so $J=4/6=0.667$.
+
+  Threshold:
+\begin{lstlisting}[style=shadedpython]
+JACCARD_THRESHOLD = 0.8
+\end{lstlisting}
+  So Jaccard $\ge 0.8$ $\rightarrow$ near duplicate $\rightarrow$ drop later
+  doc.
+\end{paragraphblock}
+
+\begin{paragraphblock}{First-seen wins}
+  The implementation keeps the first document seen and rejects later
+  near-duplicates:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+Doc A
+  | kept
+  v
+Doc B ~ A
+  | dropped
+  v
+Doc C ~ A
+  | dropped
+\end{lstlisting}
+  So file order matters here too.
+\end{paragraphblock}
+
+\subsubsection{Decontaminate}
+
+This stage has a different goal: \textbf{prevent benchmark leakage}.
+
+It creates a set of sequences from the evaluation data and removes any
+training document sharing one of them. The configured size is
+\begin{lstlisting}[style=shadedpython]
+NGRAM = 13
+\end{lstlisting}
+So it uses 13-word sequences.
+
+\begin{paragraphblock}{Building banned 13-grams}
+  Suppose an eval item contains:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+the reserve bank of india was established in april nineteen thirty five in accordance
+\end{lstlisting}
+  A 13-word window might be hashed. Then the window shifts one word:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+reserve bank of india was established in april nineteen thirty five in accordance with
+\end{lstlisting}
+  and so on. Each gets added to \texttt{banned}.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Which eval fields are used?}
+  For JSONL eval files it looks at \texttt{prompt}, \texttt{answer}, and
+  \texttt{text} --- so both the question and answer content can contribute
+  banned n-grams. For plain text eval files, the entire file contents are
+  used.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Strict contamination rule}
+
+\begin{lstlisting}[style=shadedpython]
+if any(g in banned for g in ngrams(doc["text"])):
+\end{lstlisting}
+  Meaning: if a training document shares even \emph{one} banned 13-word
+  sequence with any eval content, drop the whole document.
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+training doc
+   |
+   v
+generate all 13-grams
+   |
+   v
+any overlap with eval?
+  /           \\
+ yes           no
+  |             |
+  v             v
+drop           keep
+\end{lstlisting}
+  The rationale in the docstring: false positive / over-dropping is cheap;
+  eval leakage is expensive --- especially at large scale.
+\end{paragraphblock}
+
+\subsubsection{Clean}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+raw.jsonl
+   |
+   v
+langid.py
+   |
+   | Adds:
+   | * lang
+   | * script
+   | * code_mix
+   |
+   v
+filters.py
+   |
+   | Rejects:
+   | * too short / too long
+   | * weird mean word length
+   | * excessive symbols
+   | * bullet-heavy text
+   | * ellipsis-heavy text
+   | * duplicate lines
+   | * repeated bigrams
+   | * too few alphabetic words
+   | * language/stopword mismatch
+   |
+   v
+dedup_minhash.py
+   |
+   | 5-word shingles
+   |      |
+   |      v
+   | 128 MinHash values
+   |      |
+   |      v
+   | 16 LSH bands
+   |      |
+   |      v
+   | candidate duplicates
+   |      |
+   |      v
+   | exact Jaccard >= 0.8
+   |      |
+   |      v
+   | remove later duplicate
+   |
+   v
+decontaminate.py
+   |
+   | build eval 13-grams
+   |      |
+   |      v
+   | compare training docs
+   |      |
+   |      v
+   | any shared 13-gram?
+   |      |
+   |      v
+   | drop document
+   |
+   v
+clean.jsonl
+\end{lstlisting}
+
+\begin{paragraphblock}{Code skips \texttt{filters.py}}
+  This is especially clear from the actual filter rules. For example, code
+  frequently contains \texttt{\#}, \texttt{*}, short lines, symbol-heavy
+  expressions, few natural-language stopwords, unusual word lengths, and lots
+  of nonalphabetic tokens. So a valid Python file like
+\begin{lstlisting}[style=shadedpython]
+def foo(x):
+    if x > 10:
+        return x * 2
+\end{lstlisting}
+  might fail several prose-oriented checks --- which is why code skips
+  \texttt{filters.py} by design.
+
+  Net result: 6{,}600 docs / $\sim$4.5M words, with the drops logged
+  per stage (e.g.\ filters cut 402 of 3{,}300 Indic docs; decontamination
+  banned 198 eval n-grams).
+\end{paragraphblock}
+
+\subsection{\texttt{eval\_fertility.py}}
+
+For each \texttt{eval\_sets/<language>.txt}, the evaluator computes
+
+\[
+  \operatorname{fertility}
+  =\frac{\text{number of encoded token IDs}}
+  {\text{number of whitespace-delimited words}}.
+\]
+
+English becomes the relative reference. A language passes only if it is within
+15\% of English; native-script languages must also remain at or below 1.8
+tokens per word. Code is informational because it needs comparison with a
+strong code tokenizer rather than the language threshold.
+
+The current 64K result is:
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}l r r l@{}}
+    \textbf{Language} & \textbf{Fertility} & \textbf{vs English} &
+    \textbf{Status} \\
+    \hline
+    English & 1.18 & 0\% & pass \\
+    Hindi & 1.32 & +12\% & pass \\
+    Punjabi & 1.67 & +42\% & fails relative target \\
+    Bengali & 1.90 & +62\% & fails both targets \\
+    Hinglish & 2.13 & +81\% & fails relative target \\
+    Malayalam & 2.78 & +136\% & fails both targets
+  \end{tabular}
+\end{center}
+
+The full evaluator reports 11 failures. These values diagnose the current
+artifact, but the bundled texts are too small and are not valid held-out
+evaluation sets. They cannot select the production tokenizer.
+
+\subsection{What must be true before v0 freezes}
+
+\begin{enumerate}
+    \setlength{\itemsep}{0pt}
+  \item Replace every placeholder evaluation file with versioned
+    held-out text.
+  \item Add at least one strong multilingual and one code-tokenizer baseline.
+  \item Train the planned 64K/96K/128K candidates first; a one-month sprint
+    should not jump directly to the old 160K/256K sweep without enough data.
+  \item Compare downstream validation loss at equal model size and
+    equal token budget.
+  \item Add round-trip, special-token-ID, digit-split, and
+    script-coverage tests.
+  \item Freeze the tokenizer JSON, corpus manifest, evaluation hash,
+    and decision record together.
+\end{enumerate}
+
+Fertility is necessary because it measures representation efficiency. It is
+not sufficient because a tokenizer with excellent fertility can still produce
+worse language-model loss or arithmetic behavior.

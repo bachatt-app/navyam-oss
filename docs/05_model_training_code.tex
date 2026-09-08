@@ -1,0 +1,676 @@
+% !TEX root = main.tex
+\clearpage
+\section{Code guide: BachattLM model and trainer}
+
+\texttt{model.py} is a compact executable specification of a modern
+decoder-only Transformer. \texttt{train.py} supplies deterministic batches,
+optimization, evaluation, logging, and checkpoint resumption. Together they
+contain 384 lines of Python, small enough to audit before moving to a larger
+distributed framework.
+
+\subsection{\texttt{model.py}}
+
+Now we leave data engineering and enter the model. This defines the actual
+decoder-only Transformer.
+
+The architecture is:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+token IDs
+   |
+   v
+token embedding
+   |
+   v
+Transformer Block x N
+   |
+   |-- RMSNorm
+   |-- GQA attention
+   |    + RoPE
+   |-- residual
+   |-- RMSNorm
+   |-- SwiGLU FFN
+   `-- residual
+   |
+   v
+final RMSNorm
+   |
+   v
+language model head
+   |
+   v
+vocabulary logits
+\end{lstlisting}
+
+\subsection{Configuration and tensor dimensions}
+
+\texttt{ModelConfig} defines:
+\begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \small
+  \begin{tabular}{@{}l l p{0.55\textwidth}@{}}
+    \textbf{Field} & \textbf{Symbol} & \textbf{Meaning} \\
+    \hline
+    \texttt{vocab\_size} & \(V\) &
+    number of distinct tokens the model can emit; size of the embedding
+    table and of the final logit vector \\
+    \texttt{dim} & \(C\) &
+    residual-stream width --- every token is a \(C\)-dimensional vector
+    throughout the network \\
+    \texttt{n\_layers} & \(L\) &
+    how many Transformer blocks are stacked (each block =
+    attention + SwiGLU FFN) \\
+    \texttt{n\_heads} & \(H\) &
+    number of query heads in attention; each head has width
+    \(D=C/H\) \\
+    \texttt{n\_kv\_heads} & \(H_{kv}\) &
+    number of shared key/value heads under GQA (\(H\) must be divisible
+    by \(H_{kv}\); each KV head serves \(H/H_{kv}\) query heads) \\
+    \texttt{max\_seq\_len} & \(T\) &
+    longest context the RoPE cache and causal mask are built for
+  \end{tabular}
+\end{center}
+
+Example:
+\begin{lstlisting}[style=shadedpython]
+vocab_size = 4096
+dim        = 512
+layers     = 8
+query heads = 8
+KV heads    = 2
+sequence    = 1024
+\end{lstlisting}
+The per-head dimension is
+\[
+  D=\frac{C}{H}=\frac{\texttt{dim}}{\texttt{n\_heads}}.
+\]
+So \(512/8=64\): each query head has \(D=64\).
+
+The code asserts that \(C\) is divisible by \(H\) and that \(H\) is divisible
+by \(H_{kv}\). It should also assert that \(D\) is even, because RoPE splits
+each head into two equal halves.
+
+\subsection{RMSNorm}
+
+Previously we learned LayerNorm. RMSNorm is simpler: it normalizes based on
+root mean square,
+\[
+  \frac{x}{\sqrt{\operatorname{mean}(x^2)+\epsilon}},
+\]
+then multiplies by a learned weight. Unlike LayerNorm, it does not subtract
+the mean first --- it only rescales:
+
+\[
+  \operatorname{RMSNorm}(x)
+  =g\odot\frac{x}{\sqrt{\operatorname{mean}(x^2)+\epsilon}}.
+\]
+
+The implementation computes the normalization in FP32 and casts back to the
+activation dtype. This protects the reduction from lower-precision rounding
+while preserving mixed-precision throughput in later operations.
+
+\subsection{Rotary position embeddings (RoPE)}
+
+Old-style positional embeddings:
+\begin{lstlisting}[style=shadedpython]
+token_embedding + position_embedding
+\end{lstlisting}
+versus RoPE:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+token_embedding
+      |
+      v
+Transformer
+      |
+      v
+rotate Q and K based on position
+      |
+      v
+attention
+\end{lstlisting}
+RoPE is attractive because it gives attention a strong representation of
+relative position, works well with long contexts, and has become very common
+in modern decoder-only LLMs.
+
+RoPE is a way for a Transformer to understand token position and relative
+distance without adding a separate positional vector to each token embedding.
+
+In self-attention, you normally compute something like:
+\[
+  \operatorname{Attention}(Q,K,V)
+  =\operatorname{softmax}\!\left(\frac{QK^{\mathsf T}}{\sqrt{d}}\right)V.
+\]
+The problem is that plain attention by itself does not know whether a token
+is at position 3, 30, or 3000.
+
+RoPE solves that by rotating the query and key vectors by an angle that
+depends on token position. Conceptually:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item token at position 0 $\rightarrow$ rotate Q/K by angle 0;
+  \item token at position 1 $\rightarrow$ rotate Q/K a little;
+  \item token at position 2 $\rightarrow$ rotate Q/K more;
+  \item token at position 3 $\rightarrow$ rotate Q/K more again;
+  \item \ldots
+\end{itemize}
+The clever part is that when the rotated query and key interact through the
+dot product, their relationship naturally contains information about the
+distance between positions. So the model can learn things like ``this word
+is 1 token behind me,'' ``this variable was defined 40 tokens ago,'' or
+``this sentence started 200 tokens earlier'' --- rather than merely learning
+an absolute position number.
+
+A simplified 2D rotation looks like this:
+\[
+  \begin{bmatrix} x_1' \\ x_2'
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \cos\theta & -\sin\theta \\
+    \sin\theta & \cos\theta
+  \end{bmatrix}
+  \begin{bmatrix} x_1 \\ x_2
+  \end{bmatrix},
+\]
+where \(\theta\) depends on token position and dimension/frequency. In
+practice, RoPE applies these rotations across pairs of dimensions in \(Q\) and
+\(K\).
+
+\subsubsection{Simple example}
+
+Suppose one attention head has only 4 dimensions:
+\[
+  q=[q_1,q_2,q_3,q_4].
+\]
+RoPE treats these as two 2D pairs \((q_1,q_2)\) and \((q_3,q_4)\), and rotates
+each pair according to the token's position.
+
+RoPE is not primarily useful because the model knows ``I am at position 17.''
+The really useful property appears when \(Q\) interacts with \(K\).
+
+Suppose we simplify further and use \(q=k=[1,0]\) before RoPE. \\
+Imagine the query is at position 3 and the key is at position 1, with
+\(30^{\circ}\) per
+position. Then:
+\[
+  Q_3=[\cos 90^{\circ},\sin 90^{\circ}]=[0,1],
+\]
+\[
+  K_1=[\cos 30^{\circ},\sin 30^{\circ}]=[0.866,0.5].
+\]
+Attention uses their dot product:
+\[
+  Q_3\cdot K_1=(0)(0.866)+(1)(0.5)=0.5.
+\]
+The positional difference is also: \\
+\((3-1)\times 30^{\circ}=60^{\circ}\), and
+\(\cos 60^{\circ}=0.5\).
+
+There is a trigonometric identity underneath: if one vector is rotated by
+angle \(a\) and another by angle \(b\), their relative angle becomes
+\(a-b\). For RoPE,
+\[
+  a=p_q\,\theta,\qquad b=p_k\,\theta,
+\]
+so the important term becomes \((p_q-p_k)\theta\). \\
+Therefore the attention
+interaction contains \(p_q-p_k\) --- the distance between the two tokens.
+
+\paragraph{Why multiple frequencies?}
+Our 4D example contained two pairs, \((q_1,q_2)\) and \((q_3,q_4)\), rotated
+at different speeds. Modern RoPE does this across many dimensions:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item dimension pair 0 $\rightarrow$ relatively high frequency;
+  \item dimension pair 1 $\rightarrow$ slightly lower frequency;
+  \item dimension pair 2 $\rightarrow$ lower;
+  \item dimension pair 3 $\rightarrow$ lower;
+  \item \ldots
+\end{itemize}
+
+\texttt{rope\_cache()} precomputes sine and cosine tables of shape
+\([T,D/2]\). \\
+\texttt{apply\_rope()} splits each query or key head into two
+halves and applies a position-dependent rotation:
+
+\[
+  (x_1,x_2)\longmapsto
+  (x_1\cos\theta-x_2\sin\theta,
+  x_1\sin\theta+x_2\cos\theta).
+\]
+
+Values are not rotated. Position affects which keys a query aligns with, while
+the values continue to carry content.
+
+\subsection{Grouped-query causal attention (GQA)}
+
+Previously we studied normal multi-head attention where:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+8 query heads
+8 key heads
+8 value heads
+\end{lstlisting}
+In grouped-query attention (GQA), key/value heads are grouped.
+
+Conceptually:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+Q heads
+
+Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8
+
+      share KV groups
+
+K1/V1 serves Q1-Q4
+K2/V2 serves Q5-Q8
+\end{lstlisting}
+because
+\begin{lstlisting}[style=shadedpython]
+rep = n_heads // n_kv_heads
+\end{lstlisting}
+Here \(8/2=4\), so each KV head serves 4 query heads. This reduces KV memory
+and computation.
+
+Queries are projected to \(H\) heads, while keys and values are projected to
+only \(H_{kv}\) heads:
+
+\[
+  Q:[B,H,T,D],\qquad
+  K,V:[B,H_{kv},T,D].
+\]
+
+Each KV head serves \(H/H_{kv}\) query heads. The code currently realizes this
+by \texttt{repeat\_interleave} before calling PyTorch scaled-dot-product
+attention. This saves KV projection parameters, but materializing repeated K/V
+tensors gives up much of GQA's intended activation and cache-memory benefit.
+A production kernel should consume grouped K/V directly.
+
+\texttt{is\_causal=True} delegates causal masking and fused attention-kernel
+selection to PyTorch. The result is concatenated across heads and projected
+back to \(C\).
+
+\subsection{SwiGLU and the residual block}
+
+SwiGLU is basically a smarter feed-forward network (FFN) used inside
+many modern Transformers.
+
+A traditional FFN looks like:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+x
+|
+v
+Linear up-projection
+|
+v
+GELU / ReLU
+|
+v
+Linear down-projection
+|
+v
+output
+\end{lstlisting}
+Mathematically, roughly:
+\[
+  \operatorname{FFN}(x)=W_{down}\bigl(\operatorname{GELU}(W_{up}x)\bigr).
+\]
+
+\subsubsection{SwiGLU introduces two branches}
+
+Instead of making one projection from \(x\), SwiGLU makes two:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+                   x
+                 /   \
+                /     \
+               v       v
+          W_gate x    W_up x
+               |       |
+             SiLU      |
+               \       /
+                \     /
+                  *
+                  |
+                  v
+               W_down
+                  |
+                  v
+                output
+\end{lstlisting}
+So \(x\) goes through two independent learned matrices:
+\[
+  g=W_{gate}x,\qquad u=W_{up}x.
+\]
+The first becomes the gate; the second contains the features/values.
+
+\subsubsection{The gate goes through SiLU}
+
+We apply \(\operatorname{SiLU}(g)\), where
+\[
+  \operatorname{SiLU}(x)=x\,\sigma(x)
+\]
+and \(\sigma(x)\) is the sigmoid. Conceptually SiLU behaves somewhat like:
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}r r@{}}
+    \textbf{Input} & \textbf{SiLU output} \\
+    \hline
+    \(-5\) & near \(0\) \\
+    \(-1\) & about \(-0.27\) \\
+    \(0\) & \(0\) \\
+    \(1\) & about \(0.73\) \\
+    \(5\) & about \(4.97\)
+  \end{tabular}
+\end{center}
+So it smoothly controls how strongly something passes through. That is why we
+call it a gate.
+
+\subsubsection{Then multiply the two branches}
+
+This is the crucial bit. Suppose
+\[
+  W_{gate}x=[2,-2,0.5,1]
+\]
+and
+\[
+  W_{up}x=[10,20,30,40].
+\]
+After SiLU, imagine approximately
+\[
+  \operatorname{SiLU}(W_{gate}x)=[1.76,-0.24,0.31,0.73].
+\]
+Now multiply element-by-element:
+\[
+  [1.76,-0.24,0.31,0.73]\odot[10,20,30,40]
+\]
+giving approximately \([17.6,-4.8,9.3,29.2]\). The gate has therefore altered
+how much of every feature gets through. You can mentally read that as:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item Feature 1 $\rightarrow$ strongly useful $\rightarrow$ let it through;
+  \item Feature 2 $\rightarrow$ suppress/change it;
+  \item Feature 3 $\rightarrow$ somewhat useful;
+  \item Feature 4 $\rightarrow$ quite useful.
+\end{itemize}
+
+\subsubsection{Then \(W_{down}\) brings it back}
+
+The intermediate SwiGLU vector is usually much larger than the model's hidden
+dimension, so \(W_{down}\) projects it back down. The complete equation is:
+\[
+  \operatorname{SwiGLU}(x)
+  =W_{down}\bigl(\operatorname{SiLU}(W_{gate}x)\odot W_{up}x\bigr),
+\]
+where \(\odot\) means element-wise multiplication.
+
+\subsubsection{Why is it called SwiGLU?}
+
+The name can be broken apart. \emph{Swish} is essentially the activation now
+commonly called SiLU:
+\[
+  \operatorname{SiLU}(x)=x\,\sigma(x).
+\]
+And \emph{GLU} means Gated Linear Unit.
+
+\subsection{Transformer block}
+
+So inside your eventual Transformer block:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+                 INPUT
+                   |
+              +----+----+
+              |Attention|  <- RoPE operates in Q/K here
+              +----+----+
+                   |
+               residual
+                   |
+              +----+----+
+              | SwiGLU  |  <- gated feature processing here
+              |   FFN   |
+              +----+----+
+                   |
+               residual
+                   |
+                 OUTPUT
+\end{lstlisting}
+
+The block is:
+\begin{lstlisting}[style=shadedpython]
+x = x + Attention(RMSNorm(x))
+x = x + SwiGLU(RMSNorm(x))
+\end{lstlisting}
+
+\subsection{Embedding, head, loss, and generation}
+
+Token embeddings map \([B,T]\) IDs to \([B,T,C]\). After all blocks and a final
+RMSNorm, the language-model head maps to \([B,T,V]\). Its weight is the exact
+same parameter as the token-embedding table, reducing parameters and coupling
+input and output token geometry.
+
+Training flattens logits and targets for cross-entropy. Inference without
+targets computes only the last position's logits. \texttt{generate()} repeatedly
+crops context to the maximum sequence length, samples from softmax, and appends
+one token. It has no KV cache, top-k/top-p control, EOS stopping, or batched
+finished-sequence handling; it is a correctness path, not an inference engine.
+
+\subsection{Training \texttt{train.py}}
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+train.bin / val.bin
+       |
+       v
+train.py
+       |
+       v
+Data
+       |
+       v
+batches
+       |
+       v
+GPT
+       |
+       v
+loss
+       |
+       v
+backprop
+       |
+       v
+AdamW
+       |
+       v
+checkpoint
+\end{lstlisting}
+
+\subsection{Memory-mapped training data}
+
+\begin{lstlisting}[style=shadedpython]
+np.memmap(...)
+\end{lstlisting}
+is important. Instead of loading 1.3B tokens into RAM, the operating system
+maps the binary file. So the trainer can access slices like
+\begin{lstlisting}[style=shadedpython]
+arr[s:s+1024]
+\end{lstlisting}
+without loading the full dataset.
+
+\subsection{Prepared data and deterministic batches}
+
+The \texttt{Data} class memory-maps flat token arrays. For a training micro-step
+it seeds NumPy with the tuple
+
+\[
+  (\text{seed},\text{optimizer step},\text{micro-step},\text{is validation})
+\]
+
+and samples start offsets. Inputs and one-token-shifted targets are converted to
+\texttt{int64} PyTorch tensors and moved to CUDA, MPS, or CPU. Thus
+the batch for
+a particular step is independent of earlier process history.
+
+Validation intentionally reuses the same fixed batches, making measurements
+comparable across checkpoints. A later distributed version must incorporate
+rank into training seeds without allowing ranks to sample identical sequences.
+
+\subsection{Optimizer and schedule}
+
+Parameters with at least two dimensions receive AdamW weight decay; 1-D norm
+weights do not. The learning rate warms linearly and then follows cosine decay
+to 10\% of its peak by default.
+
+For each optimizer step, the loop performs:
+
+\begin{enumerate}
+    \setlength{\itemsep}{0pt}
+  \item set the learning rate from the global step;
+  \item clear gradients;
+  \item run one or more deterministic micro-batches;
+  \item divide every micro-loss by the accumulation count;
+  \item backpropagate and accumulate gradients;
+  \item clip the global gradient norm; and
+  \item call AdamW once.
+\end{enumerate}
+
+CUDA uses BF16 autocast. MPS and CPU run FP32. There is no FP16 gradient scaler,
+which is consistent with the current precision choices.
+
+\subsection{Checkpoint semantics}
+
+It saves:
+\begin{lstlisting}[style=shadedpython]
+{
+    "model": ...,
+    "opt": ...,
+    "step": ...,
+    "model_config": ...,
+    "train_config": ...
+}
+\end{lstlisting}
+So a checkpoint includes model weights, optimizer state, current step, model
+architecture, and training configuration.
+
+With
+\begin{lstlisting}[style=shadedpython]
+python train.py \
+    --config ... \
+    --resume
+\end{lstlisting}
+training can continue from \texttt{ckpt\_last.pt}.
+
+The checkpoint stores model weights, AdamW state, completed step, and both
+configuration dictionaries. Resumption loads them and begins at
+\texttt{saved step + 1}. Learning rate is a pure function of the step, and
+training batches are a pure function of step and seed. Because the model has no
+dropout, this is sufficient for the present deterministic smoke drill.
+
+It is not yet a robust distributed checkpoint. The write is not atomic; random
+states are not stored; there is only one latest file; dataloader, scaler, and
+distributed-shard state do not exist; and corrupt-checkpoint fallback is absent.
+
+\subsection{Logging and MFU}
+
+Tokens per optimizer step are
+
+\[
+  B\times T\times\text{gradient accumulation}.
+\]
+
+The trainer approximates training work as six times parameter count per token
+and divides estimated FLOP/s by configured device peak FLOP/s. This is a useful
+rough MFU signal, not a benchmark-quality measurement: it omits quadratic
+attention work and communication, and the interval timing logic needs care for
+resumed or partial logging windows.
+
+\subsection{What the configurations actually represent}
+
+Two different quantities get confused here: \emph{parameters} and
+\emph{tokens}.
+
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item \textbf{Parameters} count the trainable numbers in the model
+    (weights). We write M for million (\(10^6\)), B for billion
+    (\(10^9\)). So ``21.30M parameters'' means about \(21.3\times 10^6\)
+    weights.
+  \item \textbf{Tokens} count how much training text the optimizer sees.
+    T means trillion (\(10^{12}\)). So ``train on 2T tokens'' means feed
+    the model about \(2\times 10^{12}\) BPE tokens --- it does \emph{not}
+    mean the model has 2 trillion weights.
+\end{itemize}
+
+A small model can still train on a large token budget (many passes over
+data, or a huge corpus). Conversely, a large-parameter model can be
+under-trained if it sees too few tokens. The corpus roadmap's ``2T'' target
+is a \emph{data} scale (tokens), not a parameter scale.
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{@{}l r r r r@{}}
+    \textbf{Config} & \(C\) & \(L\) & \(H/H_{kv}\) & \textbf{Parameters} \\
+    \hline
+    smoke & 128 & 4 & 4/2 & 1.21M with actual 1{,}745 vocab \\
+    mini & 256 & 6 & 8/2 & 21.30M \\
+    300m & 1{,}024 & 24 & 16/4 & 337.69M \\
+    1b & 2{,}048 & 26 & 16/4 & 1.307B
+  \end{tabular}
+\end{center}
+
+The names are scale labels, not exact counts. The repository does not yet have
+30--50M or 100--150M configurations.
+
+\subsubsection{How 21.30M is calculated (\texttt{mini.json})}
+
+The code reports
+\[
+  \texttt{num\_params()}
+  =\sum_p |p|,
+\]
+i.e.\ the sum of every tensor's element count (with the LM head tied to the
+token embedding, so that table is counted once). For
+\texttt{mini.json} (\(V{=}65{,}536\), \(C{=}256\), \(L{=}6\),
+\(H{=}8\), \(H_{kv}{=}2\)):
+
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}p{0.42\textwidth}r@{}}
+    \textbf{Piece} & \textbf{Count} \\
+    \hline
+    Token embedding \(V\times C\)
+      (tied LM head) &
+    \(65{,}536\times 256=16{,}777{,}216\) \\
+    Attention per layer
+      (\(W_q,W_k,W_v,W_o\); GQA shrinks \(K/V\)) &
+    \(163{,}840\) \\
+    SwiGLU per layer
+      (hidden \(=768\) after \(8C/3\) rounded up) &
+    \(589{,}824\) \\
+    RMSNorm weights per layer (\(2\times C\)) &
+    \(512\) \\
+    \(\times\,L{=}6\) Transformer blocks &
+    \(6\times 754{,}176=4{,}525{,}056\) \\
+    Final RMSNorm & \(256\) \\
+    \hline
+    \textbf{Total} &
+    \(21{,}302{,}528\approx 21.30\text{M}\)
+  \end{tabular}
+\end{center}
+
+Notice the embedding alone is \(\sim\)79\% of this tiny model. That is why
+scaling width/depth (not only vocab) is what grows ``real'' Transformer
+capacity.
+
+\subsection{Required increments before larger runs}
+
+\begin{enumerate}
+    \setlength{\itemsep}{0pt}
+  \item Add unit tests for shapes, causal behavior, tied weights,
+    RoPE, and resume equivalence.
+  \item Make validation document-disjoint and domain-balanced.
+  \item Add atomic checkpoint writes, retained milestones, and recovery tests.
+  \item Add \texttt{torch.compile}, fused AdamW where safe, and profiler traces.
+  \item Implement DDP for throughput and FSDP or an adopted framework for 1B.
+  \item Add gradient checkpointing and a direct GQA attention path.
+  \item Log structured JSON with tokens seen, validation loss,
+    gradient norm, memory, and config hashes.
+  \item Reconcile every run with a snapshot ID and experiment-registry entry.
+\end{enumerate}

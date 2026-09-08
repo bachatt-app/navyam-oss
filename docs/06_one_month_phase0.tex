@@ -1,0 +1,139 @@
+% !TEX root = main.tex
+\clearpage
+\section{A credible one-month Phase 0 sprint}
+
+The proposed sequence is directionally correct, but its original durations add
+to 26 weeks. Compressing all original exit criteria into one month would require
+pretending that data quality, expert review, distributed reliability, and
+scaling evidence are calendar tasks. They are empirical gates.
+
+The useful one-month objective is narrower:
+
+\begin{quote}
+  \textbf{By day 30, produce a reproducible 100--150M learning run on real
+  multi-domain data, with a frozen provisional tokenizer, a trusted small eval
+  set, and a short 300M NVIDIA portability run.}
+\end{quote}
+
+This is a \emph{Phase 0 v0 milestone}, not the original Phase 0 exit gate.
+
+\subsection{Scope conversion}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{@{}p{0.09\textwidth}p{0.31\textwidth}p{0.45\textwidth}@{}}
+  \textbf{Stage} & \textbf{One-month outcome} & \textbf{Deferred proof} \\
+  \hline
+  0A & Explain and test the existing tiny GPT & Broader pedagogy is already in this document \\
+  0B & Provisional tokenizer v0, real held-out evals, 3-size sweep & Final Alpha tokenizer freeze \\
+  0C & Reproducible local pipeline with content hashes; 1--3B usable tokens & 1T-token distributed throughput \\
+  0D & One 30--50M baseline and one corrected rerun & Broad architecture search \\
+  0E & 75--100 drafts, 30--50 reviewed items, reproducible harness & 500+ reviewed items and mature judge scoring \\
+  0F & One 100--150M run with documented learning curves & Systematic scaling-law fit \\
+  0G & 300M short-run portability and profiling on NVIDIA & Full 300M/1B convergence, FSDP recovery, MFU gate
+\end{tabular}
+\end{center}
+
+\subsection{Week 1: make the existing loop trustworthy}
+
+\textbf{Model and training.} Add shape/causality/resume tests, 40M and 120M
+configs, atomic checkpoints, JSON logging, and document-disjoint validation.
+Run the smoke and 21M configurations from clean environments.
+
+\textbf{Tokenizer.} Replace placeholder evaluations with versioned held-out
+samples; add multilingual and code baselines; train 64K, 96K, and 128K
+candidates on the same seeded corpus.
+
+\textbf{Data.} Replace process-random hashes, add source content hashes and
+schema validation, and enforce legal-register IDs in ingestion.
+
+\textbf{Exit test.} A fresh clone can reproduce the smoke checkpoint, tokenizer
+report, snapshot ID, and BachattBench oracle/echo results with one documented
+command sequence.
+
+\subsection{Week 2: build enough data and run BachattLM-0}
+
+Prioritize data volume with clear legal status: expand permissive global
+English and code sources, increase verified Indic coverage, and build the first
+substantial regulator/public-domain finance slice only after terms review.
+
+Target at least 1B clean BPE tokens, preferably 2--3B. Stream tokenization into
+shards rather than loading the corpus into memory. Record yield and rejection
+rates by source, language, and pipeline stage.
+
+Train a 30--50M model first as an instrumented baseline. The decision gate is
+not whether text looks impressive; it is whether loss falls predictably, held-
+out domains improve, checkpoints resume, throughput is stable, and no eval
+contamination is found.
+
+\subsection{Week 3: evaluation and BachattLM-1}
+
+Expand BachattBench in parallel with finance review. Keep reviewed and draft
+items in separate manifests. Add grading tests, absolute numeric tolerance,
+result provenance, and a small set of code-mixed finance scenarios.
+
+Use findings from BachattLM-0 to correct data or optimization once, then start
+the 100--150M run. A 120M center point is a practical choice: it fits easily on
+one modern NVIDIA GPU and creates room for several measured restarts.
+
+Record train/validation loss by tokens seen, throughput, memory, gradient norm,
+learning rate, and evaluation snapshots. Do not declare a model better from one
+final loss number without equal-token and equal-data comparisons.
+
+\subsection{Week 4: portability proof and decision package}
+
+Port the 338M configuration to the rented NVIDIA environment. The one-month
+goal is a short, stable profiling run, not full convergence. Verify BF16,
+\texttt{torch.compile}, checkpoint save/load, deterministic next batches, and
+the most appropriate fused attention path. Measure tokens/s and MFU honestly.
+
+Finish with a decision package containing:
+
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item tokenizer candidate report and provisional freeze hash;
+  \item immutable data snapshot and stage-yield report;
+  \item 40M and 120M experiment cards, curves, checkpoints, and eval results;
+  \item reviewed/draft BachattBench manifests;
+  \item 300M NVIDIA profiler trace and bottleneck list; and
+  \item a go/no-go list for the subsequent full Phase 0 programme.
+\end{itemize}
+
+\subsection{Critical path and resource assumptions}
+
+This schedule assumes one modern 80GB NVIDIA GPU is available by the end of
+week 1, data downloads and storage are available, and a finance reviewer can
+approve at least a few items each working day. Without these, the 120M model
+can still be mechanically trained, but the data and evaluation claims will not
+be credible.
+
+The critical path is
+
+\[
+  \text{legal data}
+  \longrightarrow\text{clean token volume}
+  \longrightarrow\text{tokenizer decision}
+  \longrightarrow\text{comparable runs}.
+\]
+
+Model coding is not the bottleneck. Data provenance, held-out evaluation, and
+repeatable measurement are.
+
+\subsection{Day-30 acceptance gate}
+
+The month succeeds only if all of the following are true:
+
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \item Every claimed artifact is reproducible from committed config and content hashes.
+  \item At least one tokenizer candidate is evaluated on real held-out data against baselines.
+  \item The corpus contains at least 1B clean BPE tokens with source and legal provenance.
+  \item A 30--50M and a 100--150M run complete or reach their predeclared token budget without unexplained instability.
+  \item BachattBench has a separately reported expert-reviewed subset.
+  \item A 300M NVIDIA short run saves, resumes, evaluates, and produces a profiler report.
+\end{enumerate}
+
+If a gate fails, report the failure as the result of the sprint. Do not rename a
+mechanics check as a portability proof or an unreviewed draft set as a benchmark.
+

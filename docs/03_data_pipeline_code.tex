@@ -1,0 +1,566 @@
+% !TEX root = main.tex
+\clearpage
+\section{Code guide: data pipeline v0}
+
+Every pipeline stage reads one JSON object per line from standard input and
+writes surviving documents to standard output. This Unix-filter design makes
+the stages composable and allows rejected or intermediate rows to be inspected.
+
+\subsection{Canonical document flow}
+
+\small\ttfamily
+\begin{longtable}{@{}p{0.22\textwidth}p{0.64\textwidth}@{}}
+  ingest & source-specific API or archive $\rightarrow$ id, source, url, text \\
+  langid.py & add lang, script, code\_mix \\
+  filters.py & remove low-quality prose; optionally record reject reasons \\
+  dedup\_minhash.py & remove near-duplicate documents \\
+  decontaminate.py & remove documents overlapping evaluation text \\
+  mix.py & calculate domain sampling rates and write a snapshot manifest \\
+  prepare\_data.py & tokenize text and write train.bin, val.bin, meta.json
+\end{longtable}
+\normalsize\rmfamily
+
+Code bypasses prose quality filters because source code legitimately violates
+their assumptions about word length, symbols, bullets, and stopwords.
+
+\subsection{Legal register}
+
+\texttt{legal\_register.md} is an append-only compliance ledger for
+training-data sources. Each row records:
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+  \item source and content type;
+  \item legal basis and license/terms;
+  \item reviewer and review date;
+  \item restrictions or outstanding compliance work; and
+  \item a stable source ID such as \texttt{S010}.
+\end{itemize}
+Ingestion scripts attach that ID to every generated document, making data
+provenance traceable. The admin app can add review-pending entries, and the
+register is copied to object storage alongside corpus snapshots.
+
+The ingestion scripts require a \texttt{--source-id}, but do not verify that it
+exists in the register or has compliance approval.
+
+\subsection{Ingestion adapters}
+
+\texttt{ingest\_hf\_rows.py} paginates the Hugging Face datasets-server API in
+100-row requests. It records a stable row-based ID and the legal-register
+source ID, backs off on HTTP 429 responses, and skips empty text.
+
+\texttt{ingest\_wikipedia.py} supports curated title lists and random pages. It
+fetches one complete extract per request, follows redirects, removes stubs
+under 300 characters, and deduplicates titles within a run.
+
+\texttt{ingest\_github\_code.py} downloads tarballs only for four explicitly
+allowlisted repositories. It emits one document per Python file, records the
+repository license, and skips files larger than 200KB.
+
+\texttt{run\_ingest.sh} orchestrates the six domain pools and then applies the
+cleaning chain. Its current sources are useful for mechanics but are not a
+production corpus: Wikipedia topic lists are narrow, the GitHub allowlist is
+tiny, and the Hugging Face rows API is a laptop-scale sampler.
+
+\subsection{Language and code-mix identification}
+
+\texttt{script\_profile()} counts alphabetic characters within explicit Unicode
+ranges. Native-script text is mapped coarsely to a language; more than 15\%
+Latin letters marks it as code-mixed. Latin-dominant text becomes Hinglish when
+more than 5\% of whitespace tokens match a small marker lexicon.
+
+This approach is transparent, but it cannot distinguish Hindi from Marathi in
+Devanagari, Bengali from Assamese in Bengali script, or English containing a
+few Hindi discourse markers from genuine Hinglish. It is a routing heuristic,
+not a production language identifier.
+
+\subsubsection{Mixing and snapshot identity}
+
+\texttt{mix.py} does not actually concatenate or tokenize the data yet. Its
+job is to create a mixing plan / manifest that says: for the final training
+corpus, how much should come from each domain, and how many times do I need
+to sample each pool to hit that target?
+
+Suppose you want a 100M-token training corpus. Then \texttt{mix.py}
+calculates each domain's target as $\text{weight}\times 100\text{M}$:
+\begin{center}
+  \renewcommand{\arraystretch}{1.15}
+  \small
+  \begin{tabular}{@{}l r l@{}}
+    \textbf{Domain} & \textbf{Weight} & \textbf{Target tokens} \\
+    \hline
+    \texttt{global\_english} & 50\% &
+    $0.50\times 100\text{M}=50\text{M}$ \\
+    \texttt{indian\_english} & 17.5\% &
+    $0.175\times 100\text{M}=17.5\text{M}$ \\
+    \texttt{indian\_languages} & 12.5\% &
+    $0.125\times 100\text{M}=12.5\text{M}$ \\
+    \texttt{code} & 10\% &
+    $0.10\times 100\text{M}=10\text{M}$ \\
+    \texttt{finance} & 7.5\% &
+    $0.075\times 100\text{M}=7.5\text{M}$ \\
+    \texttt{math} & 2.5\% &
+    $0.025\times 100\text{M}=2.5\text{M}$ \\
+  \end{tabular}
+\end{center}
+Then it asks: how much clean data do I actually have in each pool?
+
+\begin{paragraphblock}{The default weights}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+DEFAULT_WEIGHTS = {
+    "global_english": 0.50,
+    "indian_english": 0.175,
+    "indian_languages": 0.125,
+    "code": 0.10,
+    "finance_econ_law": 0.075,
+    "math_reasoning": 0.025,
+}
+\end{lstlisting}
+  These sum to 100\%.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Input config}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+python mix.py \
+    --config mix_v1.json \
+    --total-tokens 100e9 \
+    --out snapshots/
+\end{lstlisting}
+  The config is expected to look conceptually like:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+  "global_english": {
+    "paths": ["pools/global_english/clean.jsonl"],
+    "tokens": 40000000000,
+    "weight": 0.50
+  },
+  "indian_languages": {
+    "paths": ["pools/indian_languages/clean.jsonl"],
+    "tokens": 5000000000,
+    "weight": 0.125
+  }
+}
+\end{lstlisting}
+  For each domain it needs \texttt{paths} (where cleaned data lives),
+  \texttt{tokens} (how many clean tokens exist in that pool), and
+  \texttt{weight} (desired fraction of the final training corpus). If
+  \texttt{weight} is absent, it uses \texttt{DEFAULT\_WEIGHTS}.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Validate weights}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+wsum = sum(
+    d.get("weight", DEFAULT_WEIGHTS.get(name, 0))
+    for name, d in cfg.items()
+)
+if abs(wsum - 1.0) > 1e-6:
+    sys.exit(...)
+\end{lstlisting}
+  makes sure they equal 1 (100\%).
+\end{paragraphblock}
+
+\begin{paragraphblock}{Calculate each domain's target}
+  For each domain, \texttt{target = w * total} means target tokens $=$ domain
+  weight $\times$ total desired tokens. Example: total $=100\text{M}$, global
+  English weight $=0.50$ $\Rightarrow$ target $=50\text{M}$ tokens.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Look at available pool size}
+  \texttt{pool = float(d["tokens"])}. Suppose the cleaned English pool
+  contains 40M tokens but the target is 50M --- you don't have enough unique
+  English data to provide 50M tokens once. So the script calculates how many
+  epochs over that pool are needed.
+\end{paragraphblock}
+
+\begin{paragraphblock}{What does epochs mean here?}
+  \texttt{epochs = target / pool}. If target $=50\text{M}$ and pool
+  $=40\text{M}$, then epochs $=1.25$: read the full pool once, plus another
+  25\% of it.
+  \begin{itemize}
+      \setlength{\itemsep}{0pt}
+    \item \texttt{epochs = 1.0} --- use the pool once
+    \item \texttt{epochs = 2.0} --- repeat the whole pool twice
+    \item \texttt{epochs = 0.5} --- sample about half the pool
+    \item \texttt{epochs = 3.5} --- use the pool about $3\frac{1}{2}$ times
+  \end{itemize}
+  This is not model-training epochs yet. It means how much of that data pool
+  needs to be sampled into the intended corpus.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Why cap at 4 epochs?}
+\begin{lstlisting}[style=shadedpython]
+MAX_EPOCHS = 4.0
+capped = min(epochs, MAX_EPOCHS)
+\end{lstlisting}
+  Suppose Indian language pool $=2\text{M}$ tokens and target $=12.5\text{M}$:
+  required epochs $=6.25$, but the script refuses to go beyond $4\times$
+  because the project has chosen not to over-repeat small datasets
+  excessively.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Calculate what you can actually get}
+  \texttt{got = capped * pool}. Using the same example: pool $=2\text{M}$,
+  capped epochs $=4$ $\Rightarrow$ \texttt{got}$=8\text{M}$ tokens, but target
+  was $12.5\text{M}$ --- so there's a shortage.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Shortfall}
+  \texttt{shortfall\_tokens = max(0.0, target - got)}. Example: target
+  $=12.5\text{M}$, got $=8\text{M}$ $\Rightarrow$ shortfall $=4.5\text{M}$
+  tokens. The manifest records that explicitly.
+\end{paragraphblock}
+
+\begin{paragraphblock}{What gets stored per domain?}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+domains[name] = {
+    "paths": d["paths"],
+    "pool_tokens": pool,
+    "weight": w,
+    "target_tokens": target,
+    "epochs": round(capped, 4),
+    "sampled_tokens": round(got),
+    "shortfall_tokens": round(max(0.0, target - got)),
+}
+\end{lstlisting}
+  creates something conceptually like:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+{
+  "global_english": {
+    "paths": ["pools/global_english/clean.jsonl"],
+    "pool_tokens": 40000000,
+    "weight": 0.50,
+    "target_tokens": 50000000,
+    "epochs": 1.25,
+    "sampled_tokens": 50000000,
+    "shortfall_tokens": 0
+  }
+}
+\end{lstlisting}
+\end{paragraphblock}
+
+\begin{paragraphblock}{Build the manifest}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+manifest = {
+    "total_tokens_requested": total,
+    "max_epochs": MAX_EPOCHS,
+    "domains": domains,
+}
+\end{lstlisting}
+  This is the recipe for the training corpus.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Generate a snapshot ID}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+blob = json.dumps(
+    manifest, sort_keys=True, ensure_ascii=False
+).encode()
+hashlib.sha256(blob)
+\end{lstlisting}
+  computes a SHA-256 fingerprint. Only the first 16 hex characters are used:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+snap_id = "snap-" + ...[:16]
+# e.g. snap-6a97923395c5573e
+\end{lstlisting}
+  Why hash the manifest? The snapshot ID identifies the exact corpus recipe.
+  Change global English from 50\% to 45\% and the SHA-256 changes --- so
+  experiments stay traceable: ``Model run \#37 used
+  \texttt{snap-6a97923395c5573e}''.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Snapshots are immutable}
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+if os.path.exists(path):
+    sys.exit(
+        f"{path} exists — snapshots are immutable, never overwrite"
+    )
+\end{lstlisting}
+  Once a snapshot exists, don't modify it. If you change the data mix, create
+  a \emph{new} snapshot instead of rewriting the old one.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Save snapshot}
+  Creates \texttt{snapshots/snap-6a97923395c5573e.json}. Important: this file
+  is a \emph{manifest}, not the actual 100B tokens of training text. It says
+  how to construct/sample the corpus.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Prints a summary}
+  For each domain it prints something like:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+global_english     w=0.500 epochs=0.72 sampled=5e+10
+indian_english     w=0.175 epochs=1.35 sampled=1.75e+10
+indian_languages   w=0.125 epochs=4.00 sampled=8e+09 SHORTFALL 4.5e+09
+\end{lstlisting}
+  This lets you immediately see target weight, required sampling/repetition,
+  actual sampled tokens, and shortfalls.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Warning when data is insufficient}
+  If any domain needs more than 4 epochs, \texttt{shortfall = True}. At the
+  end:
+\begin{lstlisting}[style=shadedpython,breaklines=true]
+if shortfall:
+    print(
+        "WARNING: shortfalls present — "
+        "get more data or rebalance weights"
+    )
+\end{lstlisting}
+  You then have two choices: collect more data for that domain, or
+  change/rebalance the desired weights.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Full example}
+  Imagine \texttt{TOTAL REQUESTED = 100M} tokens. Then \texttt{mix.py}
+  calculates:
+  \begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{@{}l r r r r r l@{}}
+      \textbf{Domain} & \textbf{Weight} & \textbf{Pool} &
+      \textbf{Target} & \textbf{Epochs} & \textbf{Sampled} &
+      \textbf{Notes} \\
+      \hline
+      global English & 50\% & 200M & 50M & 0.25 & 50M &
+      sample 25\% of pool \\
+      Indian English & 17.5\% & 20M & 17.5M & 0.875 & 17.5M & \\
+      Indian languages & 12.5\% & 2M & 12.5M & 4.0 & 8M &
+      raw $6.25$, capped; shortfall $4.5$M \\
+      code & 10\% & 20M & 10M & 0.5 & 10M & \\
+      finance & 7.5\% & 10M & 7.5M & 0.75 & 7.5M & \\
+      math & 2.5\% & 5M & 2.5M & 0.5 & 2.5M & \\
+    \end{tabular}
+  \end{center}
+  Then it saves \texttt{snap-xxxxxxxxxxxxxxxx.json} containing all those
+  decisions.
+\end{paragraphblock}
+
+\begin{paragraphblock}{Where \texttt{mix.py} sits in the pipeline}
+  End-to-end mental model:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+Internet data
+    |
+    v
+ingest
+    |
+    v
+raw.jsonl
+    |
+    v
+clean
+    |
+    v
+clean.jsonl
+    |
+    +-- tokenizer branch -> tokenizer.json
+    |
+    +-- model-mix branch -> snapshot.json
+                         |
+                         v
+          tokenizer.json + snapshot.json
+                         |
+                         v
+                  prepare_data.py
+                         |
+                         v
+                    train/val bins
+                         |
+                         v
+                    MODEL TRAINING
+\end{lstlisting}
+
+  So \texttt{clean.jsonl} is the common fork point, and
+  \texttt{prepare\_data.py} is the join point.
+
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+                        DATA SOURCES
+
+         FineWeb / Sangraha / Wikipedia / GitHub
+                            |
+                            v
+                         INGEST
+                            |
+                            v
+                        raw.jsonl
+                            |
+                            v
+                     DATA CLEANING
+
+                         langid.py
+              (detect language, script, and code-mixing)
+                            |
+                            v
+                        filters.py
+       (remove low-quality / malformed prose using
+        length, repetition, symbol, and language checks)
+                    (skipped for code)
+                            |
+                            v
+                    dedup_minhash.py
+       (remove near-duplicate documents using 5-word
+        shingles + MinHash/LSH + Jaccard similarity)
+                            |
+                            v
+                   decontaminate.py
+       (remove any training document overlapping
+        BachattBench evals via 13-word n-grams)
+                            |
+                            v
+
+                   CLEANED DATA POOLS
+              pools/<domain>/clean.jsonl
+                            |
+                +-----------+-----------+
+                |                       |
+                v                       v
+
+        TOKENIZER WORKSTREAM      MODEL DATA WORKSTREAM
+        ====================      =====================
+
+          sample_corpus.py                mix.py
+                |                           |
+        take capped sample          read domain config
+        from each domain            containing:
+                |                   * clean paths
+                v                   * pool token counts
+          corpus/*.txt              * target weights
+                |                           |
+                v                           v
+        train_tokenizer.py           calculate target
+                |                    tokens per domain
+                v                           |
+         tokenizer.json                     v
+                |                    calculate required
+                v                         epochs
+        eval_fertility.py                   |
+                |                           v
+        measure tokens/word          cap repetition at 4x
+        across languages                    |
+                |                           v
+        validate tokenizer           record shortfalls
+                |                           |
+                |                           v
+                |                    snapshot manifest
+                |                           |
+                |                           v
+                |            snap-6a97923395c5573e.json
+                |                           |
+                +-----------+---------------+
+                            |
+                            v
+                     prepare_data.py
+                            |
+              +-------------+-------------+
+              |                           |
+              v                           v
+
+       snapshot manifest             tokenizer.json
+
+       tells prepare_data:           tells prepare_data:
+       WHAT data to use              HOW text becomes
+       and in what proportions       token IDs
+
+              |                           |
+              +-------------+-------------+
+                            |
+                            v
+                  PHYSICALLY SAMPLE DATA
+                            |
+                            v
+                      TOKENIZE TEXT
+                            |
+                            v
+                    TOKEN ID STREAM
+                            |
+                     train / val split
+                            |
+                  +---------+---------+
+                  v                   v
+              train bins           val bins
+                  |
+                  +---------+---------+
+                            v
+                      MODEL TRAINING
+\end{lstlisting}
+
+  \newpage
+  Slightly more detailed version of \texttt{mix.py}:
+\begin{lstlisting}[style=shadedpython,language={},basicstyle=\scriptsize\ttfamily]
+clean.jsonl pools
+       |
+       v
+     mix.py
+       |
+       +-- desired domain weights
+       |
+       |   global English      50%
+       |   Indian English      17.5%
+       |   Indian languages    12.5%
+       |   code                10%
+       |   finance/econ/law     7.5%
+       |   math/reasoning       2.5%
+       |
+       +-- available pool sizes
+       |
+       v
+target tokens per domain
+
+target = weight x total_tokens
+       |
+       v
+required epochs
+
+epochs = target_tokens / pool_tokens
+       |
+       v
+cap at MAX_EPOCHS = 4
+       |
+       +-- if target achievable
+       |      -> sampled_tokens = target
+       |
+       +-- if pool too small
+              -> repeat at most 4x
+              -> record shortfall
+       |
+       v
+snapshot manifest
+       |
+       v
+snap-xxxxxxxxxxxxxxxx.json
+\end{lstlisting}
+
+  The most important distinction: \texttt{mix.py} does not itself build the
+  final corpus. It computes and freezes the \emph{recipe} for how the corpus
+  should be mixed.
+
+  Compared with \texttt{sample\_corpus.py}:
+  \begin{itemize}
+      \setlength{\itemsep}{0pt}
+    \item \texttt{sample\_corpus.py} builds a balanced \emph{tokenizer}-training
+      sample (equal byte cap).
+    \item \texttt{mix.py} defines the \emph{model}-training mixture (target
+        domain weights, available token counts, repetition limits, versioned
+      snapshot).
+  \end{itemize}
+
+  Why per-domain rather than per-language at the top level: the mix weights
+  in the charter are defined over domains (50\% global English, 12.5\%
+  Indian languages, \ldots), so \texttt{mix.py} samples at that granularity
+  --- but per-language files are kept inside \texttt{indian\_languages/}
+  precisely so tokenizer work can rebalance by language (that's what
+  \texttt{sample\_corpus.py} did for the balanced tokenizer corpus).
+
+  \texttt{sample\_corpus.py} walks each domain directory and copies documents
+  from \texttt{clean.jsonl} into one text file until a byte cap is reached. The
+  cap prevents the largest pool from completely dominating BPE merge counts.
+
+  The implementation is deliberately simple, but two details matter:
+
+  \begin{itemize}
+      \setlength{\itemsep}{0pt}
+    \item it takes the first documents in file order rather than a
+      seeded random sample; and
+    \item it applies an equal byte cap, not the target corpus-mix weights.
+  \end{itemize}
+
+  Before the tokenizer freeze, sampling should be seeded, content-hashed, and
+  stratified by domain, language, source, and document length.
+\end{paragraphblock}

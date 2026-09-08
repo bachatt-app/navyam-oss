@@ -237,6 +237,7 @@ These hold unless deliberately revised:
 | `code/06-inference/`        | Inference server (`serve.py`) and checkpoint→HF/GGUF export.                         |
 | `code/07-sft/`              | Supervised fine-tuning, chat template, calculators.                                  |
 | `code/08-trl/`, `13-reasoning/` | DPO/GRPO and reasoning-distillation trainers.                                   |
+| `docs/`                     | *Intro to LLM* — a from-scratch LaTeX book: model, training, tokenizer, data pipeline, evals, fine-tuning (`main.tex` → `main.pdf`). |
 | `infra.env.example`         | Template for cloud identifiers; copy to a local (gitignored) `infra.env`.            |
 | `LICENSE`                   | Apache-2.0.                                                                          |
 

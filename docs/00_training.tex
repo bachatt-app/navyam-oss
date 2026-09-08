@@ -1,0 +1,763 @@
+% !TEX root = main.tex
+\clearpage
+\section{Lesson 8 --- Training Engineering}
+
+Building a Transformer defines what the model can compute. Training engineering
+defines whether that model can learn reliably, efficiently, and reproducibly.
+This lesson turns the equations from the previous lesson into a complete loop
+that can run on a CPU, a CUDA GPU, or Apple Silicon through MPS.
+
+\subsection*{The complete training loop}
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance=0.28cm and 0.8cm,
+  >=Latex,
+  font=\scriptsize,
+  box/.style={draw, rounded corners, align=center, minimum height=0.55cm,
+              minimum width=4.2cm, inner xsep=0.35cm, fill=gray!5},
+  side/.style={box, minimum width=3.1cm},
+  flow/.style={->, semithick}
+]
+  \node[box] (dataset) {Dataset};
+  \node[box, below=of dataset] (batch) {Create batch\\inputs + targets};
+  \node[box, below=of batch] (device) {Move batch to device\\CPU / CUDA GPU / MPS};
+  \node[box, below=of device] (precision) {Mixed precision\\FP32 / BF16 / FP16};
+  \node[box, below=of precision] (forward) {MiniGPT\\forward pass};
+  \node[box, below=of forward] (loss) {Cross-entropy loss};
+  \node[box, below=of loss] (backward) {Backpropagation\\\texttt{loss.backward()}};
+  \node[box, below=of backward] (grads) {Gradients are created};
+  \node[side, below left=0.35cm and 0.2cm of grads] (accum) {Gradient accumulation\\``combine batches''};
+  \node[side, below right=0.35cm and 0.2cm of grads] (clip) {Gradient clipping\\``stop huge gradients''};
+  \node[box, below=1.35cm of grads] (schedule) {Learning-rate schedule\\warmup $\longrightarrow$ decay};
+  \node[box, below=of schedule] (adamw) {AdamW\\update model weights};
+  \node[side, below left=0.35cm and 0.2cm of adamw] (evaluate) {Evaluate model\\train / validation loss\\perplexity};
+  \node[side, below right=0.35cm and 0.2cm of adamw] (checkpoint) {Save checkpoint\\model + optimizer + step};
+  \node[box, below=1.55cm of adamw] (next) {Next training step};
+
+  \draw[flow] (dataset) -- (batch);
+  \draw[flow] (batch) -- (device);
+  \draw[flow] (device) -- (precision);
+  \draw[flow] (precision) -- (forward);
+  \draw[flow] (forward) -- (loss);
+  \draw[flow] (loss) -- (backward);
+  \draw[flow] (backward) -- (grads);
+  \draw[flow] (grads) -| (accum);
+  \draw[flow] (grads) -| (clip);
+  \draw[flow] (accum) |- (schedule);
+  \draw[flow] (clip) |- (schedule);
+  \draw[flow] (schedule) -- (adamw);
+  \draw[flow] (adamw) -| (evaluate);
+  \draw[flow] (adamw) -| (checkpoint);
+  \draw[flow] (evaluate) |- (next);
+  \draw[flow] (checkpoint) |- (next);
+  \draw[flow] (next.east) -- ++(0.55,0) |- (dataset.east);
+\end{tikzpicture}
+\end{center}
+
+A \emph{micro-step} processes one mini-batch and creates gradients. An
+\emph{optimizer step} changes the weights. They are the same only when
+gradient accumulation is one.
+
+\subsection{Dataset and next-token batches}
+
+The dataset is a stream of token IDs. For sequence length (T), each example
+needs (T+1) consecutive tokens. The first (T) are inputs and the last
+(T), shifted left by one position, are targets:
+
+\[
+  x=(t_0,t_1,\ldots,t_{T-1}),
+  \qquad
+  y=(t_1,t_2,\ldots,t_T).
+\]
+
+For batch size (B), both tensors have shape ([B,T]).
+
+\begin{lstlisting}[style=shadedpython]
+def get_batch(token_ids, batch_size, sequence_length, device):
+    starts = torch.randint(
+        0, len(token_ids) - sequence_length - 1, (batch_size,)
+    )
+    x = torch.stack([
+        token_ids[i : i + sequence_length] for i in starts
+    ])
+    y = torch.stack([
+        token_ids[i + 1 : i + sequence_length + 1] for i in starts
+    ])
+    return x.to(device), y.to(device)
+\end{lstlisting}
+
+Training and validation data must be separate. If validation examples leak
+into training, validation loss no longer measures generalization.
+
+\subsection{Move the batch to the compute device}
+
+\begin{lstlisting}[style=shadedpython]
+def get_device():
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+
+    return torch.device("cpu")
+
+
+device = get_device()
+
+print("Using:", device)
+\end{lstlisting}
+
+\subsubsection*{Moving the model onto the GPU}
+
+Creating
+
+\begin{lstlisting}[style=shadedpython]
+model = MiniGPT()
+\end{lstlisting}
+
+initially places its parameters on the CPU. Move everything with
+
+\begin{lstlisting}[style=shadedpython]
+model = model.to(device)
+\end{lstlisting}
+
+Now the following components live in accelerator memory:
+
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item token embeddings,
+  \item Q/K/V matrices,
+  \item feed-forward weights,
+  \item LayerNorm parameters, and
+  \item the output projection.
+\end{itemize}
+
+\subsubsection*{Inputs must be on the same device}
+
+This configuration will fail:
+
+\[
+  \text{Model}\longrightarrow\text{GPU},
+  \qquad
+  \text{Input}\longrightarrow\text{CPU}.
+\]
+
+The batch generator should return tensors on the same device as the model. \\
+
+Instead of
+
+\begin{lstlisting}[style=shadedpython]
+return inputs, targets
+\end{lstlisting}
+
+use
+
+\begin{lstlisting}[style=shadedpython]
+return (
+    inputs.to(device),
+    targets.to(device),
+)
+\end{lstlisting}
+
+Now the placement is consistent:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+Model   -> GPU
+Inputs  -> GPU
+Targets -> GPU
+\end{lstlisting}
+
+GPU memory contains roughly
+
+\[
+  \begin{aligned}
+  &\text{model parameters}
+  +\text{gradients}
+  +\text{optimizer states}\\
+  &\quad+\text{activations}
+  +\text{attention matrices}
+  +\text{temporary computation buffers}.
+  \end{aligned}
+\]
+
+This becomes very important when scaling.
+
+\subsection{Mixed precision: FP32, BF16, and FP16}
+
+FP32 is stable but consumes more memory. Mixed precision performs expensive
+operations in a lower-precision format while keeping sensitive state, such as
+optimizer statistics, in FP32.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.14\textwidth}p{0.27\textwidth}p{0.47\textwidth}@{}}
+  \textbf{Format} & \textbf{Main advantage} & \textbf{Practical use} \\
+  \hline
+  FP32 & Numerical range and precision & Debugging and hardware without reliable mixed precision \\
+  BF16 & FP32-like exponent range & Preferred on modern accelerators when supported \\
+  FP16 & High throughput and low memory & Often needs dynamic loss scaling to avoid underflow
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[style=shadedpython]
+amp_enabled = device.type == "cuda"
+amp_dtype = torch.bfloat16 if bf16_supported else torch.float16
+
+with torch.autocast(
+    device_type=device.type,
+    dtype=amp_dtype,
+    enabled=amp_enabled,
+):
+    logits, loss = model(x, y)
+\end{lstlisting}
+
+For FP16, a gradient scaler multiplies the loss before backpropagation and
+unscales gradients before clipping. BF16 usually does not need loss scaling
+because it has a much wider exponent range.
+
+\subsection{Forward pass and cross-entropy loss}
+
+The forward pass maps input tokens to logits:
+
+\[
+  [B,T]\longrightarrow\operatorname{MiniGPT}(x)
+  \longrightarrow Z\in\mathbb{R}^{B\times T\times V}.
+\]
+
+Cross-entropy compares every row of vocabulary logits with the correct next
+token. With \(N=B\times T\) predictions, the mean loss is
+
+\[
+  L=-\frac{1}{N}\sum_{i=1}^{N}\log p(y_i).
+\]
+
+This scalar starts backpropagation. A finite loss does not by itself prove
+that training is healthy; it must trend downward on training data and remain
+meaningful on held-out validation data.
+
+\subsection{Backpropagation creates gradients}
+
+Before a new optimizer step, stale gradients must be cleared. Then
+\texttt{loss.backward()} applies the chain rule and adds a gradient to every
+trainable parameter's \texttt{.grad} field.
+
+\begin{lstlisting}[style=shadedpython]
+optimizer.zero_grad(set_to_none=True)
+logits, loss = model(x, y)
+loss.backward()
+\end{lstlisting}
+
+Backpropagation does not update the weights. It computes
+
+\[
+  g_t=\nabla_{\theta}L_t.
+\]
+
+PyTorch accumulates gradients by addition. This is why gradients must be
+cleared deliberately, and what makes gradient accumulation possible.
+
+\subsection{Gradient accumulation}
+
+When the desired batch is too large for device memory, process (K) smaller
+micro-batches, divide each loss by (K), and call backward on each one before
+a single optimizer update:
+
+\[
+  B_{\text{effective}}
+  =B_{\text{micro}}\times K\times N_{\text{workers}}.
+\]
+
+\begin{lstlisting}[style=shadedpython]
+optimizer.zero_grad(set_to_none=True)
+
+for _ in range(accumulation_steps):
+    x, y = get_batch(...)
+    logits, loss = model(x, y)
+    (loss / accumulation_steps).backward()
+
+optimizer.step()
+\end{lstlisting}
+
+Dividing by (K) preserves the scale of the mean gradient. The learning-rate
+schedule and global step normally advance once per optimizer step, not once
+per micro-batch.
+
+\subsection{FP16 and gradient scaling}
+
+FP16 can represent only a limited range of very small numbers.
+
+During backpropagation, some gradients may become tiny:
+
+\[
+  0.00000000013
+\]
+
+FP16 might effectively round such a value down to:
+
+\[
+  0
+\]
+
+Then learning stops for that gradient.
+
+One solution is \textbf{gradient scaling}.
+
+Instead of backpropagating gradients directly, we temporarily use:
+
+\[
+  S \times L
+\]
+
+where $S$ is a large scaling factor.
+
+This makes gradients larger. Afterward, they are scaled back down before updating the parameters.
+
+PyTorch's:
+
+\begin{lstlisting}[style=shadedpython]
+torch.amp.GradScaler
+\end{lstlisting}
+
+automates this for FP16 CUDA training.
+
+BF16 usually does not require gradient scaling because its exponent range is much larger.
+
+\subsection{Why gradients can explode}
+
+Imagine your model has many layers.
+
+Backpropagation repeatedly multiplies derivatives through them.
+
+Occasionally gradients can become huge:
+
+\[
+  \text{normal gradient: } 0.04
+\]
+
+\[
+  \text{problematic gradient: } 9482
+\]
+
+Then one optimizer step might dramatically modify the weights.
+
+You may see:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+loss = 2.8
+loss = 2.4
+loss = 2.1
+loss = NaN
+\end{lstlisting}
+
+Training has become unstable.
+
+\subsection{Gradient clipping}
+
+We can constrain the total gradient norm.
+
+In PyTorch:
+
+\begin{lstlisting}[style=shadedpython]
+torch.nn.utils.clip_grad_norm_(
+    model.parameters(),
+    max_norm=1.0,
+)
+\end{lstlisting}
+
+This does \textbf{not} simply clamp every gradient between $-1$ and $1$.
+
+Instead, it calculates an overall gradient norm.
+
+Suppose:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+gradient norm = 8
+maximum = 1
+\end{lstlisting}
+
+PyTorch scales the gradients down proportionally.
+
+Their directions remain roughly the same.
+
+\subsection{Where gradient clipping goes}
+
+Training should now look like:
+
+\begin{lstlisting}[style=shadedpython]
+optimizer.zero_grad(set_to_none=True)
+
+logits, loss = model(inputs, targets)
+
+loss.backward()
+
+torch.nn.utils.clip_grad_norm_(
+    model.parameters(),
+    1.0,
+)
+
+optimizer.step()
+\end{lstlisting}
+
+The order matters:
+
+\[
+\begin{aligned}
+&\text{forward} \\
+&\downarrow \\
+&\text{calculate loss} \\
+&\downarrow \\
+&\text{backward} \\
+&\downarrow \\
+&\text{gradients exist} \\
+&\downarrow \\
+&\text{clip gradients} \\
+&\downarrow \\
+&\text{optimizer updates weights}
+\end{aligned}
+\]
+
+\subsection{Constant learning rate is not ideal}
+
+Until now we used:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+learning_rate = 3e-4
+\end{lstlisting}
+
+for every training step.
+
+That means:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+Step 1      → 0.0003
+Step 100    → 0.0003
+Step 10,000 → 0.0003
+Step 50,000 → 0.0003
+\end{lstlisting}
+
+Real training often changes the learning rate over time.
+
+A common schedule is:
+
+\[
+\begin{aligned}
+&\text{warmup} \\
+&\downarrow \\
+&\text{maximum learning rate} \\
+&\downarrow \\
+&\text{gradual decay}
+\end{aligned}
+\]
+
+\subsection{Why warmup?}
+
+At initialization, the model is essentially random.
+
+Gradients can be noisy.
+
+If we immediately use a large learning rate:
+
+\[
+\begin{aligned}
+&\text{random model} \\
+&+ \\
+&\text{large updates} \\
+&= \\
+&\text{potential instability}
+\end{aligned}
+\]
+
+Instead, we might start at:
+
+\[
+  0.000003
+\]
+
+and gradually rise to:
+
+\[
+  0.0003
+\]
+
+over the first few hundred or thousand steps.
+
+This is \textbf{learning-rate warmup}.
+
+\subsection{Warmup calculation}
+
+Suppose:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+warmup_steps = 1000
+max_learning_rate = 3e-4
+\end{lstlisting}
+
+At step 500:
+
+\[
+  \text{LR} = \frac{500}{1000} \times 0.0003 = 0.00015
+\]
+
+At step 1000:
+
+\[
+  \text{LR} = 0.0003
+\]
+
+\subsection{Learning-rate decay}
+
+After warmup, we reduce the learning rate.
+
+Early training:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+make relatively large improvements
+\end{lstlisting}
+
+Later training:
+
+\begin{lstlisting}[style=shadedpython,language={}]
+make small refinements
+\end{lstlisting}
+
+A common schedule is cosine decay.
+
+Conceptually:
+
+\[
+\begin{array}{c}
+\text{LR} \\
+\\
+\mid \quad \quad /\backslash \\
+\mid \quad /\quad\backslash \\
+\mid \quad /\quad\quad\backslash \\
+\mid \quad /\quad\quad\quad\backslash \\
+\mid \quad /\quad\quad\quad\quad\backslash \\
+\mid \_\_\_/\quad\quad\quad\quad\quad\backslash\_\_\_ \\
+\mid \\
+\text{warmup} \quad\quad\quad \text{decay}
+\end{array}
+\]
+
+\subsection{A learning-rate function}
+
+Here's a practical implementation:
+
+\begin{lstlisting}[style=shadedpython]
+import math
+
+def get_learning_rate(step):
+    warmup_steps = 500
+    max_steps = training_steps
+
+    max_lr = 3e-4
+    min_lr = 3e-5
+
+    # Warmup
+    if step < warmup_steps:
+        return (
+            max_lr
+            * (step + 1)
+            / warmup_steps
+        )
+
+    # Finished decay
+    if step >= max_steps:
+        return min_lr
+
+    # Cosine decay progress: 0 -> 1
+    progress = (
+        (step - warmup_steps)
+        /
+        (max_steps - warmup_steps)
+    )
+
+    cosine = 0.5 * (
+        1.0
+        +
+        math.cos(
+            math.pi * progress
+        )
+    )
+
+    return (
+        min_lr
+        +
+        cosine
+        * (max_lr - min_lr)
+    )
+\end{lstlisting}
+
+\subsection{AdamW updates the weights}
+
+Once gradients are ready, AdamW updates its first and second moments and then
+changes the parameters. In simplified form,
+
+\[
+  m_t=\beta_1m_{t-1}+(1-\beta_1)g_t,
+  \qquad
+  v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^2,
+\]
+\[
+  \theta_t=\theta_{t-1}
+  -\eta_t\frac{\widehat m_t}{\sqrt{\widehat v_t}+\epsilon}
+  -\eta_t\lambda\theta_{t-1}.
+\]
+
+The final term is decoupled weight decay. Biases and normalization parameters
+are commonly assigned zero weight decay.
+
+\begin{lstlisting}[style=shadedpython]
+optimizer = torch.optim.AdamW(
+    parameter_groups,
+    lr=max_lr,
+    betas=(0.9, 0.95),
+    eps=1e-8,
+)
+\end{lstlisting}
+
+Hyperparameters must be recorded with the code version, data version, random
+seed, and model configuration.
+
+\subsection{Evaluation and perplexity}
+
+Evaluation measures performance without creating gradients or changing
+weights. Switch to evaluation mode, sample fixed validation batches, then
+restore training mode.
+
+\begin{lstlisting}[style=shadedpython]
+@torch.no_grad()
+def estimate_loss(model, get_validation_batch, eval_steps):
+    model.eval()
+    losses = []
+    for _ in range(eval_steps):
+        x, y = get_validation_batch()
+        _, loss = model(x, y)
+        losses.append(loss.detach().float())
+    model.train()
+    return torch.stack(losses).mean().item()
+\end{lstlisting}
+
+For token cross-entropy measured with natural logarithms,
+
+\[
+  \operatorname{PPL}=e^{L_{\text{validation}}}.
+\]
+
+Perplexity is comparable only when tokenization, evaluation data, and loss
+conventions match. Task-specific evaluations are still needed; loss alone
+does not measure factuality, coding, or financial reasoning.
+
+\subsection{Save resumable checkpoints}
+
+A checkpoint needs enough state to resume the same optimization trajectory:
+
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \item model parameters;
+  \item optimizer, scheduler, and FP16 gradient-scaler state;
+  \item optimizer step and consumed-token count;
+  \item model and training configuration;
+  \item random-number-generator states; and
+  \item data sampler position when deterministic resumption matters.
+\end{itemize}
+
+\begin{lstlisting}[style=shadedpython]
+checkpoint = {
+    "model": model.state_dict(),
+    "optimizer": optimizer.state_dict(),
+    "scaler": scaler.state_dict() if scaler is not None else None,
+    "step": step,
+    "tokens_seen": tokens_seen,
+    "model_config": model_config,
+    "train_config": train_config,
+    "rng_state": torch.get_rng_state(),
+}
+torch.save(checkpoint, checkpoint_path)
+\end{lstlisting}
+
+Write to a temporary path and rename only after the write succeeds. Keep a
+recent rolling checkpoint for recovery and less frequent milestone
+checkpoints for comparison and auditing.
+
+\subsection{One complete optimizer step}
+
+The pieces must occur in the right order:
+
+\begin{lstlisting}[style=shadedpython]
+model.train()
+
+for step in range(start_step, total_steps):
+    lr = learning_rate(
+        step, warmup_steps, total_steps, max_lr, min_lr
+    )
+    for group in optimizer.param_groups:
+        group["lr"] = lr
+
+    optimizer.zero_grad(set_to_none=True)
+    accumulated_loss = 0.0
+
+    for _ in range(accumulation_steps):
+        x, y = get_train_batch()
+        with torch.autocast(
+            device_type=device.type,
+            dtype=amp_dtype,
+            enabled=amp_enabled,
+        ):
+            _, loss = model(x, y)
+            scaled_loss = loss / accumulation_steps
+
+        if scaler is None:
+            scaled_loss.backward()
+        else:
+            scaler.scale(scaled_loss).backward()
+        accumulated_loss += loss.detach().float().item()
+
+    if scaler is not None:
+        scaler.unscale_(optimizer)
+
+    grad_norm = torch.nn.utils.clip_grad_norm_(
+        model.parameters(), max_norm=1.0
+    )
+
+    if scaler is None:
+        optimizer.step()
+    else:
+        scaler.step(optimizer)
+        scaler.update()
+
+    if step % eval_interval == 0:
+        validation_loss = estimate_loss(...)
+        validation_ppl = math.exp(validation_loss)
+
+    if step % checkpoint_interval == 0:
+        save_checkpoint(...)
+\end{lstlisting}
+
+\[
+  \boxed{
+  \text{zero gradients}
+  \rightarrow\text{forward}
+  \rightarrow\text{loss}
+  \rightarrow\text{backward}
+  \rightarrow\text{unscale}
+  \rightarrow\text{clip}
+  \rightarrow\text{AdamW}
+  }
+\]
+
+Evaluation and checkpointing happen at controlled intervals; then the next
+optimizer step begins.
+
+\subsection{Signals to monitor}
+
+At minimum, record optimizer step, tokens processed, train loss, validation
+loss, learning rate, gradient norm, step time, tokens per second, memory use,
+and skipped FP16 updates. Investigate non-finite loss or gradients, persistent
+validation degradation, unexpected throughput changes, or checkpoint resumes
+that do not reproduce the expected next steps.
+
+The loop succeeds only when it is both a learning system and a measurement
+system: it changes the weights and leaves enough evidence to explain exactly
+how those weights were produced.

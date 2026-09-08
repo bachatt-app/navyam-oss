@@ -1,0 +1,222 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+% Core packages shared by every included lesson.
+\usepackage{amsmath,amssymb}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fontspec}
+
+% Customize paragraph formatting (fourth-level headings)
+\usepackage{titlesec}
+\usepackage{changepage}
+\titleformat{\paragraph}[block]
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+\titlespacing*{\paragraph}
+{0pt}    % left indent comes from paragraphblock / adjustwidth
+{1.0ex}  % space before
+{0.4ex}  % space after (keep tight; document \parskip is large)
+
+% Indented fourth-level section block: title + body share one left margin.
+% Avoid empty \par after the title --- with \parskip=1\baselineskip that
+% creates a large blank gap before the body.
+\newenvironment{paragraphblock}[1]{%
+  \begin{adjustwidth}{1.5em}{0pt}%
+  \paragraph{#1}%
+  \ignorespaces
+}{%
+  \end{adjustwidth}%
+}
+
+% TikZ library for drawing diagrams
+\usetikzlibrary{arrows.meta,positioning,fit}
+
+% Monospace for listings: JetBrains Mono (coding). Devanagari is NOT in
+% coding fonts, so Option 1 is the project default:
+%   - JetBrains Mono for Latin/code
+%   - \dev{...} / Kohinoor for Hindi in body text
+%   - in listings that need Hindi: escapeinside={(*}{*)} then (*\dev{भारत}*)
+% Do NOT enable escapeinside globally --- Python (*args) would break.
+% Ligatures=NoCommon: fonts often map <| and |> to ◁ and ▷, which breaks
+% special-token spellings like <|eos|> in monospace.
+\IfFontExistsTF{JetBrains Mono}{
+  \setmonofont{JetBrains Mono}[Scale=0.9, Ligatures=NoCommon]
+}{
+  \IfFontExistsTF{Consolas}{
+    \setmonofont{Consolas}[Scale=0.95, Ligatures=NoCommon]
+  }{
+    \setmonofont{Courier New}[Scale=1.0, Ligatures=NoCommon]
+  }
+}
+% Inline special tokens in headings/body (survives bold title fonts).
+\newcommand{\spectok}[1]{{\normalfont\ttfamily\addfontfeature{Ligatures=NoCommon}#1}}
+\IfFontExistsTF{Kohinoor Devanagari}{
+  \newfontfamily\devanagarifont{Kohinoor Devanagari}
+}{
+  \IfFontExistsTF{ITF Devanagari}{
+    \newfontfamily\devanagarifont{ITF Devanagari}
+  }{
+    \newfontfamily\devanagarifont{Devanagari Sangam MN}
+  }
+}
+\newcommand{\dev}[1]{{\devanagarifont #1}}
+
+% Define colors for syntax highlighting - applied system-wide
+\definecolor{keywordcolor}{RGB}{199, 89, 207}  % Purple for keywords
+\definecolor{stringcolor}{RGB}{76, 175, 80}   % Green for strings
+\definecolor{commentcolor}{RGB}{128, 128, 128} % Gray for comments
+\definecolor{functioncolor}{RGB}{33, 150, 243} % Blue for functions
+\definecolor{numbercolor}{RGB}{255, 152, 0}   % Orange for numbers
+\definecolor{buildincolor}{RGB}{199, 89, 207} % Purple for built-ins
+\definecolor{bgcolor}{RGB}{250, 250, 250}     % Light background
+
+% Global listings configuration
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4,
+  upquote=true,
+}
+
+% Define Python style with monospace font and colors
+\lstdefinestyle{shadedpython}{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  backgroundcolor=\color{bgcolor},
+  frame=single,
+  framerule=0.5pt,
+  rulecolor=\color{gray!30},
+  xleftmargin=0.5em,
+  xrightmargin=0.5em,
+  framexleftmargin=0.75em,
+  framexrightmargin=0.75em,
+  framextopmargin=0.75em,
+  framexbottommargin=0.75em,
+  showstringspaces=false,
+  % Syntax highlighting with colors
+  keywordstyle=\color{keywordcolor}\bfseries,
+  stringstyle=\color{stringcolor},
+  commentstyle=\color{commentcolor}\itshape,
+  numberstyle=\color{numbercolor}\small,
+  identifierstyle=\color{black},
+  emphstyle=\color{functioncolor},
+  % Line numbers
+  numbers=none,
+  % Better spacing
+  aboveskip=0.5em,
+  belowskip=0.5em,
+  lineskip=0em,
+  captionpos=b,
+}
+
+% Clickable TOC / cross-refs / PDF bookmarks (section → subsubsection).
+% Load late: after most packages, before \begin{document}.
+\usepackage[
+  colorlinks=true,
+  linkcolor=black!55!blue,
+  urlcolor=black!55!blue,
+  citecolor=black!55!blue,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=2
+]{hyperref}
+\usepackage{bookmark}
+\setcounter{tocdepth}{3} % section, subsection, subsubsection
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1\baselineskip}
+\title{Intro to LLM\\[0.5em]\large How to write your own foundational model from scratch}
+\author{Ankur Jhavery}
+\date{\today}
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+\section{Introduction}
+
+\subsection*{The full architecture of a modern AI assistant}
+
+\begin{center}
+  \begin{tikzpicture}[
+      node distance=0.65cm and 0.75cm,
+      >=Latex,
+      font=\small,
+      box/.style={draw, rounded corners, align=center, minimum height=0.8cm,
+      inner xsep=0.45cm, fill=gray!5},
+      component/.style={box, minimum width=3.2cm},
+      flow/.style={->, thick},
+      dataflow/.style={semithick}
+    ]
+    \node[component] (policies) {System policies};
+    \node[component, below=of policies] (context) {Context builder};
+    \node[box, left=of context] (tokeniser) {Tokeniser};
+    \node[left=of tokeniser, align=center] (message) {User message};
+
+    \draw[flow] (policies) -- (context);
+    \draw[flow] (message) -- (tokeniser);
+    \draw[flow] (tokeniser) -- (context);
+
+    \node[box, below left=1.05cm and 2.15cm of context] (history)
+    {Chat history};
+    \node[box, below=1.05cm of context] (retrieved) {Retrieved data};
+    \node[box, below right=1.05cm and 2.15cm of context] (tools) {Tool results};
+    \coordinate[below=0.45cm of context] (split);
+    \coordinate[below=0.55cm of retrieved] (merge);
+
+    \draw[flow] (context.south) -- (split);
+    \draw[dataflow] (split) -| (history.north);
+    \draw[dataflow] (split) -- (retrieved.north);
+    \draw[dataflow] (split) -| (tools.north);
+    \draw[dataflow] (history.south) |- (merge);
+    \draw[dataflow] (retrieved.south) -- (merge);
+    \draw[dataflow] (tools.south) |- (merge);
+
+    \node[component, below=0.55cm of merge] (embeddings) {Embeddings
+    + positions};
+    \node[component, below=of embeddings] (transformer) {Transformer layers};
+    \node[box, below=0.35cm of transformer, align=left, minimum
+    width=5.2cm] (details) {
+      Attention\\
+      Feed-forward / MoE\\
+      Normalisation\\
+      Residual connections
+    };
+    \node[component, below=of details] (logits) {Logits};
+    \node[component, below=of logits] (sampling) {Token sampling};
+    \node[component, below=of sampling] (output) {Text or tool request};
+
+    \draw[flow] (merge) -- (embeddings);
+    \draw[flow] (embeddings) -- (transformer);
+    \draw[flow] (transformer) -- (details);
+    \draw[flow] (details) -- (logits);
+    \draw[flow] (logits) -- (sampling);
+    \draw[flow] (sampling) -- (output);
+  \end{tikzpicture}
+\end{center}
+
+\clearpage
+
+\clearpage
+
+\input{00_model.tex}
+\input{00_training.tex}
+\input{02_tokenizer_code.tex}
+\input{03_data_pipeline_code.tex}
+\input{04_eval_code.tex}
+\input{05_model_training_code.tex}
+\input{06_one_month_phase0.tex}
+\input{07_fine_tuning.tex}
+
+\end{document}
